@@ -13,6 +13,14 @@
 		1CD81ECF1EEAED04006098D1 /* XCSync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81ECD1EEAED04006098D1 /* XCSync.xcdatamodeld */; };
 		1CD81ED11EEAED04006098D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CD81ED01EEAED04006098D1 /* Assets.xcassets */; };
 		1CD81ED41EEAED04006098D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CD81ED21EEAED04006098D1 /* LaunchScreen.storyboard */; };
+		1CD81EE81EEB15CD006098D1 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EE71EEB15CD006098D1 /* BPMDetector.mm */; };
+		1CD81EF51EEB249E006098D1 /* AdvPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EF31EEB249E006098D1 /* AdvPlayer.mm */; };
+		1CD81EF81EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EF71EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm */; };
+		1CD81EFA1EEB378F006098D1 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD81EF91EEB378F006098D1 /* libSuperpoweredAudioIOS.a */; };
+		1CD81F031EEC42FA006098D1 /* RunPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F021EEC42FA006098D1 /* RunPoint.swift */; };
+		1CD81F051EEC4309006098D1 /* RunSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F041EEC4309006098D1 /* RunSong.swift */; };
+		1CD81F071EEC5250006098D1 /* AddSongVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F061EEC5250006098D1 /* AddSongVC.swift */; };
+		1CD81F091EED6150006098D1 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F081EED6150006098D1 /* SongTableVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +32,23 @@
 		1CD81ED01EEAED04006098D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CD81ED31EEAED04006098D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1CD81ED51EEAED04006098D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CD81EDE1EEB118B006098D1 /* XCSync-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCSync-Bridging-Header.h"; sourceTree = "<group>"; };
+		1CD81EE61EEB15CD006098D1 /* BPMDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMDetector.h; sourceTree = "<group>"; };
+		1CD81EE71EEB15CD006098D1 /* BPMDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BPMDetector.mm; sourceTree = "<group>"; };
+		1CD81EF31EEB249E006098D1 /* AdvPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AdvPlayer.mm; sourceTree = "<group>"; };
+		1CD81EF41EEB249E006098D1 /* AdvPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvPlayer.h; sourceTree = "<group>"; };
+		1CD81EF61EEB250C006098D1 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredIOSAudioIO.h; sourceTree = "<group>"; };
+		1CD81EF71EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SuperpoweredIOSAudioIO.mm; sourceTree = "<group>"; };
+		1CD81EF91EEB378F006098D1 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
+		1CD81EFB1EEB37F0006098D1 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAdvancedAudioPlayer.h; sourceTree = "<group>"; };
+		1CD81EFC1EEB37F0006098D1 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAnalyzer.h; sourceTree = "<group>"; };
+		1CD81EFD1EEB37F0006098D1 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = "<group>"; };
+		1CD81EFE1EEB37F0006098D1 /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredDecoder.h; sourceTree = "<group>"; };
+		1CD81EFF1EEB37F0006098D1 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = "<group>"; };
+		1CD81F021EEC42FA006098D1 /* RunPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunPoint.swift; sourceTree = "<group>"; };
+		1CD81F041EEC4309006098D1 /* RunSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunSong.swift; sourceTree = "<group>"; };
+		1CD81F061EEC5250006098D1 /* AddSongVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSongVC.swift; sourceTree = "<group>"; };
+		1CD81F081EED6150006098D1 /* SongTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CD81EFA1EEB378F006098D1 /* libSuperpoweredAudioIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,8 +82,14 @@
 		1CD81EC51EEAED04006098D1 /* XCSync */ = {
 			isa = PBXGroup;
 			children = (
+				1CD81EDE1EEB118B006098D1 /* XCSync-Bridging-Header.h */,
+				1CD81EDB1EEB112D006098D1 /* Superpowered */,
 				1CD81EC61EEAED04006098D1 /* AppDelegate.swift */,
 				1CD81EC81EEAED04006098D1 /* ViewController.swift */,
+				1CD81F061EEC5250006098D1 /* AddSongVC.swift */,
+				1CD81F081EED6150006098D1 /* SongTableVC.swift */,
+				1CD81F021EEC42FA006098D1 /* RunPoint.swift */,
+				1CD81F041EEC4309006098D1 /* RunSong.swift */,
 				1CD81ECA1EEAED04006098D1 /* Main.storyboard */,
 				1CD81ED01EEAED04006098D1 /* Assets.xcassets */,
 				1CD81ED21EEAED04006098D1 /* LaunchScreen.storyboard */,
@@ -65,6 +97,25 @@
 				1CD81ECD1EEAED04006098D1 /* XCSync.xcdatamodeld */,
 			);
 			path = XCSync;
+			sourceTree = "<group>";
+		};
+		1CD81EDB1EEB112D006098D1 /* Superpowered */ = {
+			isa = PBXGroup;
+			children = (
+				1CD81EF91EEB378F006098D1 /* libSuperpoweredAudioIOS.a */,
+				1CD81EF61EEB250C006098D1 /* SuperpoweredIOSAudioIO.h */,
+				1CD81EF71EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm */,
+				1CD81EFB1EEB37F0006098D1 /* SuperpoweredAdvancedAudioPlayer.h */,
+				1CD81EFC1EEB37F0006098D1 /* SuperpoweredAnalyzer.h */,
+				1CD81EFD1EEB37F0006098D1 /* SuperpoweredAudioBuffers.h */,
+				1CD81EFE1EEB37F0006098D1 /* SuperpoweredDecoder.h */,
+				1CD81EFF1EEB37F0006098D1 /* SuperpoweredSimple.h */,
+				1CD81EE61EEB15CD006098D1 /* BPMDetector.h */,
+				1CD81EE71EEB15CD006098D1 /* BPMDetector.mm */,
+				1CD81EF41EEB249E006098D1 /* AdvPlayer.h */,
+				1CD81EF31EEB249E006098D1 /* AdvPlayer.mm */,
+			);
+			name = Superpowered;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,7 +151,13 @@
 					1CD81EC21EEAED04006098D1 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = M8B59A97XZ;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -140,8 +197,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CD81F091EED6150006098D1 /* SongTableVC.swift in Sources */,
+				1CD81F071EEC5250006098D1 /* AddSongVC.swift in Sources */,
+				1CD81EE81EEB15CD006098D1 /* BPMDetector.mm in Sources */,
+				1CD81EF81EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm in Sources */,
+				1CD81F031EEC42FA006098D1 /* RunPoint.swift in Sources */,
 				1CD81EC91EEAED04006098D1 /* ViewController.swift in Sources */,
+				1CD81F051EEC4309006098D1 /* RunSong.swift in Sources */,
 				1CD81ECF1EEAED04006098D1 /* XCSync.xcdatamodeld in Sources */,
+				1CD81EF51EEB249E006098D1 /* AdvPlayer.mm in Sources */,
 				1CD81EC71EEAED04006098D1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,7 +273,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -254,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -267,12 +331,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
 				INFOPLIST_FILE = XCSync/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/XCSync",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bradztech.XCSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XCSync/XCSync-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -280,12 +352,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
 				INFOPLIST_FILE = XCSync/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/XCSync",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bradztech.XCSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XCSync/XCSync-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -308,6 +387,7 @@
 				1CD81EDA1EEAED04006098D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
