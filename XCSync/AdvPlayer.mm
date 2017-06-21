@@ -38,7 +38,9 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
 - (void)play:(NSURL *)fileURL
 {
     if (posix_memalign((void **)&stereoBuffer, 16, 4096 + 128) != 0) abort();
-    player = new SuperpoweredAdvancedAudioPlayer(NULL, NULL, 44100, 0);
+    if (!player) {
+        player = new SuperpoweredAdvancedAudioPlayer(NULL, NULL, 44100, 0);
+    }
     player->open([[fileURL absoluteString] UTF8String]);
     player->play(false);
     
@@ -46,6 +48,14 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
         output = [[SuperpoweredIOSAudioIO alloc] initWithDelegate:(id<SuperpoweredIOSAudioIODelegate>)self preferredBufferSize:12 preferredMinimumSamplerate:44100 audioSessionCategory:AVAudioSessionCategoryPlayback channels:2 audioProcessingCallback:audioProcessing clientdata:(__bridge void *)self];
         [output start];
     }
+}
+
+- (void)resume {
+    player->play(false);
+}
+
+- (void)pause {
+    player->pause();
 }
 
 - (void)mapChannels:(multiOutputChannelMap *)outputMap inputMap:(multiInputChannelMap *)inputMap externalAudioDeviceName:(NSString *)externalAudioDeviceName outputsAndInputs:(NSString *)outputsAndInputs {
@@ -76,6 +86,10 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
     } else {
         return -1;
     }
+}
+- (void)interruptionStarted {}
+- (void)interruptionEnded {
+    player->onMediaserverInterrupt();
 }
 
 @end

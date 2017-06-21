@@ -14,4 +14,6 @@
 - (void)setVolume:(float)newVolume;
 - (void)setBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
 - (double)getMsSinceLastBeat;
+- (void)resume;
+- (void)pause;
 @end

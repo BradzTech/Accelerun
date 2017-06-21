@@ -7,39 +7,52 @@
 //
 
 import UIKit
-import CoreLocation
 import MediaPlayer
 import CoreData
 import CoreMotion
-import HealthKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MPMediaPickerControllerDelegate {
+class ViewController: UIViewController {
     static var inst: ViewController!
-    var locMan: CLLocationManager!
     private var musicPlayer: AdvPlayer!
     var targetTempo: Float = 155.0
     var ttFactor: Float = 1
-    var csong: RunSong?
-    var songs = [RunSong]()
-    @IBOutlet weak var lblTempo: UILabel!
     var pedometer: CMPedometer!
     var stepCadence: Float = 0.0
-    var runPoints = [RunPoint]()
+    var cFolder: SongFolder?
+    var cIndex: Int = 0
+    private var _playing = false
+    var playing: Bool {
+        get {
+            return _playing
+        } set {
+            _playing = newValue
+            if _playing {
+                musicPlayer.resume()
+                playPauseBtn.setImage(UIImage(named: "btnPause"), for: .normal)
+            } else {
+                musicPlayer.pause()
+                playPauseBtn.setImage(UIImage(named: "btnPlay"), for: .normal)
+            }
+        }
+    }
+    
+    var cSong: Song? {
+        if let folder = cFolder {
+            return folder.at(index: cIndex) as? Song
+        }
+        return nil
+    }
+    
     @IBOutlet weak var lblTmp: UILabel!
     @IBOutlet weak var circleView: UIView!
+    @IBOutlet weak var lblTempo: UILabel!
+    @IBOutlet weak var playPauseBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ViewController.inst = self
-        locMan = CLLocationManager()
-        locMan.delegate = self
-        locMan.requestAlwaysAuthorization()
-        locMan.activityType = .fitness
-        locMan.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        if CLLocationManager.authorizationStatus() == .authorizedAlways {
-            locMan.startUpdatingLocation()
-        }
         musicPlayer = AdvPlayer()
+        BackgroundAnalyzer.rescan()
         
         pedometer = CMPedometer()
         pedometer.startUpdates(from: Date(), withHandler: {(pedoData, error) in
@@ -78,38 +91,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MPMediaPicker
         }
     }
     
-    @IBAction func addBtn() {
-        let pickerController = MPMediaPickerController(mediaTypes: .music)
-        pickerController.allowsPickingMultipleItems = true
-        pickerController.delegate = self
-        present(pickerController, animated: true, completion: nil)
-    }
-    
-    func play(song: RunSong) {
-        csong = song
-        song.playIn(advPlayer: musicPlayer)
+    func play(folder: SongFolder, index: Int) {
+        cFolder = folder
+        cIndex = index
+        cSong?.playIn(advPlayer: musicPlayer)
         upTempo()
-    }
-    
-    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
-        mediaPicker.dismiss(animated: true, completion: nil)
-    }
-    
-    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        var songsLeftToAdd = [MPMediaItem]()
-        for song in mediaItemCollection.items {
-            if song.assetURL != nil {
-                songsLeftToAdd.append(song)
-            }
-        }
-        mediaPicker.dismiss(animated: true, completion: nil)
-        let addSongVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddSongVC") as! AddSongVC
-        addSongVC.songsToAdd = songsLeftToAdd
-        present(addSongVC, animated: true, completion: nil)
+        playing = true
     }
     
     private func upTempo() {
-        if let song = csong {
+        if let song = cSong {
             let bpm = song.bpm
             var ttf: Float = 1
             if targetTempo > bpm * 5 / 3 {
@@ -129,20 +120,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MPMediaPicker
         upTempo()
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
-            locMan.startUpdatingLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let loc = locations.last {
-            runPoints.append(RunPoint(location: loc, stepsPerMinute: stepCadence))
-            lblTmp.text = "\(runPoints.count)\n\(26.8224 / (loc.speed + 0.01))\n\(stepCadence)"
-            AppDelegate.saveContext()
-        }
-    }
-    
     func flashDot() {
         circleView.backgroundColor = UIColor.cyan
         
@@ -151,5 +128,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MPMediaPicker
         }, completion: nil)
     }
     
+    @IBAction func btnPrev(_ sender: Any) {
+        if let folder = cFolder {
+            cIndex = (cIndex - 1) % folder.numSongs()
+            play(folder: folder, index: cIndex)
+        }
+    }
+    
+    @IBAction func btnNext(_ sender: Any) {
+        if let folder = cFolder {
+            cIndex = (cIndex + 1) % folder.numSongs()
+            play(folder: folder, index: cIndex)
+        }
+    }
+    
+    @IBAction func btnPlayPause(_ sender: Any) {
+        playing = !playing
+    }
+    
+    @IBAction func btnMusic(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }
 

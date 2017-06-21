@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CCE76601EF9B1E100303544 /* SongFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE765F1EF9B1E100303544 /* SongFolder.swift */; };
 		1CD81EC71EEAED04006098D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EC61EEAED04006098D1 /* AppDelegate.swift */; };
 		1CD81EC91EEAED04006098D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EC81EEAED04006098D1 /* ViewController.swift */; };
 		1CD81ECC1EEAED04006098D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CD81ECA1EEAED04006098D1 /* Main.storyboard */; };
@@ -17,13 +18,12 @@
 		1CD81EF51EEB249E006098D1 /* AdvPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EF31EEB249E006098D1 /* AdvPlayer.mm */; };
 		1CD81EF81EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81EF71EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm */; };
 		1CD81EFA1EEB378F006098D1 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CD81EF91EEB378F006098D1 /* libSuperpoweredAudioIOS.a */; };
-		1CD81F031EEC42FA006098D1 /* RunPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F021EEC42FA006098D1 /* RunPoint.swift */; };
-		1CD81F051EEC4309006098D1 /* RunSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F041EEC4309006098D1 /* RunSong.swift */; };
-		1CD81F071EEC5250006098D1 /* AddSongVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F061EEC5250006098D1 /* AddSongVC.swift */; };
+		1CD81F051EEC4309006098D1 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F041EEC4309006098D1 /* Song.swift */; };
 		1CD81F091EED6150006098D1 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD81F081EED6150006098D1 /* SongTableVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1CCE765F1EF9B1E100303544 /* SongFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongFolder.swift; sourceTree = "<group>"; };
 		1CD81EC31EEAED04006098D1 /* XCSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CD81EC61EEAED04006098D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CD81EC81EEAED04006098D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,9 +45,7 @@
 		1CD81EFD1EEB37F0006098D1 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = "<group>"; };
 		1CD81EFE1EEB37F0006098D1 /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredDecoder.h; sourceTree = "<group>"; };
 		1CD81EFF1EEB37F0006098D1 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = "<group>"; };
-		1CD81F021EEC42FA006098D1 /* RunPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunPoint.swift; sourceTree = "<group>"; };
-		1CD81F041EEC4309006098D1 /* RunSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunSong.swift; sourceTree = "<group>"; };
-		1CD81F061EEC5250006098D1 /* AddSongVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSongVC.swift; sourceTree = "<group>"; };
+		1CD81F041EEC4309006098D1 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		1CD81F081EED6150006098D1 /* SongTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +61,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CCE76611EF9B1E400303544 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1CD81F041EEC4309006098D1 /* Song.swift */,
+				1CCE765F1EF9B1E100303544 /* SongFolder.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		1CD81EBA1EEAED04006098D1 = {
 			isa = PBXGroup;
 			children = (
@@ -86,10 +93,8 @@
 				1CD81EDB1EEB112D006098D1 /* Superpowered */,
 				1CD81EC61EEAED04006098D1 /* AppDelegate.swift */,
 				1CD81EC81EEAED04006098D1 /* ViewController.swift */,
-				1CD81F061EEC5250006098D1 /* AddSongVC.swift */,
 				1CD81F081EED6150006098D1 /* SongTableVC.swift */,
-				1CD81F021EEC42FA006098D1 /* RunPoint.swift */,
-				1CD81F041EEC4309006098D1 /* RunSong.swift */,
+				1CCE76611EF9B1E400303544 /* Model */,
 				1CD81ECA1EEAED04006098D1 /* Main.storyboard */,
 				1CD81ED01EEAED04006098D1 /* Assets.xcassets */,
 				1CD81ED21EEAED04006098D1 /* LaunchScreen.storyboard */,
@@ -198,13 +203,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CD81F091EED6150006098D1 /* SongTableVC.swift in Sources */,
-				1CD81F071EEC5250006098D1 /* AddSongVC.swift in Sources */,
 				1CD81EE81EEB15CD006098D1 /* BPMDetector.mm in Sources */,
 				1CD81EF81EEB250C006098D1 /* SuperpoweredIOSAudioIO.mm in Sources */,
-				1CD81F031EEC42FA006098D1 /* RunPoint.swift in Sources */,
 				1CD81EC91EEAED04006098D1 /* ViewController.swift in Sources */,
-				1CD81F051EEC4309006098D1 /* RunSong.swift in Sources */,
+				1CD81F051EEC4309006098D1 /* Song.swift in Sources */,
 				1CD81ECF1EEAED04006098D1 /* XCSync.xcdatamodeld in Sources */,
+				1CCE76601EF9B1E100303544 /* SongFolder.swift in Sources */,
 				1CD81EF51EEB249E006098D1 /* AdvPlayer.mm in Sources */,
 				1CD81EC71EEAED04006098D1 /* AppDelegate.swift in Sources */,
 			);
