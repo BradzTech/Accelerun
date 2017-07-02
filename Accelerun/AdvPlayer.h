@@ -10,9 +10,9 @@
 
 @interface AdvPlayer : NSObject
 - (void)play:(NSURL *)fileURL;
-- (void)setTempo:(float)tempo;
+- (void)setTargetBpm:(float)targetBPM;
 - (void)setVolume:(float)newVolume;
-- (void)setBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
+- (void)setOrigBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
 - (double)getMsToNextBeat;
 - (void)resume;
 - (void)pause;

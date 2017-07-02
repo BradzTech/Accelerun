@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1C4F41FC1EFD3424006E117E /* Accelerun.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */; };
+		1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */; };
+		1C8AB7BF1EFFDF8500E61FFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */; };
 		1CA97DD01EFD312C00572B42 /* AdvPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */; };
 		1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */; };
 		1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DBC1EFD312C00572B42 /* Assets.xcassets */; };
@@ -20,12 +22,13 @@
 		1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC51EFD312C00572B42 /* SongTableVC.swift */; };
 		1CA97DDB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm */; };
 		1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCD1EFD312C00572B42 /* ViewController.swift */; };
-		1CA97DEA1EFD32EF00572B42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DE61EFD32EF00572B42 /* LaunchScreen.storyboard */; };
-		1CA97DEB1EFD32EF00572B42 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DE81EFD32EF00572B42 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C4F41FB1EFD3424006E117E /* Accelerun.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Accelerun.xcdatamodel; sourceTree = "<group>"; };
+		1C8AB7BB1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1C8AB7BD1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1C9311A61F082E1300DB9A0F /* Accelerun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Accelerun.entitlements; path = Accelerun/Accelerun.entitlements; sourceTree = SOURCE_ROOT; };
 		1CA97DB91EFD312C00572B42 /* AdvPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvPlayer.h; path = Accelerun/AdvPlayer.h; sourceTree = SOURCE_ROOT; };
 		1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AdvPlayer.mm; path = Accelerun/AdvPlayer.mm; sourceTree = SOURCE_ROOT; };
 		1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Accelerun/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -48,8 +51,6 @@
 		1CA97DCC1EFD312C00572B42 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredSimple.h; path = Accelerun/SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
 		1CA97DCD1EFD312C00572B42 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Accelerun/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Accelerun-Bridging-Header.h"; path = "Accelerun/Accelerun-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		1CA97DE71EFD32EF00572B42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1CA97DE91EFD32EF00572B42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1CD81EC31EEAED04006098D1 /* Accelerun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accelerun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -87,8 +88,6 @@
 		1CA97DDE1EFD316100572B42 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1CA97DE61EFD32EF00572B42 /* LaunchScreen.storyboard */,
-				1CA97DE81EFD32EF00572B42 /* Main.storyboard */,
 				1CA97DC31EFD312C00572B42 /* Song.swift */,
 				1CA97DC41EFD312C00572B42 /* SongFolder.swift */,
 			);
@@ -98,6 +97,8 @@
 		1CD81EBA1EEAED04006098D1 = {
 			isa = PBXGroup;
 			children = (
+				1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */,
+				1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */,
 				1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */,
 				1CD81EC51EEAED04006098D1 /* Accelerun */,
 			);
@@ -115,6 +116,7 @@
 		1CD81EC51EEAED04006098D1 /* Accelerun */ = {
 			isa = PBXGroup;
 			children = (
+				1C9311A61F082E1300DB9A0F /* Accelerun.entitlements */,
 				1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */,
 				1CA97DDD1EFD315900572B42 /* Superpowered */,
 				1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */,
@@ -167,6 +169,9 @@
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -197,10 +202,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA97DEB1EFD32EF00572B42 /* Main.storyboard in Resources */,
-				1CA97DEA1EFD32EF00572B42 /* LaunchScreen.storyboard in Resources */,
+				1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */,
 				1CA97DD71EFD312C00572B42 /* MyParticle.sks in Resources */,
 				1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */,
+				1C8AB7BF1EFFDF8500E61FFC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,22 +232,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		1CA97DE61EFD32EF00572B42 /* LaunchScreen.storyboard */ = {
+		1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1CA97DE71EFD32EF00572B42 /* Base */,
+				1C8AB7BB1EFFDF8500E61FFC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			path = ..;
 			sourceTree = "<group>";
 		};
-		1CA97DE81EFD32EF00572B42 /* Main.storyboard */ = {
+		1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1CA97DE91EFD32EF00572B42 /* Base */,
+				1C8AB7BD1EFFDF8500E61FFC /* Base */,
 			);
 			name = Main.storyboard;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -348,6 +351,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Accelerun/Accelerun.entitlements;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
 				INFOPLIST_FILE = "$(SRCROOT)/Accelerun/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -370,6 +374,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Accelerun/Accelerun.entitlements;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
 				INFOPLIST_FILE = "$(SRCROOT)/Accelerun/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

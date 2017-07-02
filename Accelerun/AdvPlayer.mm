@@ -16,6 +16,7 @@
     SuperpoweredIOSAudioIO *output;
     float *stereoBuffer;
     float volume;
+    float origBPM;
     unsigned int lastSamplerate;
 }
 
@@ -43,6 +44,7 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
         player->fixDoubleOrHalfBPM = true;
     }
     player->open([[fileURL absoluteString] UTF8String]);
+    player->setTempo(1.0f, true);
     player->play(false);
     
     if (!output) {
@@ -64,10 +66,18 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
     outputMap->deviceChannels[1] = 1;
 }
 
-- (void)setTempo:(float)tempo
+- (void)setTargetBpm:(float)targetBpm
 {
-    if (player) {
-        player->setTempo(tempo, true);
+    if (player && origBPM > 1 && targetBpm > 1) {
+        float ratio = targetBpm / origBPM;
+        float factor = 1;
+        if (ratio > 1.66666f) {
+            factor = 2;
+        } else if (ratio < 0.83333f) {
+            factor = 0.5;
+        }
+        player->setBpm(origBPM * factor);
+        player->setTempo(ratio / factor, true);
     }
 }
 
@@ -78,8 +88,9 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
     }
 }
 
-- (void)setBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
+- (void)setOrigBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
 {
+    origBPM = newBpm;
     if (player) {
         player->setBpm(newBpm);
         player->setFirstBeatMs(newBeatStartMs);
@@ -90,7 +101,7 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
 {
     if (player && player->playing) {
         //return player->msElapsedSinceLastBeat;
-        return player->closestBeatMs(player->positionMs, NULL) - player->positionMs;
+        return (player->closestBeatMs(player->positionMs, NULL) - player->positionMs) / player->tempo;
     } else {
         return -1;
     }

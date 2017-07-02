@@ -44,9 +44,8 @@ class Song: SongItem {
     
     func playIn(advPlayer: AdvPlayer) {
         advPlayer.play(Url)
+        advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
         advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!
-        advPlayer.setTempo(1)
-        advPlayer.setBpm(bpm, beatStartMs: beatStartMs)
     }
 }
 

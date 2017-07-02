@@ -9,14 +9,18 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    var lastFlash = 0
-    var feet = [SKSpriteNode]()
-    var emitters = [SKEmitterNode]()
+    private var lastFlash = 0
+    private var feet = [SKSpriteNode]()
+    private var emitters = [SKEmitterNode]()
+    private var effectColor = UIColor.yellow
+    private var emitterStrength: Int = 100
     
     override func didMove(to view: SKView) {
         for i in 0..<2 {
             let foot = SKSpriteNode(imageNamed: "rightFoot")
-            foot.position = CGPoint(x: view.bounds.midX + (CGFloat(i) * 2 - 1) * 64, y: 300)
+            foot.position = CGPoint(x: view.bounds.midX + (CGFloat(i) * 2 - 1) * (view.bounds.width * 0.17), y: view.bounds.midY)
+            foot.xScale = 0.88
+            foot.yScale = foot.xScale
             foot.zPosition = 3
             if i == 0 {
                 foot.xScale *= -1
@@ -34,13 +38,32 @@ class GameScene: SKScene {
     // Run on background thread
     func flashFoot() {
         DispatchQueue.main.async {
-            self.emitters[self.lastFlash].resetSimulation()
+            if self.emitterStrength != 0 {
+                self.emitters[self.lastFlash].particleColor = self.effectColor
+                self.emitters[self.lastFlash].numParticlesToEmit = self.emitterStrength
+                self.emitters[self.lastFlash].resetSimulation()
+            }
         }
         //usleep(10000)
         DispatchQueue.main.async {
-            self.feet[self.lastFlash].run(SKAction.colorize(with: UIColor.yellow, colorBlendFactor: 1.0, duration: 0.0))
-            self.feet[self.lastFlash].run(SKAction.colorize(with: UIColor.black, colorBlendFactor: 1.0, duration: 0.5))
+            let lf = self.lastFlash
+            let foot = self.feet[lf]
+            let scaleFactor: CGFloat = 0.85
+            foot.run(SKAction.colorize(with: self.effectColor, colorBlendFactor: 1.0, duration: 0.0))
+            foot.run(SKAction.scale(by: 1 / scaleFactor, duration: 0.0))
+            foot.run(SKAction.colorize(with: UIColor.black, colorBlendFactor: 1.0, duration: 0.5))
+            foot.run(SKAction.scale(by: scaleFactor, duration: 0.3))
             self.lastFlash = (self.lastFlash + 1) % 2
         }
+    }
+    
+    func setEffectColor(tempo: Float) {
+        if tempo >= 105 && tempo <= 210 {
+            effectColor = UIColor(hue: (1 - ((CGFloat(tempo) - 105) / 105)) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+        }
+    }
+    
+    func setEmitterStrength(_ strength: Int) {
+        emitterStrength = strength
     }
 }
