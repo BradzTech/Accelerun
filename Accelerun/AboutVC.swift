@@ -1,0 +1,41 @@
+//
+//  AboutVC.swift
+//  Accelerun
+//
+//  Created by Bradley Klemick on 7/2/17.
+//  Copyright © 2017 BradzTech. All rights reserved.
+//
+
+import UIKit
+
+class AboutVC: UITableViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "descCell", for: indexPath)
+        switch indexPath.row {
+        case 0:
+            cell.textLabel!.text = "Accelerun " + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
+            cell.accessoryType = .none
+        case 2:
+            cell.textLabel!.text = "Icons provided by icons8.com"
+        default:
+            cell.textLabel!.text = "Created by BradzTech"
+        }
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch indexPath.row {
+        case 1:
+            UIApplication.shared.open(URL(string: "http://bradztech.com/")!, options: [:], completionHandler: nil)
+        case 2:
+            UIApplication.shared.open(URL(string: "http://icons8.com/")!, options: [:], completionHandler: nil)
+        default:
+            break
+        }
+    }
+}

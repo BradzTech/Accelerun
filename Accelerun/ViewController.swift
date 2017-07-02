@@ -17,8 +17,7 @@ class ViewController: UIViewController {
     private var musicPlayer: AdvPlayer!
     var targetTempo: Float = 155.0
     var currentTempo: Float = 1
-    var pedometer: CMPedometer!
-    var stepCadence: Float = 0.0
+    var ttFactor: Float = 1
     var cFolder: SongFolder?
     var cIndex: Int = 0
     private var _playing = false
@@ -45,62 +44,36 @@ class ViewController: UIViewController {
         return nil
     }
     
-    @IBOutlet weak var lblTmp: UILabel!
     @IBOutlet weak var circleView: UIView!
     @IBOutlet weak var lblTempo: UILabel!
     @IBOutlet weak var playPauseBtn: UIButton!
+    @IBOutlet weak var lblSong: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ViewController.inst = self
         musicPlayer = AdvPlayer()
         BackgroundAnalyzer.rescan()
-        
-        pedometer = CMPedometer()
-        pedometer.startUpdates(from: Date(), withHandler: {(pedoData, error) in
-            if let pd = pedoData,
-                let cc = pd.currentCadence {
-                self.stepCadence = Float(cc) * 60
-            }
-        })
-        pedometer.startEventUpdates(handler: {(pedoEvent, error) in
-            if let event = pedoEvent {
-                if event.type == CMPedometerEventType.pause {
-                    self.stepCadence = 0
-                }
-            }
-        })
+        startPedometer()
         
         DispatchQueue.global(qos: .userInitiated).async {
             while true {
                 let msToNextBeat = self.musicPlayer.getMsToNextBeat()
                 if (msToNextBeat > 0) {
-                    if let cSong = self.cSong {
-                        let sleepTime = msToNextBeat * 1000 / Double(self.currentTempo)
-                        if sleepTime > 0 {
-                            usleep(useconds_t(sleepTime))
-                        }
-                        self.flashDot()
+                    let sleepTime = msToNextBeat * 1000 / Double(self.currentTempo) - 5000
+                    if sleepTime > 0 {
+                        usleep(useconds_t(sleepTime))
                     }
+                    self.flashDot()
                 }
                 usleep(40000)
-                /*if self.ttFactor != 1 {
-                    msSinceLastBeat = 0
-                }*/
-                /*let msToNextBeat = (60000 / Double(self.targetTempo * self.ttFactor) - msSinceLastBeat) * Double(self.ttFactor)
-                if msToNextBeat >= 0 && msToNextBeat.isFinite {
-                    usleep(useconds_t(msToNextBeat * 1000))
-                    self.flashDot()
-                } else {
-                    usleep(100000)
-                }*/
             }
         }
         
         if let skView = circleView as? SKView {
             scene = GameScene()
-            scene.scaleMode = .resizeFill
-            print(AppDelegate.moc)
+            scene.scaleMode = .aspectFill
+            scene.size = skView.bounds.size
             scene.backgroundColor = view.backgroundColor!
             skView.ignoresSiblingOrder = true
             skView.presentScene(scene)
@@ -116,38 +89,80 @@ class ViewController: UIViewController {
     }
     
     private func upTempo() {
+        musicPlayer.setTargetBpm(targetTempo)
         if let song = cSong {
-            let bpm = song.bpm
-            var ttf: Float = 1
-            if targetTempo > bpm * 5 / 3 {
-                ttf /= 2
-            } else if targetTempo < bpm * 5 / 6 {
-                ttf *= 2
-            }
-            let ttFactor = ttf
-            currentTempo = targetTempo * ttFactor / bpm
-            musicPlayer.setTempo(currentTempo)
-            lblTempo.text = "\(targetTempo)"
-            lblTempo.textColor = UIColor(hue: CGFloat(1.07 - (currentTempo) * 0.7).remainder(dividingBy: 1.0), saturation: 1.0, brightness: 1.0, alpha: 1.0)
+            lblSong.text = song.title
+            lblTempo.text = "\(Int(targetTempo))"
+            scene.setEffectColor(tempo: targetTempo)
         }
     }
-    @IBAction func tempoSliderChanged(_ sender: UISlider) {
-        targetTempo = sender.value
-        upTempo()
+    
+    private var processNextUp = true
+    @IBAction func tempoUp(_ sender: Any) {
+        if processNextUp {
+            targetTempo += 5
+            if targetTempo > 210 {
+                targetTempo = 105
+            }
+            upTempo()
+        }
+        processNextUp = true
+    }
+    
+    @IBAction func tempoDown(_ sender: Any) {
+        if processNextUp {
+            targetTempo -= 5
+            if targetTempo < 105 {
+                targetTempo = 210
+            }
+            upTempo()
+        }
+        processNextUp = true
+    }
+    
+    @IBAction func tempoUpHold(_ sender: UIButton, forEvent event: UIEvent) {
+        if let touch = event.allTouches?.first {
+            DispatchQueue.global(qos: .default).async {
+                while touch.phase != .cancelled && touch.phase != .ended {
+                    usleep(1100000)
+                    if touch.phase != .cancelled && touch.phase != .ended && self.targetTempo < 210 {
+                        self.targetTempo += 1
+                        self.processNextUp = false
+                        DispatchQueue.main.async {
+                            self.upTempo()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @IBAction func tempoDownHold(_ sender: UIButton, forEvent event: UIEvent) {
+        if let touch = event.allTouches?.first {
+            DispatchQueue.global(qos: .default).async {
+                while touch.phase != .cancelled && touch.phase != .ended {
+                    usleep(1100000)
+                    if touch.phase != .cancelled && touch.phase != .ended && self.targetTempo > 105 {
+                        self.targetTempo -= 1
+                        self.processNextUp = false
+                        DispatchQueue.main.async {
+                            self.upTempo()
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func flashDot() {
-        /*circleView.backgroundColor = UIColor.cyan
-        
-        UIView.animate(withDuration: TimeInterval(60 / targetTempo - 0.05), delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            self.circleView.backgroundColor = UIColor.black
-        }, completion: nil)*/
         scene.flashFoot()
     }
     
     @IBAction func btnPrev(_ sender: Any) {
         if let folder = cFolder {
-            cIndex = (cIndex - 1) % folder.numSongs()
+            cIndex -= 1
+            if cIndex < 0 {
+                cIndex += folder.numSongs()
+            }
             play(folder: folder, index: cIndex)
         }
     }
@@ -165,6 +180,47 @@ class ViewController: UIViewController {
     
     @IBAction func btnMusic(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    // Begin Pedometer
+    private var pedometer: CMPedometer!
+    private var _stepCadence: Float = 0.0
+    private var _stepActive = true
+    private var stepsPerMinute: Float {
+        if _stepActive {
+            return _stepCadence
+        } else {
+            return 0.0
+        }
+    }
+    private func startPedometer() {
+        if pedometer == nil {
+            if CMPedometer.isPedometerEventTrackingAvailable() {
+                pedometer = CMPedometer()
+                pedometer.startUpdates(from: Date(), withHandler: {(pedoData, error) in
+                    if let pd = pedoData,
+                        let cc = pd.currentCadence {
+                        self._stepCadence = Float(cc) * 60
+                        self.upPedometer()
+                    }
+                })
+                pedometer.startEventUpdates(handler: {(pedoEvent, error) in
+                    if let event = pedoEvent {
+                        self._stepActive = event.type != CMPedometerEventType.pause
+                        self.upPedometer()
+                    }
+                })
+            } else {
+                print("MEOW")
+            }
+        }
+    }
+    private func upPedometer() {
+        self.scene?.setEmitterStrength(Int(self.stepsPerMinute))
     }
 }
 

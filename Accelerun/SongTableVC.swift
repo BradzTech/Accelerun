@@ -14,6 +14,17 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     var songItems = [SongItem]()
     var folder: SongFolder?
     private var toolGroups = [[UIBarButtonItem]]()
+    private var playlistLengthStr: String {
+        var numSongs = 0
+        var totalSeconds: Float = 0.0
+        for songItem in songItems {
+            if let song = songItem as? Song {
+                numSongs += 1
+                totalSeconds += song.seconds
+            }
+        }
+        return "\(numSongs) tracks, \(Int(totalSeconds / 60)) minutes"
+    }
     
     var editingMode: Bool {
         get {
@@ -50,6 +61,9 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         }
         songItems = si
         
+        if folder == SongFolder.rootFolder {
+            toolGroups[1].remove(at: 0)
+        }
         editingMode = songItems.count == 0
         for tg in toolGroups {
             for tb in tg {
@@ -61,21 +75,22 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 tableView.selectRow(at: IndexPath(row: i, section: 0), animated: true, scrollPosition: .middle)
             }
         }
-        if folder == SongFolder.rootFolder {
-            // TODO: remove Add Song button
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setToolbarHidden(true, animated: true)
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songItems.count + 1
+        return section == 0 ? songItems.count: 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row < songItems.count {
+        if indexPath.section == 0 {
             let songItem = songItems[indexPath.row]
             if songItem is SongFolder {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "folderCell")!
@@ -95,27 +110,35 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "playlistTotal")!
-                cell.textLabel?.text = "Total length: ??:??"
+                cell.textLabel?.text = playlistLengthStr
                 return cell
             }
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row < songItems.count {
+        if indexPath.section == 0 {
             let songItem = songItems[indexPath.row]
             if let folder = songItem as? SongFolder {
                 tableView.deselectRow(at: indexPath, animated: true)
                 open(folder: folder)
-            } else {
-                goToNowPlaying(true)
-                ViewController.inst.play(folder: folder!, index: indexPath.row)
+            } else if let song = songItem as? Song {
+                if song.bpm > 0 {
+                    goToNowPlaying(true)
+                    ViewController.inst.play(folder: folder!, index: indexPath.row)
+                } else {
+                    let alert = UIAlertController(title: "Song Analysis in Progress", message: "Please try again in a few seconds.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+                    present(alert, animated: true, completion: nil)
+                }
             }
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        if indexPath.row < songItems.count {
+        if indexPath.section == 0 {
             /*let moveAction = UITableViewRowAction(style: .default, title: "Fix Beat", handler: {(rowAction, indexPath) in
              if let newVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MusicAddVC") as? MusicAddVC {
              newVC.songItem = self.songItems[indexPath.row]
@@ -127,11 +150,15 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             })
             return [deleteAction]
         }
-        return nil
+        return []
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.row < songItems.count
+        return indexPath.section == 0
     }
     
     
@@ -146,8 +173,15 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         AppDelegate.saveContext()
     }
     
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if proposedDestinationIndexPath.section > 0 {
+            return IndexPath(row: songItems.count - 1, section: 0)
+        }
+        return proposedDestinationIndexPath
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row < songItems.count || folder != SongFolder.rootFolder {
+        if indexPath.section == 0  || folder != SongFolder.rootFolder {
             return 54
         } else {
             return 150
@@ -222,6 +256,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         songItems.append(songItem)
         AppDelegate.saveContext()
         tableView.insertRows(at: [IndexPath(row: self.songItems.count - 1, section: 0)], with: .top)
+        tableView.reloadSections(IndexSet(integer: 1), with: .fade)
     }
     
     private func remove(index: Int) {
@@ -233,6 +268,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         AppDelegate.saveContext()
         songItems.remove(at: index)
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .top)
+        tableView.reloadSections(IndexSet(integer: 1), with: .fade)
     }
     
     func goToNowPlaying(_ sender: Bool = false) {

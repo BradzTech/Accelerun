@@ -32,13 +32,22 @@ class SongFolder: SongItem {
         return nil
     }
     
+    // Note: inefficient with large playlists
+    private var songs: [Song] {
+        var foundSongs = [Song]()
+        for songItem in items {
+            if let song = songItem as? Song {
+                foundSongs.append(song)
+            }
+        }
+        return foundSongs
+    }
     func songAt(index: Int) -> Song? {
-        // TODO: skip subfolders (and numSongs)
-        return at(index: index) as? Song
+        return songs[index]
     }
     
     func numSongs() -> Int {
-        return items.count
+        return songs.count
     }
     
     // Fetch root folder, create if it does not yet exist.
