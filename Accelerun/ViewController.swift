@@ -78,14 +78,27 @@ class ViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             skView.presentScene(scene)
         }
+        
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget(self, action:#selector(remotePause(_:)))
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget(self, action:#selector(remotePlay(_:)))
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.previousTrackCommand.addTarget(self, action:#selector(btnPrev(_:)))
+        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.addTarget(self, action:#selector(btnNext(_:)))
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.addTarget(self, action:#selector(changePlaybackPosition(_:)))
     }
     
     func play(folder: SongFolder, index: Int) {
         cFolder = folder
         cIndex = index
         cSong?.playIn(advPlayer: musicPlayer)
-        upTempo()
         playing = true
+        upTempo()
     }
     
     private func upTempo() {
@@ -94,6 +107,14 @@ class ViewController: UIViewController {
             lblSong.text = song.title
             lblTempo.text = "\(Int(targetTempo))"
             scene.setEffectColor(tempo: targetTempo)
+            
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                MPMediaItemPropertyTitle: song.title,
+                MPMediaItemPropertyPlaybackDuration: Double(Float(song.seconds) / musicPlayer.getCurrentFactor()),
+                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
+                
+            ]
         }
     }
     
@@ -157,7 +178,7 @@ class ViewController: UIViewController {
         scene.flashFoot()
     }
     
-    @IBAction func btnPrev(_ sender: Any) {
+    @IBAction func btnPrev(_ sender: Any? = nil) {
         if let folder = cFolder {
             cIndex -= 1
             if cIndex < 0 {
@@ -167,15 +188,31 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func btnNext(_ sender: Any) {
+    @IBAction func btnNext(_ sender: Any? = nil) {
         if let folder = cFolder {
             cIndex = (cIndex + 1) % folder.numSongs()
             play(folder: folder, index: cIndex)
         }
     }
     
+    func remotePlay(_ sender: Any) {
+        playing = true
+        upTempo()
+    }
+    
+    func remotePause(_ sender: Any) {
+        playing = false
+        upTempo()
+    }
+    
     @IBAction func btnPlayPause(_ sender: Any) {
         playing = !playing
+        upTempo()
+    }
+    
+    func changePlaybackPosition(_ event: MPChangePlaybackPositionCommandEvent) {
+        musicPlayer.setPosition(event.positionTime * Double(musicPlayer.getCurrentFactor()));
+        MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = event.positionTime
     }
     
     @IBAction func btnMusic(_ sender: Any) {
@@ -184,6 +221,14 @@ class ViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    @objc func eof() {
+        DispatchQueue.global(qos: .default).async {
+            DispatchQueue.main.async {
+                self.btnNext()
+            }
+        }
     }
     
     // Begin Pedometer

@@ -17,11 +17,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.9</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>This app plays music from your Music Library.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone access may be required for audio processing to work correctly. We will not record you.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>This app senses your steps to help syncronize them to the music.</string>
 	<key>UIBackgroundModes</key>

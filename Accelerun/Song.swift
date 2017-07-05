@@ -43,6 +43,19 @@ class Song: SongItem {
     }
     
     func playIn(advPlayer: AdvPlayer) {
+        if bpm == 0 {
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.calcSpecs()
+                DispatchQueue.main.async {
+                    self.finishPlay(advPlayer: advPlayer)
+                }
+            }
+        } else {
+            finishPlay(advPlayer: advPlayer)
+        }
+    }
+    
+    private func finishPlay(advPlayer: AdvPlayer) {
         advPlayer.play(Url)
         advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
         advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!

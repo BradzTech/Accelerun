@@ -11,6 +11,9 @@
 @interface AdvPlayer : NSObject
 - (void)play:(NSURL *)fileURL;
 - (void)setTargetBpm:(float)targetBPM;
+- (float)getCurrentFactor;
+- (float)getPosition;
+- (void)setPosition:(double)newSeconds;
 - (void)setVolume:(float)newVolume;
 - (void)setOrigBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
 - (double)getMsToNextBeat;

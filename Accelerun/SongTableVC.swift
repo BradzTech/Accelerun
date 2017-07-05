@@ -23,7 +23,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 totalSeconds += song.seconds
             }
         }
-        return "\(numSongs) tracks, \(Int(totalSeconds / 60)) minutes"
+        return "\(numSongs) tracks, ~\(Int(floor(totalSeconds / 60))) minutes"
     }
     
     var editingMode: Bool {
@@ -45,6 +45,8 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         let nowPlaying = UIBarButtonItem(title: "Return to Player", style: .plain, target: self, action: #selector(goToNowPlaying(_:)))
         toolGroups = [[flexSpace, nowPlaying, flexSpace], [addSong, flexSpace, newPlaylist]]
         self.navigationController!.toolbar.barStyle = .blackTranslucent
+        //FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bradztech")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -269,6 +271,12 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         songItems.remove(at: index)
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .top)
         tableView.reloadSections(IndexSet(integer: 1), with: .fade)
+        if let VC = ViewController.inst {
+            if VC.cFolder == folder && VC.cIndex == index {
+                ViewController.inst?.btnNext()
+                ViewController.inst?.btnPrev()
+            }
+        }
     }
     
     func goToNowPlaying(_ sender: Bool = false) {

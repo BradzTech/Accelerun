@@ -10,6 +10,11 @@
 #include "SuperpoweredSimple.h"
 #include "SuperpoweredAdvancedAudioPlayer.h"
 #include "SuperpoweredIOSAudioIO.h"
+#import <UIKit/UIKit.h>
+#import <SpriteKit/SpriteKit.h>
+#import <CoreData/CoreData.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import "Accelerun-Swift.h"
 
 @implementation AdvPlayer {
     SuperpoweredAdvancedAudioPlayer *player;
@@ -36,11 +41,21 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
     return !silence;
 }
 
+void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent event, void *value) {
+    switch (event) {
+        case SuperpoweredAdvancedAudioPlayerEvent_EOF:
+            ViewController.inst.eof;
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)play:(NSURL *)fileURL
 {
     if (posix_memalign((void **)&stereoBuffer, 16, 4096 + 128) != 0) abort();
     if (!player) {
-        player = new SuperpoweredAdvancedAudioPlayer(NULL, NULL, 44100, 0);
+        player = new SuperpoweredAdvancedAudioPlayer(NULL, playerEventCallback, 44100, 0);
         player->fixDoubleOrHalfBPM = true;
     }
     player->open([[fileURL absoluteString] UTF8String]);
@@ -54,11 +69,15 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
 }
 
 - (void)resume {
-    player->play(false);
+    if (player) {
+        player->play(false);
+    }
 }
 
 - (void)pause {
-    player->pause();
+    if (player) {
+        player->pause();
+    }
 }
 
 - (void)mapChannels:(multiOutputChannelMap *)outputMap inputMap:(multiInputChannelMap *)inputMap externalAudioDeviceName:(NSString *)externalAudioDeviceName outputsAndInputs:(NSString *)outputsAndInputs {
@@ -81,11 +100,32 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
     }
 }
 
-- (void)setVolume:(float)newVolume
+- (float)getCurrentFactor {
+    if (player) {
+        return player->tempo;
+    } else {
+        return 1.0f;
+    }
+}
+
+- (float)getPosition {
+    if (player) {
+        return (float)(player->positionMs / 1000);
+    } else {
+        return 0.0f;
+    }
+}
+
+- (void)setPosition:(double)newSeconds
 {
     if (player) {
-        volume = newVolume;
+        player->setPosition(newSeconds * 1000, false, false);
     }
+}
+
+- (void)setVolume:(float)newVolume
+{
+    volume = newVolume;
 }
 
 - (void)setOrigBpm:(float)newBpm beatStartMs:(float)newBeatStartMs;
