@@ -49,6 +49,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var playPauseBtn: UIButton!
     @IBOutlet weak var lblSong: UILabel!
     @IBOutlet weak var tutView: UIView!
+    @IBOutlet weak var tutViewBack: UIView!
     @IBOutlet weak var lblMotionAccess: UILabel!
     @IBOutlet weak var lblDetecting: UILabel!
     
@@ -106,6 +107,7 @@ class ViewController: UIViewController {
         if lastTempo == 0 {
             remotePause()
             tutView.isHidden = false
+            tutViewBack.isHidden = true
         } else {
             targetTempo = Float(lastTempo)
             upTempo()
@@ -293,6 +295,7 @@ class ViewController: UIViewController {
             targetTempo = 155.0
         }
         tutView.isHidden = true
+        tutViewBack.isHidden = false
         remotePlay()
     }
 }

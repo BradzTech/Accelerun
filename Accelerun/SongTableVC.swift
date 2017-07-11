@@ -40,7 +40,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     override func viewDidLoad() {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let addSong = UIBarButtonItem(title: "Add Song(s)", style: .plain, target: self, action: #selector(addBtn(_:)))
+        let addSong = UIBarButtonItem(title: "Add Track", style: .plain, target: self, action: #selector(addBtn(_:)))
         let newPlaylist = UIBarButtonItem(title: "New Playlist", style: .plain, target: self, action: #selector(addPlaylist(_:)))
         let nowPlaying = UIBarButtonItem(title: "Return to Player", style: .plain, target: self, action: #selector(goToNowPlaying(_:)))
         toolGroups = [[flexSpace, nowPlaying, flexSpace], [addSong, flexSpace, newPlaylist]]
@@ -48,9 +48,8 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         //FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bradztech")
         if folder == nil {
             folder = SongFolder.rootFolder
-        }
-        if folder == SongFolder.rootFolder {
             toolGroups[1].remove(at: 0)
+            navigationItem.title = "Playlists"
         }
     }
     
@@ -195,7 +194,8 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     func addBtn(_ sender: Any) {
         let pickerController = MPMediaPickerController(mediaTypes: .music)
-        pickerController.allowsPickingMultipleItems = true
+        pickerController.allowsPickingMultipleItems = false
+        pickerController.prompt = "Tap a track to add it to the playlist."
         pickerController.delegate = self
         present(pickerController, animated: true, completion: nil)
     }
