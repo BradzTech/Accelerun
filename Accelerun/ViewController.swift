@@ -15,7 +15,7 @@ import SpriteKit
 class ViewController: UIViewController {
     static var inst: ViewController!
     private var musicPlayer: AdvPlayer!
-    var targetTempo: Float = 155.0
+    var targetTempo: Float = 0.0
     var currentTempo: Float = 1
     var ttFactor: Float = 1
     var cFolder: SongFolder?
@@ -48,6 +48,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var lblTempo: UILabel!
     @IBOutlet weak var playPauseBtn: UIButton!
     @IBOutlet weak var lblSong: UILabel!
+    @IBOutlet weak var tutView: UIView!
+    @IBOutlet weak var lblMotionAccess: UILabel!
+    @IBOutlet weak var lblDetecting: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +101,15 @@ class ViewController: UIViewController {
         cIndex = index
         cSong?.playIn(advPlayer: musicPlayer)
         playing = true
-        upTempo()
+        
+        let lastTempo = UserDefaults.standard.integer(forKey: "lastTempo")
+        if lastTempo == 0 {
+            remotePause()
+            tutView.isHidden = false
+        } else {
+            targetTempo = Float(lastTempo)
+            upTempo()
+        }
     }
     
     private func upTempo() {
@@ -113,8 +124,10 @@ class ViewController: UIViewController {
                 MPMediaItemPropertyPlaybackDuration: Double(Float(song.seconds) / musicPlayer.getCurrentFactor()),
                 MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
                 MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
-                
             ]
+        }
+        if targetTempo != 0 {
+            UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
         }
     }
     
@@ -195,12 +208,12 @@ class ViewController: UIViewController {
         }
     }
     
-    func remotePlay(_ sender: Any) {
+    func remotePlay(_ sender: Any? = nil) {
         playing = true
         upTempo()
     }
     
-    func remotePause(_ sender: Any) {
+    func remotePause(_ sender: Any? = nil) {
         playing = false
         upTempo()
     }
@@ -259,13 +272,28 @@ class ViewController: UIViewController {
                         self.upPedometer()
                     }
                 })
-            } else {
-                print("MEOW")
             }
         }
     }
     private func upPedometer() {
+        DispatchQueue.main.async {
+            self.lblMotionAccess.isHidden = true
+            self.lblDetecting.isHidden = false
+            let spm = self.stepsPerMinute
+            if spm > 0.0 && !self.tutView.isHidden {
+                self.targetTempo = floor(spm)
+                self.finishTut()
+            }
+        }
         self.scene?.setEmitterStrength(Int(self.stepsPerMinute))
+    }
+    
+    @IBAction func finishTut() {
+        if targetTempo == 0.0 {
+            targetTempo = 155.0
+        }
+        tutView.isHidden = true
+        remotePlay()
     }
 }
 

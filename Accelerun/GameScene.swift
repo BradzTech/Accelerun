@@ -23,6 +23,7 @@ class GameScene: SKScene {
             foot.xScale = footScale
             foot.yScale = foot.xScale
             foot.zPosition = 3
+            foot.run(SKAction.colorize(with: UIColor.black, colorBlendFactor: 1.0, duration: 0.0))
             if i == 0 {
                 foot.xScale *= -1
             }

@@ -46,14 +46,16 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         toolGroups = [[flexSpace, nowPlaying, flexSpace], [addSong, flexSpace, newPlaylist]]
         self.navigationController!.toolbar.barStyle = .blackTranslucent
         //FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bradztech")
-        
+        if folder == nil {
+            folder = SongFolder.rootFolder
+        }
+        if folder == SongFolder.rootFolder {
+            toolGroups[1].remove(at: 0)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setToolbarHidden(false, animated: true)
-        if folder == nil {
-            folder = SongFolder.rootFolder
-        }
         let itemsSet = folder!.itemsSet
         var si = [SongItem]()
         for item in itemsSet {
@@ -63,13 +65,10 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         }
         songItems = si
         
-        if folder == SongFolder.rootFolder {
-            toolGroups[1].remove(at: 0)
-        }
         editingMode = songItems.count == 0
         for tg in toolGroups {
             for tb in tg {
-                tb.tintColor = navigationItem.rightBarButtonItem?.tintColor
+                tb.tintColor = view.tintColor
             }
         }
         for i in 0..<songItems.count {
