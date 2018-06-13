@@ -18,6 +18,7 @@ class Song: SongItem {
     
     var Url: URL {
         return URL(string: url)!
+        //return URL(string: URL(string: url)!.path)!
     }
     
     init(assetUrl: URL, title: String, seconds: Float) {
@@ -59,6 +60,34 @@ class Song: SongItem {
         advPlayer.play(Url)
         advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
         advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!
+    }
+    
+    static func multicloudResults() -> [Song]? {
+        let sharedUD = UserDefaults(suiteName: "group.com.bradztech")!
+        if let mcDict = sharedUD.dictionary(forKey: "multicloud-local") as? [String: String],
+            let containerUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bradztech") {
+            let mcUrl = containerUrl.appendingPathComponent("multicloud")
+            if FileManager.default.fileExists(atPath: mcUrl.path) && false {
+                var songs = [Song]()
+                for (title, uid) in mcDict {
+                    let preFetch = NSFetchRequest<Song>(entityName: "Song")
+                    let assetUrl = URL(string: mcUrl.appendingPathComponent(uid + "-meow.m4a").path)!
+                    preFetch.predicate = NSPredicate(format: "url = %@", assetUrl.path)
+                    var theSong: Song?
+                    do {
+                        let fetchRes = try AppDelegate.moc.fetch(preFetch)
+                        theSong = fetchRes.first
+                    } catch {}
+                    if theSong == nil {
+                        theSong = Song(assetUrl: assetUrl, title: title, seconds: 240)
+                    }
+                    songs.append(theSong!)
+                }
+                AppDelegate.saveContext()
+                return songs
+            }
+        }
+        return nil
     }
 }
 

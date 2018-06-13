@@ -221,6 +221,16 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
         mediaPicker.dismiss(animated: true, completion: nil)
+        
+        if let multicloudResults = Song.multicloudResults() {
+            let mcTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MCTableVC") as! MCTableVC
+            mcTableVC.songs = multicloudResults
+            mcTableVC.onSelect = {(song) in
+                song.foldersSet.add(self.folder!)
+                self.add(songItem: song)
+            }
+            navigationController!.pushViewController(mcTableVC, animated: true)
+        }
     }
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
@@ -293,5 +303,24 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             rvc.modalTransitionStyle = .flipHorizontal
             present(rvc, animated: true, completion: nil)
         }
+    }
+}
+
+class MCTableVC: UITableViewController {
+    var songs = [Song]()
+    var onSelect: ((Song) -> ())!
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return songs.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mcCell", for: indexPath)
+        cell.textLabel?.text = songs[indexPath.row].title
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        onSelect(songs[indexPath.row])
     }
 }

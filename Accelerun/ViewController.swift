@@ -107,7 +107,7 @@ class ViewController: UIViewController {
         if lastTempo == 0 {
             remotePause()
             tutView.isHidden = false
-            tutViewBack.isHidden = true
+            tutViewBack.isHidden = false
         } else {
             targetTempo = Float(lastTempo)
             upTempo()
@@ -295,7 +295,7 @@ class ViewController: UIViewController {
             targetTempo = 155.0
         }
         tutView.isHidden = true
-        tutViewBack.isHidden = false
+        tutViewBack.isHidden = true
         remotePlay()
     }
 }
