@@ -28,6 +28,9 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
 
 // Initialization
 @implementation SuperpoweredIOSAudioIO {
+#if __has_feature(objc_arc)
+    __weak
+#endif
     id<SuperpoweredIOSAudioIODelegate>delegate;
     NSString *externalAudioDeviceName, *audioSessionCategory;
     NSTimer *stopTimer;
@@ -153,11 +156,12 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
 - (void)endInterruption {
     if (audioUnitRunning || !started) return;
     if (![NSThread isMainThread]) [self performSelectorOnMainThread:@selector(endInterruption) withObject:nil waitUntilDone:NO];
-    else for (int n = 0; n < 2; n++) if ([[AVAudioSession sharedInstance] setActive:YES error:nil] && [self start]) { // Need to try twice sometimes. Don't know why.
+    else {
         [delegate interruptionEnded];
-        audioUnitRunning = true;
-        break;
-    };
+        [[AVAudioSession sharedInstance] setActive:NO error:nil];
+        [self resetAudio];
+        [self start];
+    }
  }
 
 - (void)endInterruptionWithFlags:(NSUInteger)flags {
@@ -170,15 +174,25 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
 
 - (void)onAudioSessionInterrupted:(NSNotification *)notification {
     NSNumber *interruption = [notification.userInfo objectForKey:AVAudioSessionInterruptionTypeKey];
-    if (interruption) switch ([interruption intValue]) {
-        case AVAudioSessionInterruptionTypeBegan:
-            if (audioUnitRunning) [self performSelectorOnMainThread:@selector(startDelegateInterruption) withObject:nil waitUntilDone:NO];
-            [self beginInterruption];
-            break;
-        case AVAudioSessionInterruptionTypeEnded:
+    if (interruption != nil) switch ([interruption intValue]) {
+        case AVAudioSessionInterruptionTypeBegan: {
+            bool wasSuspended = false;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+            if (&AVAudioSessionInterruptionWasSuspendedKey != NULL) {
+#pragma clang diagnostic pop
+                NSNumber *obj = [notification.userInfo objectForKey:AVAudioSessionInterruptionWasSuspendedKey];
+                if ((obj != nil) && ([obj boolValue] == TRUE)) wasSuspended = true;
+            }
+            if (!wasSuspended) {
+                if (audioUnitRunning) [self performSelectorOnMainThread:@selector(startDelegateInterruption) withObject:nil waitUntilDone:NO];
+                [self beginInterruption];
+            }
+        } break;
+        case AVAudioSessionInterruptionTypeEnded: {
             NSNumber *shouldResume = [notification.userInfo objectForKey:AVAudioSessionInterruptionOptionKey];
             if ((shouldResume == nil) || [shouldResume unsignedIntegerValue] == AVAudioSessionInterruptionOptionShouldResume) [self endInterruption];
-            break;
+        } break;
     };
 }
 
@@ -236,14 +250,16 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
         else if (type == audioDeviceType_HDMI) {
             outputChannelMap.numberOfHDMIChannelsAvailable = channels;
 #if !__has_feature(objc_arc)
-            [externalAudioDeviceName release], externalAudioDeviceName = [port.portName retain];
+            [externalAudioDeviceName release];
+            externalAudioDeviceName = [port.portName retain];
 #else
             externalAudioDeviceName = port.portName;
 #endif
         } else if (type == audioDeviceType_USB) { // iOS can handle one USB audio device only
             outputChannelMap.numberOfUSBChannelsAvailable = channels;
 #if !__has_feature(objc_arc)
-            [externalAudioDeviceName release], externalAudioDeviceName = [port.portName retain];
+            [externalAudioDeviceName release];
+            externalAudioDeviceName = [port.portName retain];
 #else
             externalAudioDeviceName = port.portName;
 #endif
@@ -306,7 +322,7 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
         }
     };
 #ifdef ALLOW_BLUETOOTH
-    if (multiRoute)  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryMultiRoute error:NULL];
+    if (multiRoute) [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryMultiRoute error:NULL];
     else [[AVAudioSession sharedInstance] setCategory:audioSessionCategory withOptions:AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:NULL];
 #else
     [[AVAudioSession sharedInstance] setCategory:multiRoute ? AVAudioSessionCategoryMultiRoute : audioSessionCategory error:NULL];
@@ -339,7 +355,7 @@ static void streamFormatChangedCallback(void *inRefCon, AudioUnit inUnit, AudioU
     if (format.mSampleRate != 0) {
         __unsafe_unretained SuperpoweredIOSAudioIO *self = (__bridge SuperpoweredIOSAudioIO *)inRefCon;
         self->samplerate = (int)format.mSampleRate;
-        int minimum = int(self->samplerate * 0.001f), maximum = int(self->samplerate * 0.015f);
+        int minimum = int(self->samplerate * 0.001f), maximum = int(self->samplerate * 0.025f);
         self->minimumNumberOfFrames = (minimum >> 3) << 3;
         self->maximumNumberOfFrames = (maximum >> 3) << 3;
         [self performSelectorOnMainThread:@selector(setSamplerateAndBuffersize) withObject:nil waitUntilDone:NO];
@@ -350,7 +366,7 @@ static OSStatus coreAudioProcessingCallback(void *inRefCon, AudioUnitRenderActio
     __unsafe_unretained SuperpoweredIOSAudioIO *self = (__bridge SuperpoweredIOSAudioIO *)inRefCon;
     if (!ioData) ioData = self->inputBufferListForRecordingCategory;
     div_t d = div(inNumberFrames, 8);
-    if ((d.rem != 0) || (inNumberFrames < self->minimumNumberOfFrames) || (inNumberFrames > self->maximumNumberOfFrames) || (ioData->mNumberBuffers != self->numChannels)) {
+    if ((d.rem != 0) || ((int)inNumberFrames < self->minimumNumberOfFrames) || ((int)inNumberFrames > self->maximumNumberOfFrames) || ((int)ioData->mNumberBuffers != self->numChannels)) {
         return kAudioUnitErr_InvalidParameter;
     };
 
@@ -477,7 +493,8 @@ static OSStatus coreAudioProcessingCallback(void *inRefCon, AudioUnitRenderActio
         return;
     };
 #if !__has_feature(objc_arc)
-    [audioSessionCategory release], audioSessionCategory = [category retain];
+    [audioSessionCategory release];
+    audioSessionCategory = [category retain];
 #else
     audioSessionCategory = category;
 #endif
@@ -491,7 +508,7 @@ static OSStatus coreAudioProcessingCallback(void *inRefCon, AudioUnitRenderActio
         if ([[AVAudioSession sharedInstance] recordPermission] == AVAudioSessionRecordPermissionGranted) [self onMediaServerReset:nil];
         else {
             [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-                if (granted) [self onMediaServerReset:nil]; else [delegate recordPermissionRefused];
+                if (granted) [self onMediaServerReset:nil]; else [self->delegate recordPermissionRefused];
             }];
         };
     } else [self onMediaServerReset:nil];
