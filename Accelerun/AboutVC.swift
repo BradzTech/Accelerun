@@ -31,11 +31,16 @@ class AboutVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 1:
-            UIApplication.shared.open(URL(string: "http://bradztech.com/")!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: "http://bradztech.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         case 2:
-            UIApplication.shared.open(URL(string: "http://icons8.com/")!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: "http://icons8.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         default:
             break
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

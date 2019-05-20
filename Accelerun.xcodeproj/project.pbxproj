@@ -16,13 +16,13 @@
 		1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DBC1EFD312C00572B42 /* Assets.xcassets */; };
 		1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */; };
 		1CA97DD41EFD312C00572B42 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBF1EFD312C00572B42 /* GameScene.swift */; };
-		1CA97DD61EFD312C00572B42 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA97DC11EFD312C00572B42 /* libSuperpoweredAudioIOS.a */; };
 		1CA97DD71EFD312C00572B42 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DC21EFD312C00572B42 /* MyParticle.sks */; };
 		1CA97DD81EFD312C00572B42 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC31EFD312C00572B42 /* Song.swift */; };
 		1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC41EFD312C00572B42 /* SongFolder.swift */; };
 		1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC51EFD312C00572B42 /* SongTableVC.swift */; };
-		1CA97DDB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm */; };
 		1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCD1EFD312C00572B42 /* ViewController.swift */; };
+		A20BA06D22933E1800351138 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */; };
+		A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A20BA06A22933E1700351138 /* SuperpoweredIOSAudioIO.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,21 +39,22 @@
 		1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BPMDetector.mm; path = Accelerun/BPMDetector.mm; sourceTree = SOURCE_ROOT; };
 		1CA97DBF1EFD312C00572B42 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Accelerun/GameScene.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DC01EFD312C00572B42 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Accelerun/Info.plist; sourceTree = SOURCE_ROOT; };
-		1CA97DC11EFD312C00572B42 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = Accelerun/libSuperpoweredAudioIOS.a; sourceTree = SOURCE_ROOT; };
 		1CA97DC21EFD312C00572B42 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = Accelerun/MyParticle.sks; sourceTree = SOURCE_ROOT; };
 		1CA97DC31EFD312C00572B42 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Accelerun/Song.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DC41EFD312C00572B42 /* SongFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongFolder.swift; path = Accelerun/SongFolder.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DC51EFD312C00572B42 /* SongTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongTableVC.swift; path = Accelerun/SongTableVC.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DC61EFD312C00572B42 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAdvancedAudioPlayer.h; path = Accelerun/SuperpoweredAdvancedAudioPlayer.h; sourceTree = SOURCE_ROOT; };
-		1CA97DC71EFD312C00572B42 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAnalyzer.h; path = Accelerun/SuperpoweredAnalyzer.h; sourceTree = SOURCE_ROOT; };
-		1CA97DC81EFD312C00572B42 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAudioBuffers.h; path = Accelerun/SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
-		1CA97DC91EFD312C00572B42 /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredDecoder.h; path = Accelerun/SuperpoweredDecoder.h; sourceTree = SOURCE_ROOT; };
-		1CA97DCA1EFD312C00572B42 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredIOSAudioIO.h; path = Accelerun/SuperpoweredIOSAudioIO.h; sourceTree = SOURCE_ROOT; };
-		1CA97DCB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SuperpoweredIOSAudioIO.mm; path = Accelerun/SuperpoweredIOSAudioIO.mm; sourceTree = SOURCE_ROOT; };
-		1CA97DCC1EFD312C00572B42 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredSimple.h; path = Accelerun/SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
 		1CA97DCD1EFD312C00572B42 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Accelerun/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Accelerun-Bridging-Header.h"; path = "Accelerun/Accelerun-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		1CD81EC31EEAED04006098D1 /* Accelerun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accelerun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20BA06522933E1700351138 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAdvancedAudioPlayer.h; sourceTree = SOURCE_ROOT; };
+		A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = SOURCE_ROOT; };
+		A20BA06722933E1700351138 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAnalyzer.h; sourceTree = SOURCE_ROOT; };
+		A20BA06822933E1700351138 /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredDecoder.h; sourceTree = SOURCE_ROOT; };
+		A20BA06922933E1700351138 /* SuperpoweredHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredHTTP.h; sourceTree = SOURCE_ROOT; };
+		A20BA06A22933E1700351138 /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SuperpoweredIOSAudioIO.mm; sourceTree = SOURCE_ROOT; };
+		A20BA06B22933E1700351138 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
+		A20BA06C22933E1700351138 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredIOSAudioIO.h; sourceTree = SOURCE_ROOT; };
+		A20BA06F22933E8700351138 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA97DD61EFD312C00572B42 /* libSuperpoweredAudioIOS.a in Frameworks */,
+				A20BA06D22933E1800351138 /* libSuperpoweredAudioIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,18 +72,19 @@
 		1CA97DDD1EFD315900572B42 /* Superpowered */ = {
 			isa = PBXGroup;
 			children = (
-				1CA97DC11EFD312C00572B42 /* libSuperpoweredAudioIOS.a */,
+				A20BA06F22933E8700351138 /* SuperpoweredAudioBuffers.h */,
+				A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */,
+				A20BA06522933E1700351138 /* SuperpoweredAdvancedAudioPlayer.h */,
+				A20BA06722933E1700351138 /* SuperpoweredAnalyzer.h */,
+				A20BA06822933E1700351138 /* SuperpoweredDecoder.h */,
+				A20BA06922933E1700351138 /* SuperpoweredHTTP.h */,
+				A20BA06C22933E1700351138 /* SuperpoweredIOSAudioIO.h */,
+				A20BA06A22933E1700351138 /* SuperpoweredIOSAudioIO.mm */,
+				A20BA06B22933E1700351138 /* SuperpoweredSimple.h */,
 				1CA97DB91EFD312C00572B42 /* AdvPlayer.h */,
 				1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */,
 				1CA97DBD1EFD312C00572B42 /* BPMDetector.h */,
 				1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */,
-				1CA97DC61EFD312C00572B42 /* SuperpoweredAdvancedAudioPlayer.h */,
-				1CA97DC71EFD312C00572B42 /* SuperpoweredAnalyzer.h */,
-				1CA97DC81EFD312C00572B42 /* SuperpoweredAudioBuffers.h */,
-				1CA97DC91EFD312C00572B42 /* SuperpoweredDecoder.h */,
-				1CA97DCA1EFD312C00572B42 /* SuperpoweredIOSAudioIO.h */,
-				1CA97DCB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm */,
-				1CA97DCC1EFD312C00572B42 /* SuperpoweredSimple.h */,
 			);
 			name = Superpowered;
 			sourceTree = "<group>";
@@ -163,13 +165,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = BradzTech;
 				TargetAttributes = {
 					1CD81EC21EEAED04006098D1 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = M8B59A97XZ;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -184,7 +186,7 @@
 			};
 			buildConfigurationList = 1CD81EBE1EEAED04006098D1 /* Build configuration list for PBXProject "Accelerun" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -219,7 +221,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA97DDB1EFD312C00572B42 /* SuperpoweredIOSAudioIO.mm in Sources */,
 				1CA97DD41EFD312C00572B42 /* GameScene.swift in Sources */,
 				1CA97DD01EFD312C00572B42 /* AdvPlayer.mm in Sources */,
 				1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */,
@@ -228,6 +229,7 @@
 				1C4F41FC1EFD3424006E117E /* Accelerun.xcdatamodeld in Sources */,
 				1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */,
 				1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */,
+				A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */,
 				1C9311A81F09799D00DB9A0F /* AboutVC.swift in Sources */,
 				1CA97DD81EFD312C00572B42 /* Song.swift in Sources */,
 			);
@@ -259,6 +261,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -318,6 +321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -373,6 +377,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = Accelerun/Accelerun.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Accelerun/Info.plist";
@@ -380,12 +386,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Accelerun",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bradztech.Accelerun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Accelerun/Accelerun-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -397,6 +405,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CODE_SIGN_ENTITLEMENTS = Accelerun/Accelerun.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Accelerun/Info.plist";
@@ -404,11 +414,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Accelerun",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bradztech.Accelerun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Accelerun/Accelerun-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

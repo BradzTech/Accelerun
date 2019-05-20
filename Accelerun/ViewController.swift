@@ -210,12 +210,12 @@ class ViewController: UIViewController {
         }
     }
     
-    func remotePlay(_ sender: Any? = nil) {
+    @objc func remotePlay(_ sender: Any? = nil) {
         playing = true
         upTempo()
     }
     
-    func remotePause(_ sender: Any? = nil) {
+    @objc func remotePause(_ sender: Any? = nil) {
         playing = false
         upTempo()
     }
@@ -225,7 +225,7 @@ class ViewController: UIViewController {
         upTempo()
     }
     
-    func changePlaybackPosition(_ event: MPChangePlaybackPositionCommandEvent) {
+    @objc func changePlaybackPosition(_ event: MPChangePlaybackPositionCommandEvent) {
         musicPlayer.setPosition(event.positionTime * Double(musicPlayer.getCurrentFactor()));
         MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = event.positionTime
     }
@@ -264,7 +264,7 @@ class ViewController: UIViewController {
                 pedometer.startUpdates(from: Date(), withHandler: {(pedoData, error) in
                     if let pd = pedoData,
                         let cc = pd.currentCadence {
-                        self._stepCadence = Float(cc) * 60
+                        self._stepCadence = Float(truncating: cc) * 60
                         self.upPedometer()
                     }
                 })

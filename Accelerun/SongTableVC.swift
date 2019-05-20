@@ -192,7 +192,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         editingMode = !editingMode
     }
     
-    func addBtn(_ sender: Any) {
+    @objc func addBtn(_ sender: Any) {
         let pickerController = MPMediaPickerController(mediaTypes: .music)
         pickerController.allowsPickingMultipleItems = false
         pickerController.prompt = "Tap a track to add it to the playlist."
@@ -200,7 +200,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         present(pickerController, animated: true, completion: nil)
     }
     
-    func addPlaylist(_ sender: Any) {
+    @objc func addPlaylist(_ sender: Any) {
         let alertController = UIAlertController(title: "Folder Name:", message: nil, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: {(textField) in
         })
@@ -288,7 +288,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         }
     }
     
-    func goToNowPlaying(_ sender: Bool = false) {
+    @objc func goToNowPlaying(_ sender: Bool = false) {
         var rootVC: ViewController?
         if let rvc = ViewController.inst {
             rootVC = rvc

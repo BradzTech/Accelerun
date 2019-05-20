@@ -14,7 +14,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import <CoreData/CoreData.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import "Accelerun-Swift.h"
+//#import "Accelerun-Swift.h"
 
 @implementation AdvPlayer {
     SuperpoweredAdvancedAudioPlayer *player;
@@ -25,8 +25,8 @@
     unsigned int lastSamplerate;
 }
 
-static bool audioProcessing(void *clientdata, float **buffers, unsigned int inputChannels, unsigned int outputChannels, unsigned int numberOfSamples, unsigned int samplerate, uint64_t hostTime) {
-    __unsafe_unretained AdvPlayer *self = (__bridge AdvPlayer *)clientdata;
+static bool audioProcessing(void *clientData, float **inputBuffers, unsigned int inputChannels, float **outputBuffers, unsigned int outputChannels, unsigned int numberOfSamples, unsigned int samplerate, unsigned long long hostTime) {
+    __unsafe_unretained AdvPlayer *self = (__bridge AdvPlayer *)clientData;
     if (samplerate != self->lastSamplerate) {
         self->lastSamplerate = samplerate;
         self->player->setSamplerate(samplerate);
@@ -37,14 +37,14 @@ static bool audioProcessing(void *clientdata, float **buffers, unsigned int inpu
     bool silence = !self->player->process(self->stereoBuffer, false, numberOfSamples, self->volume, 0.0f, -1.0);
     
     //self->playing = self->player->playing;
-    if (!silence) SuperpoweredDeInterleave(self->stereoBuffer, buffers[0], buffers[1], numberOfSamples); // The stereoBuffer is ready now, let's put the finished audio into the requested buffers.
+    if (!silence) SuperpoweredDeInterleave(self->stereoBuffer, inputBuffers[0], inputBuffers[1], numberOfSamples); // The stereoBuffer is ready now, let's put the finished audio into the requested buffers.
     return !silence;
 }
 
 void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent event, void *value) {
     switch (event) {
         case SuperpoweredAdvancedAudioPlayerEvent_EOF:
-            ViewController.inst.eof;
+            //ViewController.inst.eof;
             break;
         default:
             break;
@@ -63,7 +63,7 @@ void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent 
     player->play(false);
     
     if (!output) {
-        output = [[SuperpoweredIOSAudioIO alloc] initWithDelegate:(id<SuperpoweredIOSAudioIODelegate>)self preferredBufferSize:12 preferredMinimumSamplerate:44100 audioSessionCategory:AVAudioSessionCategoryPlayback channels:2 audioProcessingCallback:audioProcessing clientdata:(__bridge void *)self];
+        output = [[SuperpoweredIOSAudioIO alloc] initWithDelegate:(id<SuperpoweredIOSAudioIODelegate>)self preferredBufferSize:12 preferredSamplerate:44100 audioSessionCategory:AVAudioSessionCategoryPlayback channels:2 audioProcessingCallback:audioProcessing clientdata:(__bridge void *)self];
         [output start];
     }
 }
