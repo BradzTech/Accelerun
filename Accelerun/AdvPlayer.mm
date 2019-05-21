@@ -85,18 +85,11 @@ void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent 
     outputMap->deviceChannels[1] = 1;
 }
 
-- (void)setTargetBpm:(float)targetBpm
+- (void)setRatio:(float)ratio
 {
-    if (player && origBPM > 1 && targetBpm > 1) {
-        float ratio = targetBpm / origBPM;
-        float factor = 1;
-        if (ratio > 1.66666f) {
-            factor = 2;
-        } else if (ratio < 0.83333f) {
-            factor = 0.5;
-        }
-        player->setBpm(origBPM * factor);
-        player->setTempo(ratio / factor, true);
+    if (player && origBPM > 1 && ratio > 0) {
+        player->setBpm(origBPM * ratio);
+        player->setTempo(ratio, true);
     }
 }
 

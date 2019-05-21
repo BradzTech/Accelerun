@@ -21,6 +21,9 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             if let song = songItem as? Song {
                 numSongs += 1
                 totalSeconds += song.seconds
+            } else if let song = songItem as? SongYoutube {
+                numSongs += 1
+                totalSeconds += song.seconds
             }
         }
         return "\(numSongs) tracks, ~\(Int(floor(totalSeconds / 60))) minutes"
@@ -55,7 +58,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setToolbarHidden(false, animated: true)
         let itemsSet = folder!.itemsSet
         var si = [SongItem]()
         for item in itemsSet {
@@ -76,10 +78,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 tableView.selectRow(at: IndexPath(row: i, section: 0), animated: true, scrollPosition: .middle)
             }
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setToolbarHidden(true, animated: true)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -125,17 +123,61 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 open(folder: folder)
             } else if let song = songItem as? Song {
                 if song.bpm > 0 {
-                    goToNowPlaying(true)
-                    ViewController.inst.play(folder: folder!, index: indexPath.row)
+                    if song.doesExist() {
+                        self.playIndex(indexPath)
+                    } else {
+                        alertNotExist(index: indexPath.row)
+                    }
                 } else {
-                    let alert = UIAlertController(title: "Song Analysis in Progress", message: "Please try again in a few seconds.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
-                    present(alert, animated: true, completion: nil)
+                    alertAnalysis()
+                }
+            } else if let song = songItem as? SongYoutube {
+                if song.seconds == 0 {
+                    BackgroundAnalyzer.rescan(ytCallback: {() in
+                        DispatchQueue.main.async {
+                            if song.seconds == 0 {
+                                self.alertAnalysis()
+                            } else {
+                                self.playIndex(indexPath)
+                            }
+                        }
+                    })
+                } else {
+                    if song.bpm == 0 {
+                        self.alertTooLong(index: indexPath.row)
+                    } else {
+                        self.playIndex(indexPath)
+                    }
                 }
             }
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
         }
+    }
+    
+    private func alertAnalysis() {
+        let alert = UIAlertController(title: "Song Analysis in Progress", message: "Please try again in several seconds.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func alertNotExist(index: Int) {
+        let alert = UIAlertController(title: "Could not find file!", message: "Sorry about that. Please re-add it from your library.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        remove(index: index)
+    }
+    
+    private func alertTooLong(index: Int) {
+        let alert = UIAlertController(title: "Song Too Long", message: "Sorry, this song is either too long, or no beat was detected. Please use a shorter song with a constant rhythm.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        remove(index: index)
+    }
+    
+    private func playIndex(_ indexPath: IndexPath) {
+        ViewController.inst.play(folder: folder!, index: indexPath.row)
+        goToNowPlaying()
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -285,20 +327,15 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         }
     }
     
-    @objc func goToNowPlaying(_ sender: Bool = false) {
-        var rootVC: ViewController?
-        if let rvc = ViewController.inst {
-            rootVC = rvc
-        } else if sender {
-            rootVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NowPlaying") as? ViewController
-        } else {
-            let alert = UIAlertController(title: "No Music", message: "Please select a song to begin playback.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
-            present(alert, animated: true, completion: nil)
-        }
-        if let rvc = rootVC {
-            rvc.modalTransitionStyle = .flipHorizontal
-            present(rvc, animated: true, completion: nil)
+    @objc func goToNowPlaying(_ sender: Any? = nil) {
+        DispatchQueue.main.async {
+            if ViewController.inst.cSong == nil {
+                let alert = UIAlertController(title: "No Music", message: "Please select a song to begin playback.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

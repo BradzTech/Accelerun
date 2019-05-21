@@ -60,6 +60,13 @@ class Song: SongItem {
         advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
         advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!
     }
+    
+    public func doesExist() -> Bool {
+        if let _ = try? AVAudioPlayer(contentsOf: Url) {
+            return true
+        }
+        return false
+    }
 }
 
 class BackgroundAnalyzer {
@@ -75,7 +82,7 @@ class BackgroundAnalyzer {
                     requestArr.append(yt.videoId)
                 }
                 if let requestJson = try? JSONSerialization.data(withJSONObject: ["videoIds": requestArr], options: .init()) {
-                    var request = URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/analyze.php")!)
+                    var request = URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/calcyt.php")!)
                     request.httpMethod = "POST"
                     request.httpBody = requestJson
                     URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) in
@@ -84,14 +91,15 @@ class BackgroundAnalyzer {
                                 for i in 0..<jsonRoot.count {
                                     let jsonItem = jsonRoot[i]
                                     if let seconds = jsonItem["seconds"] as? Double,
-                                        let bpm = jsonItem["bpm"] as? Double,
-                                        let beatFingerprint = jsonItem["beatFingerprint"] as? [Double] {
+                                        let bpm = jsonItem["bpm"] as? Double {
                                         let yt = yts[i]
                                         yt.seconds = Float(seconds)
                                         yt.bpm = Float(bpm)
                                         var bfFloats = [Float]()
-                                        for bf in beatFingerprint {
-                                            bfFloats.append(Float(bf))
+                                        if let beatFingerprint = jsonItem["beatFingerprint"] as? [Double] {
+                                            for bf in beatFingerprint {
+                                                bfFloats.append(Float(bf))
+                                            }
                                         }
                                         yt.beatFingerprint = bfFloats
                                     }
@@ -100,7 +108,7 @@ class BackgroundAnalyzer {
                             }
                         }
                         ytCallback?()
-                    })
+                    }).resume()
                 }
             }
         }

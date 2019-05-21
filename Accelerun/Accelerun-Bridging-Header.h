@@ -14,7 +14,7 @@
 @interface AdvPlayer : NSObject
 
 - (void)play:(NSURL *)fileURL;
-- (void)setTargetBpm:(float)targetBPM;
+- (void)setRatio:(float)ratio;
 - (float)getCurrentFactor;
 - (float)getPosition;
 - (void)setPosition:(double)newSeconds;

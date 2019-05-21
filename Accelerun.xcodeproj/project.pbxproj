@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1C4F41FC1EFD3424006E117E /* Accelerun.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */; };
 		1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */; };
-		1C8AB7BF1EFFDF8500E61FFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */; };
 		1C9311A81F09799D00DB9A0F /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9311A71F09799D00DB9A0F /* AboutVC.swift */; };
 		1CA97DD01EFD312C00572B42 /* AdvPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */; };
 		1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */; };
@@ -21,16 +20,18 @@
 		1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC41EFD312C00572B42 /* SongFolder.swift */; };
 		1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC51EFD312C00572B42 /* SongTableVC.swift */; };
 		1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCD1EFD312C00572B42 /* ViewController.swift */; };
+		A2029571229442F0003D4FDA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2029570229442F0003D4FDA /* WebKit.framework */; };
+		A202957322946127003D4FDA /* YTWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202957222946127003D4FDA /* YTWebView.swift */; };
 		A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */; };
 		A20BA06D22933E1800351138 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */; };
 		A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A20BA06A22933E1700351138 /* SuperpoweredIOSAudioIO.mm */; };
 		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
+		A29A3EE12294819600E34BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A29A3EE02294819600E34BFE /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C4F41FB1EFD3424006E117E /* Accelerun.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Accelerun.xcdatamodel; sourceTree = "<group>"; };
 		1C8AB7BB1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1C8AB7BD1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1C9311A61F082E1300DB9A0F /* Accelerun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Accelerun.entitlements; path = Accelerun/Accelerun.entitlements; sourceTree = SOURCE_ROOT; };
 		1C9311A71F09799D00DB9A0F /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		1CA97DB91EFD312C00572B42 /* AdvPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvPlayer.h; path = Accelerun/AdvPlayer.h; sourceTree = SOURCE_ROOT; };
@@ -48,6 +49,8 @@
 		1CA97DCD1EFD312C00572B42 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Accelerun/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Accelerun-Bridging-Header.h"; path = "Accelerun/Accelerun-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		1CD81EC31EEAED04006098D1 /* Accelerun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accelerun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2029570229442F0003D4FDA /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		A202957222946127003D4FDA /* YTWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YTWebView.swift; path = Accelerun/YTWebView.swift; sourceTree = SOURCE_ROOT; };
 		A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YoutubeSelectVC.swift; path = Accelerun/YoutubeSelectVC.swift; sourceTree = SOURCE_ROOT; };
 		A20BA06522933E1700351138 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAdvancedAudioPlayer.h; sourceTree = SOURCE_ROOT; };
 		A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = SOURCE_ROOT; };
@@ -59,6 +62,7 @@
 		A20BA06C22933E1700351138 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredIOSAudioIO.h; sourceTree = SOURCE_ROOT; };
 		A20BA06F22933E8700351138 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
 		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
+		A29A3EE02294819600E34BFE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Accelerun/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2029571229442F0003D4FDA /* WebKit.framework in Frameworks */,
 				A20BA06D22933E1800351138 /* libSuperpoweredAudioIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,9 +112,10 @@
 			isa = PBXGroup;
 			children = (
 				1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */,
-				1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */,
+				A29A3EE02294819600E34BFE /* Main.storyboard */,
 				1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */,
 				1CD81EC51EEAED04006098D1 /* Accelerun */,
+				A202956F229442F0003D4FDA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,9 +145,18 @@
 				1CA97DC01EFD312C00572B42 /* Info.plist */,
 				1CA97DC21EFD312C00572B42 /* MyParticle.sks */,
 				1CD81EC41EEAED04006098D1 /* Products */,
+				A202957222946127003D4FDA /* YTWebView.swift */,
 			);
 			name = Accelerun;
 			path = XCSync;
+			sourceTree = "<group>";
+		};
+		A202956F229442F0003D4FDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2029570229442F0003D4FDA /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,7 +231,7 @@
 				1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */,
 				1CA97DD71EFD312C00572B42 /* MyParticle.sks in Resources */,
 				1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */,
-				1C8AB7BF1EFFDF8500E61FFC /* Main.storyboard in Resources */,
+				A29A3EE12294819600E34BFE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +254,7 @@
 				1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */,
 				A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */,
 				1C9311A81F09799D00DB9A0F /* AboutVC.swift in Sources */,
+				A202957322946127003D4FDA /* YTWebView.swift in Sources */,
 				1CA97DD81EFD312C00572B42 /* Song.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,14 +268,6 @@
 				1C8AB7BB1EFFDF8500E61FFC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1C8AB7BD1EFFDF8500E61FFC /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

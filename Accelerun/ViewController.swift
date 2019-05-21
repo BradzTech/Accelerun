@@ -14,27 +14,50 @@ import SpriteKit
 import WebKit
 
 class ViewController: UIViewController {
+    // Internal/static properties
     static var inst: ViewController!
     private var musicPlayer: AdvPlayer!
     var targetTempo: Float = 0.0
-    var currentTempo: Float = 1
-    var ttFactor: Float = 1
+    private var _trueRatio: Float = 1.0
     var cFolder: SongFolder?
     var cIndex: Int = 0
     private var _playing = false
     var scene: GameScene!
+    
+    // Dynamic properties
+    var trueRatio: Float {
+        get {
+            return _trueRatio
+        } set {
+            var tr = newValue
+            if tr > 1.6 {
+                tr /= 2
+            } else if tr < 0.8 {
+                tr *= 2
+            }
+            _trueRatio = newValue
+        }
+    }
+    
     var playing: Bool {
         get {
             return _playing
         } set {
             _playing = newValue
             if _playing {
-                musicPlayer.resume()
-                webView.evaluateJavaScript("player.playVideo();", completionHandler: nil)
+                if let _ = cSong as? Song {
+                    musicPlayer.resume()
+                } else {
+                    musicPlayer.pause()
+                    webView.resume()
+                }
                 playPauseBtn.setImage(UIImage(named: "btnPause"), for: .normal)
             } else {
-                musicPlayer.pause()
-                webView.evaluateJavaScript("player.pauseVideo();", completionHandler: nil)
+                if let _ = cSong as? Song {
+                    musicPlayer.pause()
+                } else {
+                    webView.pause()
+                }
                 playPauseBtn.setImage(UIImage(named: "btnPlay"), for: .normal)
             }
         }
@@ -47,6 +70,7 @@ class ViewController: UIViewController {
         return nil
     }
     
+    // Outlet properties
     @IBOutlet weak var circleView: UIView!
     @IBOutlet weak var lblTempo: UILabel!
     @IBOutlet weak var playPauseBtn: UIButton!
@@ -55,7 +79,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tutViewBack: UIView!
     @IBOutlet weak var lblMotionAccess: UILabel!
     @IBOutlet weak var lblDetecting: UILabel!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var webView: YTWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,15 +89,38 @@ class ViewController: UIViewController {
         startPedometer()
         webView.scrollView.contentInset = UIEdgeInsets.zero
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .default).async {
             while true {
-                let msToNextBeat = self.musicPlayer.getMsToNextBeat()
-                if (msToNextBeat > 0) {
-                    let sleepTime = msToNextBeat * 1000 / Double(self.currentTempo) - 5000
-                    if sleepTime > 0 {
-                        usleep(useconds_t(sleepTime))
+                if let _ = self.cSong as? Song {
+                    let msToNextBeat = self.musicPlayer.getMsToNextBeat()
+                    if (msToNextBeat > 0) {
+                        let sleepTime = msToNextBeat * 1000 / Double(self.trueRatio) - 5000
+                        if sleepTime > 0 {
+                            usleep(useconds_t(sleepTime))
+                        }
+                        self.flashDot()
                     }
-                    self.flashDot()
+                } else if let song = self.cSong as? SongYoutube {
+                    if self.playing {
+                        let cur = Float(self.webView.getCurrentTime())
+                        var i = 0
+                        let len = song.beatFingerprint.count
+                        while i < len && song.beatFingerprint[i] < cur {
+                            i += 1
+                        }
+                        if i < len {
+                            let sleepTime = UInt32((song.beatFingerprint[i] - cur) / self.trueRatio * 1000000)
+                            if sleepTime > 0 && sleepTime < 3000000 {
+                                usleep(sleepTime)
+                                self.flashDot()
+                                usleep(40000)
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.btnNext()
+                            }
+                        }
+                    }
                 }
                 usleep(40000)
             }
@@ -103,12 +150,23 @@ class ViewController: UIViewController {
         webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
     }
     
+    var initLoad = true
+    override func viewDidAppear(_ animated: Bool) {
+        if initLoad {
+            initLoad = false
+            btnMusic(true)
+        }
+    }
+    
     func play(folder: SongFolder, index: Int) {
+        playing = false
         cFolder = folder
         cIndex = index
         if let cSong = cSong as? Song {
+            webView.isHidden = true
             cSong.playIn(advPlayer: musicPlayer)
         } else if let cSong = cSong as? SongYoutube {
+            webView.isHidden = false
             cSong.playIn(webView: webView)
         }
         playing = true
@@ -125,22 +183,22 @@ class ViewController: UIViewController {
     }
     
     public func upTempo() {
-        musicPlayer.setTargetBpm(targetTempo)
         scene.setEffectColor(tempo: targetTempo)
-        if let song = cSong {
+        lblTempo.text = "\(Int(targetTempo))"
+        if let song = cSong as? SongYoutube {
+            trueRatio = targetTempo / song.bpm
             lblSong.text = song.title
-            lblTempo.text = "\(Int(targetTempo))"
-            
-            if let song = song as? SongYoutube {
-                webView.evaluateJavaScript("player.setPlaybackRate(\(targetTempo / song.bpm));", completionHandler: nil)
-            } else if let song = song as? Song {
-                MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                    MPMediaItemPropertyTitle: song.title,
-                    MPMediaItemPropertyPlaybackDuration: Double(song.seconds / musicPlayer.getCurrentFactor()),
-                    MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
-                    MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
-                ]
-            }
+            webView.evaluateJavaScript("player.setPlaybackRate(\(trueRatio));", completionHandler: nil)
+        } else if let song = cSong as? Song {
+            trueRatio = targetTempo / song.bpm
+            lblSong.text = song.title
+            musicPlayer.setRatio(trueRatio)
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                MPMediaItemPropertyTitle: song.title,
+                MPMediaItemPropertyPlaybackDuration: Double(song.seconds / musicPlayer.getCurrentFactor()),
+                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
+            ]
         }
         if targetTempo != 0 {
             UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
@@ -174,7 +232,7 @@ class ViewController: UIViewController {
         if let touch = event.allTouches?.first {
             DispatchQueue.global(qos: .default).async {
                 while touch.phase != .cancelled && touch.phase != .ended {
-                    usleep(1100000)
+                    sleep(1)
                     if touch.phase != .cancelled && touch.phase != .ended && self.targetTempo < 210 {
                         self.targetTempo += 1
                         self.processNextUp = false
@@ -190,7 +248,7 @@ class ViewController: UIViewController {
         if let touch = event.allTouches?.first {
             DispatchQueue.global(qos: .default).async {
                 while touch.phase != .cancelled && touch.phase != .ended {
-                    usleep(1100000)
+                    sleep(1)
                     if touch.phase != .cancelled && touch.phase != .ended && self.targetTempo > 105 {
                         self.targetTempo -= 1
                         self.processNextUp = false
@@ -245,7 +303,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func btnMusic(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        performSegue(withIdentifier: "toNav", sender: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
