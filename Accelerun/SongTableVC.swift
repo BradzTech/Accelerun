@@ -40,15 +40,16 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     override func viewDidLoad() {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let addSong = UIBarButtonItem(title: "Add Track", style: .plain, target: self, action: #selector(addBtn(_:)))
+        let addSong = UIBarButtonItem(title: "Add from Library", style: .plain, target: self, action: #selector(addBtn(_:)))
         let newPlaylist = UIBarButtonItem(title: "New Playlist", style: .plain, target: self, action: #selector(addPlaylist(_:)))
+        let addYt = UIBarButtonItem(title: "Search YouTube", style: .plain, target: self, action: #selector(addYoutube(_:)))
         let nowPlaying = UIBarButtonItem(title: "Return to Player", style: .plain, target: self, action: #selector(goToNowPlaying(_:)))
-        toolGroups = [[flexSpace, nowPlaying, flexSpace], [addSong, flexSpace, newPlaylist]]
+        toolGroups = [[flexSpace, nowPlaying, flexSpace], [addSong, flexSpace, addYt]]
         self.navigationController!.toolbar.barStyle = .blackTranslucent
-        //FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.bradztech")
         if folder == nil {
             folder = SongFolder.rootFolder
             toolGroups[1].remove(at: 0)
+            toolGroups[1][1] = newPlaylist
             navigationItem.title = "Playlists"
         }
     }
@@ -213,6 +214,12 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
+    @objc func addYoutube(_ sender: Any) {
+        let youtubeVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YoutubeSelectVC") as! YoutubeSelectVC
+        youtubeVC.pvc = self
+        navigationController!.pushViewController(youtubeVC, animated: true)
+    }
+    
     private func open(folder: SongFolder) {
         let songTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SongTableVC") as! SongTableVC
         songTableVC.folder = folder
@@ -221,16 +228,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
         mediaPicker.dismiss(animated: true, completion: nil)
-        
-        if let multicloudResults = Song.multicloudResults() {
-            let mcTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MCTableVC") as! MCTableVC
-            mcTableVC.songs = multicloudResults
-            mcTableVC.onSelect = {(song) in
-                song.foldersSet.add(self.folder!)
-                self.add(songItem: song)
-            }
-            navigationController!.pushViewController(mcTableVC, animated: true)
-        }
     }
     
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
@@ -263,7 +260,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         BackgroundAnalyzer.rescan()
     }
     
-    private func add(songItem: SongItem) {
+    public func add(songItem: SongItem) {
         songItems.append(songItem)
         AppDelegate.saveContext()
         tableView.insertRows(at: [IndexPath(row: self.songItems.count - 1, section: 0)], with: .top)
@@ -303,24 +300,5 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             rvc.modalTransitionStyle = .flipHorizontal
             present(rvc, animated: true, completion: nil)
         }
-    }
-}
-
-class MCTableVC: UITableViewController {
-    var songs = [Song]()
-    var onSelect: ((Song) -> ())!
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return songs.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "mcCell", for: indexPath)
-        cell.textLabel?.text = songs[indexPath.row].title
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        onSelect(songs[indexPath.row])
     }
 }

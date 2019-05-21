@@ -9,7 +9,7 @@
 import CoreData
 
 class SongFolder: SongItem {
-    @NSManaged var items: NSSet
+    @NSManaged var items: Set<SongItem>
     
     var itemsSet: NSMutableOrderedSet {
         return mutableOrderedSetValue(forKey: "items")
@@ -27,22 +27,16 @@ class SongFolder: SongItem {
     
     func at(index: Int) -> SongItem? {
         if index >= 0 && index < items.count {
-            return items.allObjects[index] as? SongItem
+            return songs[index]
         }
         return nil
     }
     
     // Note: inefficient with large playlists
-    private var songs: [Song] {
-        var foundSongs = [Song]()
-        for songItem in items {
-            if let song = songItem as? Song {
-                foundSongs.append(song)
-            }
-        }
-        return foundSongs
+    private var songs: [SongItem] {
+        return Array(items)
     }
-    func songAt(index: Int) -> Song? {
+    func songAt(index: Int) -> SongItem? {
         return songs[index]
     }
     

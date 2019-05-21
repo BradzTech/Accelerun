@@ -11,6 +11,7 @@ import MediaPlayer
 import CoreData
 import CoreMotion
 import SpriteKit
+import WebKit
 
 class ViewController: UIViewController {
     static var inst: ViewController!
@@ -29,17 +30,19 @@ class ViewController: UIViewController {
             _playing = newValue
             if _playing {
                 musicPlayer.resume()
+                webView.evaluateJavaScript("player.playVideo();", completionHandler: nil)
                 playPauseBtn.setImage(UIImage(named: "btnPause"), for: .normal)
             } else {
                 musicPlayer.pause()
+                webView.evaluateJavaScript("player.pauseVideo();", completionHandler: nil)
                 playPauseBtn.setImage(UIImage(named: "btnPlay"), for: .normal)
             }
         }
     }
     
-    var cSong: Song? {
+    var cSong: SongItem? {
         if let folder = cFolder {
-            return folder.at(index: cIndex) as? Song
+            return folder.at(index: cIndex)
         }
         return nil
     }
@@ -52,6 +55,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tutViewBack: UIView!
     @IBOutlet weak var lblMotionAccess: UILabel!
     @IBOutlet weak var lblDetecting: UILabel!
+    @IBOutlet weak var webView: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +63,7 @@ class ViewController: UIViewController {
         musicPlayer = AdvPlayer()
         BackgroundAnalyzer.rescan()
         startPedometer()
+        webView.scrollView.contentInset = UIEdgeInsets.zero
         
         DispatchQueue.global(qos: .userInitiated).async {
             while true {
@@ -95,12 +100,17 @@ class ViewController: UIViewController {
         commandCenter.nextTrackCommand.addTarget(self, action:#selector(btnNext(_:)))
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget(self, action:#selector(changePlaybackPosition(_:)))
+        webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
     }
     
     func play(folder: SongFolder, index: Int) {
         cFolder = folder
         cIndex = index
-        cSong?.playIn(advPlayer: musicPlayer)
+        if let cSong = cSong as? Song {
+            cSong.playIn(advPlayer: musicPlayer)
+        } else if let cSong = cSong as? SongYoutube {
+            cSong.playIn(webView: webView)
+        }
         playing = true
         
         let lastTempo = UserDefaults.standard.integer(forKey: "lastTempo")
@@ -114,19 +124,23 @@ class ViewController: UIViewController {
         }
     }
     
-    private func upTempo() {
+    public func upTempo() {
         musicPlayer.setTargetBpm(targetTempo)
+        scene.setEffectColor(tempo: targetTempo)
         if let song = cSong {
             lblSong.text = song.title
             lblTempo.text = "\(Int(targetTempo))"
-            scene.setEffectColor(tempo: targetTempo)
             
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                MPMediaItemPropertyTitle: song.title,
-                MPMediaItemPropertyPlaybackDuration: Double(Float(song.seconds) / musicPlayer.getCurrentFactor()),
-                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
-                MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
-            ]
+            if let song = song as? SongYoutube {
+                webView.evaluateJavaScript("player.setPlaybackRate(\(targetTempo / song.bpm));", completionHandler: nil)
+            } else if let song = song as? Song {
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                    MPMediaItemPropertyTitle: song.title,
+                    MPMediaItemPropertyPlaybackDuration: Double(song.seconds / musicPlayer.getCurrentFactor()),
+                    MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
+                    MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
+                ]
+            }
         }
         if targetTempo != 0 {
             UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")

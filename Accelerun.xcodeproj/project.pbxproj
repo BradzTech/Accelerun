@@ -21,8 +21,10 @@
 		1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC41EFD312C00572B42 /* SongFolder.swift */; };
 		1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC51EFD312C00572B42 /* SongTableVC.swift */; };
 		1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCD1EFD312C00572B42 /* ViewController.swift */; };
+		A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */; };
 		A20BA06D22933E1800351138 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */; };
 		A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A20BA06A22933E1700351138 /* SuperpoweredIOSAudioIO.mm */; };
+		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +32,7 @@
 		1C8AB7BB1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C8AB7BD1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1C9311A61F082E1300DB9A0F /* Accelerun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Accelerun.entitlements; path = Accelerun/Accelerun.entitlements; sourceTree = SOURCE_ROOT; };
-		1C9311A71F09799D00DB9A0F /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutVC.swift; path = Accelerun/AboutVC.swift; sourceTree = "<group>"; };
+		1C9311A71F09799D00DB9A0F /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		1CA97DB91EFD312C00572B42 /* AdvPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvPlayer.h; path = Accelerun/AdvPlayer.h; sourceTree = SOURCE_ROOT; };
 		1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AdvPlayer.mm; path = Accelerun/AdvPlayer.mm; sourceTree = SOURCE_ROOT; };
 		1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Accelerun/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -46,6 +48,7 @@
 		1CA97DCD1EFD312C00572B42 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Accelerun/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Accelerun-Bridging-Header.h"; path = "Accelerun/Accelerun-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		1CD81EC31EEAED04006098D1 /* Accelerun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accelerun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YoutubeSelectVC.swift; path = Accelerun/YoutubeSelectVC.swift; sourceTree = SOURCE_ROOT; };
 		A20BA06522933E1700351138 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAdvancedAudioPlayer.h; sourceTree = SOURCE_ROOT; };
 		A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = SOURCE_ROOT; };
 		A20BA06722933E1700351138 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAnalyzer.h; sourceTree = SOURCE_ROOT; };
@@ -55,6 +58,7 @@
 		A20BA06B22933E1700351138 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
 		A20BA06C22933E1700351138 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredIOSAudioIO.h; sourceTree = SOURCE_ROOT; };
 		A20BA06F22933E8700351138 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
+		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				1CA97DC31EFD312C00572B42 /* Song.swift */,
+				A26E21D422938C9900B4BE28 /* SongYoutube.swift */,
 				1CA97DC41EFD312C00572B42 /* SongFolder.swift */,
 			);
 			name = Model;
@@ -104,7 +109,6 @@
 				1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */,
 				1C8AB7BC1EFFDF8500E61FFC /* Main.storyboard */,
 				1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */,
-				1C9311A71F09799D00DB9A0F /* AboutVC.swift */,
 				1CD81EC51EEAED04006098D1 /* Accelerun */,
 			);
 			sourceTree = "<group>";
@@ -127,7 +131,9 @@
 				1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */,
 				1CA97DCD1EFD312C00572B42 /* ViewController.swift */,
 				1CA97DBF1EFD312C00572B42 /* GameScene.swift */,
+				1C9311A71F09799D00DB9A0F /* AboutVC.swift */,
 				1CA97DC51EFD312C00572B42 /* SongTableVC.swift */,
+				A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */,
 				1CA97DDE1EFD316100572B42 /* Model */,
 				1CA97DBC1EFD312C00572B42 /* Assets.xcassets */,
 				1CA97DC01EFD312C00572B42 /* Info.plist */,
@@ -175,7 +181,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -226,7 +232,9 @@
 				1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */,
 				1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */,
 				1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */,
+				A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */,
 				1C4F41FC1EFD3424006E117E /* Accelerun.xcdatamodeld in Sources */,
+				A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */,
 				1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */,
 				1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */,
 				A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */,
@@ -307,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -361,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -376,7 +384,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
-				CODE_SIGN_ENTITLEMENTS = Accelerun/Accelerun.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
@@ -404,7 +411,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
-				CODE_SIGN_ENTITLEMENTS = Accelerun/Accelerun.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8B59A97XZ;
