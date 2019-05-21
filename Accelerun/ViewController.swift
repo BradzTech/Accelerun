@@ -148,6 +148,7 @@ class ViewController: UIViewController {
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget(self, action:#selector(changePlaybackPosition(_:)))
         webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
+        webView.navigationDelegate = self
     }
     
     var initLoad = true
@@ -188,7 +189,7 @@ class ViewController: UIViewController {
         if let song = cSong as? SongYoutube {
             trueRatio = targetTempo / song.bpm
             lblSong.text = song.title
-            webView.evaluateJavaScript("player.setPlaybackRate(\(trueRatio));", completionHandler: nil)
+            webView.evaluateJavaScript("setPlaybackRate(\(trueRatio));", completionHandler: nil)
         } else if let song = cSong as? Song {
             trueRatio = targetTempo / song.bpm
             lblSong.text = song.title
@@ -232,7 +233,7 @@ class ViewController: UIViewController {
         if let touch = event.allTouches?.first {
             DispatchQueue.global(qos: .default).async {
                 while touch.phase != .cancelled && touch.phase != .ended {
-                    sleep(1)
+                    usleep(550000)
                     if touch.phase != .cancelled && touch.phase != .ended && self.targetTempo < 210 {
                         self.targetTempo += 1
                         self.processNextUp = false
@@ -372,3 +373,18 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated  {
+            if let url = navigationAction.request.url,
+                UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+                decisionHandler(.cancel)
+            } else {
+                decisionHandler(.allow)
+            }
+        } else {
+            decisionHandler(.allow)
+        }
+    }
+}

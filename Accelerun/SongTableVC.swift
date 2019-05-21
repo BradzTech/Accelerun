@@ -227,7 +227,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         if indexPath.section == 0  || folder != SongFolder.rootFolder {
             return 54
         } else {
-            return 150
+            return 260
         }
     }
     

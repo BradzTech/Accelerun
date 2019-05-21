@@ -25,7 +25,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone access may be required for audio processing to work correctly. We will not record you.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>This app senses your steps to help syncronize them to the music.</string>
+	<string>This app senses your steps to help synchronize them to the music.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

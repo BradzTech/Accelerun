@@ -10,7 +10,7 @@ import UIKit
 
 class AboutVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -21,6 +21,8 @@ class AboutVC: UITableViewController {
             cell.accessoryType = .none
         case 2:
             cell.textLabel!.text = "Icons provided by icons8.com"
+        case 3:
+            cell.textLabel!.text = "Powered by Superpowered Audio"
         default:
             cell.textLabel!.text = "Created by BradzTech"
         }
@@ -31,9 +33,11 @@ class AboutVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 1:
-            UIApplication.shared.open(URL(string: "http://bradztech.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://bradztech.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         case 2:
-            UIApplication.shared.open(URL(string: "http://icons8.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://icons8.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+        case 3:
+            UIApplication.shared.open(URL(string: "https://superpowered.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         default:
             break
         }
