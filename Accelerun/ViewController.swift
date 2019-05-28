@@ -388,3 +388,9 @@ extension ViewController: WKNavigationDelegate {
         }
     }
 }
+
+@objc class VCBridge: NSObject {
+    @objc public static func eof() {
+        ViewController.inst.eof()
+    }
+}

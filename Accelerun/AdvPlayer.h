@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class ViewController;
+
 @interface AdvPlayer : NSObject
 - (void)play:(NSURL *)fileURL;
 - (void)setRatio:(float)ratio;

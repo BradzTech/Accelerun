@@ -14,7 +14,8 @@
 #import <SpriteKit/SpriteKit.h>
 #import <CoreData/CoreData.h>
 #import <MediaPlayer/MediaPlayer.h>
-//#import "Accelerun-Swift.h"
+#import <WebKit/WebKit.h>
+#import "Accelerun-Swift.h"
 
 @implementation AdvPlayer {
     SuperpoweredAdvancedAudioPlayer *player;
@@ -44,7 +45,7 @@ static bool audioProcessing(void *clientData, float **inputBuffers, unsigned int
 void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent event, void *value) {
     switch (event) {
         case SuperpoweredAdvancedAudioPlayerEvent_EOF:
-            //ViewController.inst.eof;
+            [VCBridge eof];
             break;
         default:
             break;

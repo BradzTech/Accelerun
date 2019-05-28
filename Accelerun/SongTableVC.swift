@@ -73,6 +73,21 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 tb.tintColor = view.tintColor
             }
         }
+        upSelected()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if folder == SongFolder.rootFolder {
+            if let cFolder = ViewController.inst.cFolder {
+                open(folder: cFolder)
+            }
+        }
+    }
+    
+    private func upSelected() {
+        if let beforeRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: beforeRow, animated: true)
+        }
         for i in 0..<songItems.count {
             if songItems[i] == ViewController.inst?.cSong {
                 tableView.selectRow(at: IndexPath(row: i, section: 0), animated: true, scrollPosition: .middle)
@@ -182,12 +197,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if indexPath.section == 0 {
-            /*let moveAction = UITableViewRowAction(style: .default, title: "Fix Beat", handler: {(rowAction, indexPath) in
-             if let newVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MusicAddVC") as? MusicAddVC {
-             newVC.songItem = self.songItems[indexPath.row]
-             self.navigationController!.pushViewController(newVC, animated: true)
-             }
-             })*/
             let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: {(rowAction, indexPath) in
                 self.remove(index: indexPath.row)
             })
@@ -206,14 +215,20 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        folder!.itemsSet.exchangeObject(at: sourceIndexPath.row, withObjectAt: destinationIndexPath.row)
+        var needsExchange = true
         if let vc = ViewController.inst,
             let csong = vc.cSong {
             if vc.cFolder == folder {
+                folder!.itemsSet.exchangeObject(at: sourceIndexPath.row, withObjectAt: destinationIndexPath.row)
                 vc.cIndex = folder!.itemsSet.index(of: csong)
+                needsExchange = false
             }
         }
+        if needsExchange {
+            folder!.itemsSet.exchangeObject(at: sourceIndexPath.row, withObjectAt: destinationIndexPath.row)
+        }
         AppDelegate.saveContext()
+        upSelected()
     }
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
@@ -246,6 +261,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     @objc func addPlaylist(_ sender: Any) {
         let alertController = UIAlertController(title: "Folder Name:", message: nil, preferredStyle: .alert)
         alertController.addTextField(configurationHandler: {(textField) in
+            textField.autocapitalizationType = .words
         })
         alertController.addAction(UIAlertAction(title: "Create", style: .default, handler: {(action) in
             let songFolder = SongFolder(Title: alertController.textFields![0].text!, Folder: self.folder)
