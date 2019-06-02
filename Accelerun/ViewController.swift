@@ -147,8 +147,13 @@ class ViewController: UIViewController {
         commandCenter.nextTrackCommand.addTarget(self, action:#selector(btnNext(_:)))
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget(self, action:#selector(changePlaybackPosition(_:)))
-        webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
+        let ytUrl = Bundle.main.url(forResource: "yt", withExtension: "html")!
+        let ytHtml = try! String(contentsOf: ytUrl, encoding: .utf8)
+        webView.loadHTMLString(ytHtml, baseURL: URL(string: "https://bradztech.com/"))
+        //webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
         webView.navigationDelegate = self
+        
+        // TODO: Fix spin lock at eof of YouTube
     }
     
     var initLoad = true
@@ -183,6 +188,7 @@ class ViewController: UIViewController {
         }
     }
     
+    private var startData: UInt64 = 0
     public func upTempo() {
         scene.setEffectColor(tempo: targetTempo)
         lblTempo.text = "\(Int(targetTempo))"
@@ -204,6 +210,12 @@ class ViewController: UIViewController {
         if targetTempo != 0 {
             UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
         }
+        
+        let wifiComplete = SystemDataUsage.wifiCompelete
+        if startData == 0 {
+            startData = wifiComplete
+        }
+        print("\(Double(wifiComplete - startData) / 1024 / 1024) MB")
     }
     
     private var processNextUp = true
