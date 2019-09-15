@@ -82,6 +82,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
+                if let documentsUrl = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+                    let corruptUrl = documentsUrl.appendingPathComponent("Accelerun.sqlite")
+                    try? FileManager.default.removeItem(at: corruptUrl)
+                }
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })

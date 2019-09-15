@@ -11,14 +11,14 @@ import CoreData
 import MediaPlayer
 
 class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
-    var songItems = [SongItem]()
+    var songItems = [Song]()
     var folder: SongFolder?
     private var toolGroups = [[UIBarButtonItem]]()
     private var playlistLengthStr: String {
         var numSongs = 0
         var totalSeconds: Float = 0.0
         for songItem in songItems {
-            if let song = songItem as? Song {
+            if let song = songItem as? SongApple {
                 numSongs += 1
                 totalSeconds += song.seconds
             } else if let song = songItem as? SongYoutube {
@@ -55,13 +55,19 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             toolGroups[1][1] = newPlaylist
             navigationItem.title = "Playlists"
         }
+        
+        if folder == SongFolder.rootFolder {
+            if let cFolder = ViewController.inst.cFolder {
+                open(folder: cFolder, animated: false)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         let itemsSet = folder!.itemsSet
-        var si = [SongItem]()
+        var si = [Song]()
         for item in itemsSet {
-            if let songItem = item as? SongItem {
+            if let songItem = item as? Song {
                 si.append(songItem)
             }
         }
@@ -74,14 +80,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             }
         }
         upSelected()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if folder == SongFolder.rootFolder {
-            if let cFolder = ViewController.inst.cFolder {
-                open(folder: cFolder)
-            }
-        }
     }
     
     private func upSelected() {
@@ -135,8 +133,8 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             let songItem = songItems[indexPath.row]
             if let folder = songItem as? SongFolder {
                 tableView.deselectRow(at: indexPath, animated: true)
-                open(folder: folder)
-            } else if let song = songItem as? Song {
+                open(folder: folder, animated: true)
+            } else if let song = songItem as? SongApple {
                 if song.bpm > 0 {
                     if song.doesExist() {
                         self.playIndex(indexPath)
@@ -147,7 +145,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                     alertAnalysis()
                 }
             } else if let song = songItem as? SongYoutube {
-                if song.seconds == 0 {
+                if song.seconds < 0 {
                     BackgroundAnalyzer.rescan(ytCallback: {() in
                         DispatchQueue.main.async {
                             if song.seconds == 0 {
@@ -239,7 +237,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0  || folder != SongFolder.rootFolder {
+        if indexPath.section == 0 || folder != SongFolder.rootFolder {
             return 54
         } else {
             return 260
@@ -266,7 +264,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         alertController.addAction(UIAlertAction(title: "Create", style: .default, handler: {(action) in
             let songFolder = SongFolder(Title: alertController.textFields![0].text!, Folder: self.folder)
             self.add(songItem: songFolder)
-            self.open(folder: songFolder)
+            self.open(folder: songFolder, animated: true)
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true, completion: nil)
@@ -278,47 +276,35 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         navigationController!.pushViewController(youtubeVC, animated: true)
     }
     
-    private func open(folder: SongFolder) {
+    private func open(folder: SongFolder, animated: Bool) {
         let songTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SongTableVC") as! SongTableVC
         songTableVC.folder = folder
-        navigationController!.pushViewController(songTableVC, animated: true)
+        navigationController!.pushViewController(songTableVC, animated: animated)
     }
     
     func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
         mediaPicker.dismiss(animated: true, completion: nil)
     }
     
+    /**
+     * Get cached song if it exists, otherwise create one. Then add it to the current folder.
+     */
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         mediaPicker.dismiss(animated: true, completion: nil)
-        for mediaItem in mediaItemCollection.items {
-            if let assetUrl = mediaItem.assetURL {
-                let songFetch = NSFetchRequest<Song>(entityName: "Song")
-                songFetch.predicate = NSPredicate(format: "url == %@", assetUrl.absoluteString)
-                var existingSongs = [Song]()
-                do {
-                    existingSongs = try AppDelegate.moc.fetch(songFetch)
-                } catch {}
-                var song: Song?
-                if let es = existingSongs.last {
-                    song = es
-                } else {
-                    var songTitle = ""
-                    if let title = mediaItem.title {
-                        songTitle = title
-                    }
-                    if let artist = mediaItem.artist {
-                        songTitle += " | " + artist
-                    }
-                    song = Song(assetUrl: assetUrl, title: songTitle, seconds: Float(mediaItem.playbackDuration))
-                }
-                song!.foldersSet.add(folder!)
-                add(songItem: song!)
+        // Sleep a bit so we don't get a table out of view hierarchy warning
+        DispatchQueue.global(qos: .userInitiated).async(execute: {
+            usleep(100000)
+            // Add each item to playlist, both database-side and visually
+            for mediaItem in mediaItemCollection.items {
+                let song = SongApple.getOrCreateFor(mediaItem: mediaItem)
+                song.foldersSet.add(self.folder!)
+                self.add(songItem: song)
             }
-        }
-        BackgroundAnalyzer.rescan()
+            BackgroundAnalyzer.rescan()
+        })
     }
     
-    public func add(songItem: SongItem) {
+    public func add(songItem: Song) {
         songItems.append(songItem)
         AppDelegate.saveContext()
         tableView.insertRows(at: [IndexPath(row: self.songItems.count - 1, section: 0)], with: .top)

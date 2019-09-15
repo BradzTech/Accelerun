@@ -16,7 +16,7 @@
 		1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */; };
 		1CA97DD41EFD312C00572B42 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBF1EFD312C00572B42 /* GameScene.swift */; };
 		1CA97DD71EFD312C00572B42 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DC21EFD312C00572B42 /* MyParticle.sks */; };
-		1CA97DD81EFD312C00572B42 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC31EFD312C00572B42 /* Song.swift */; };
+		1CA97DD81EFD312C00572B42 /* SongApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC31EFD312C00572B42 /* SongApple.swift */; };
 		1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC41EFD312C00572B42 /* SongFolder.swift */; };
 		1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC51EFD312C00572B42 /* SongTableVC.swift */; };
 		1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCD1EFD312C00572B42 /* ViewController.swift */; };
@@ -25,7 +25,7 @@
 		A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */; };
 		A20BA06D22933E1800351138 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A20BA06622933E1700351138 /* libSuperpoweredAudioIOS.a */; };
 		A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A20BA06A22933E1700351138 /* SuperpoweredIOSAudioIO.mm */; };
-		A25244D0229DD7080023C5AB /* SystemDataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25244CF229DD7080023C5AB /* SystemDataUsage.swift */; };
+		A232EC82232EDAF400C583C7 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232EC81232EDAF400C583C7 /* Song.swift */; };
 		A25244D2229DD9F80023C5AB /* yt.html in Resources */ = {isa = PBXBuildFile; fileRef = A25244D1229DD9F70023C5AB /* yt.html */; };
 		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
 		A29A3EE12294819600E34BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A29A3EE02294819600E34BFE /* Main.storyboard */; };
@@ -34,7 +34,6 @@
 /* Begin PBXFileReference section */
 		1C4F41FB1EFD3424006E117E /* Accelerun.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Accelerun.xcdatamodel; sourceTree = "<group>"; };
 		1C8AB7BB1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1C9311A61F082E1300DB9A0F /* Accelerun.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Accelerun.entitlements; path = Accelerun/Accelerun.entitlements; sourceTree = SOURCE_ROOT; };
 		1C9311A71F09799D00DB9A0F /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		1CA97DB91EFD312C00572B42 /* AdvPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvPlayer.h; path = Accelerun/AdvPlayer.h; sourceTree = SOURCE_ROOT; };
 		1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AdvPlayer.mm; path = Accelerun/AdvPlayer.mm; sourceTree = SOURCE_ROOT; };
@@ -45,7 +44,7 @@
 		1CA97DBF1EFD312C00572B42 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Accelerun/GameScene.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DC01EFD312C00572B42 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Accelerun/Info.plist; sourceTree = SOURCE_ROOT; };
 		1CA97DC21EFD312C00572B42 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = Accelerun/MyParticle.sks; sourceTree = SOURCE_ROOT; };
-		1CA97DC31EFD312C00572B42 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Accelerun/Song.swift; sourceTree = SOURCE_ROOT; };
+		1CA97DC31EFD312C00572B42 /* SongApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongApple.swift; path = Accelerun/SongApple.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DC41EFD312C00572B42 /* SongFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongFolder.swift; path = Accelerun/SongFolder.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DC51EFD312C00572B42 /* SongTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongTableVC.swift; path = Accelerun/SongTableVC.swift; sourceTree = SOURCE_ROOT; };
 		1CA97DCD1EFD312C00572B42 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Accelerun/ViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -63,7 +62,7 @@
 		A20BA06B22933E1700351138 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
 		A20BA06C22933E1700351138 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredIOSAudioIO.h; sourceTree = SOURCE_ROOT; };
 		A20BA06F22933E8700351138 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
-		A25244CF229DD7080023C5AB /* SystemDataUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SystemDataUsage.swift; path = Accelerun/SystemDataUsage.swift; sourceTree = SOURCE_ROOT; };
+		A232EC81232EDAF400C583C7 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = SOURCE_ROOT; };
 		A25244D1229DD9F70023C5AB /* yt.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = yt.html; sourceTree = "<group>"; };
 		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
 		A29A3EE02294819600E34BFE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Accelerun/Main.storyboard; sourceTree = "<group>"; };
@@ -105,9 +104,10 @@
 		1CA97DDE1EFD316100572B42 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1CA97DC31EFD312C00572B42 /* Song.swift */,
+				1CA97DC31EFD312C00572B42 /* SongApple.swift */,
 				A26E21D422938C9900B4BE28 /* SongYoutube.swift */,
 				1CA97DC41EFD312C00572B42 /* SongFolder.swift */,
+				A232EC81232EDAF400C583C7 /* Song.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -136,7 +136,6 @@
 			isa = PBXGroup;
 			children = (
 				A25244D1229DD9F70023C5AB /* yt.html */,
-				1C9311A61F082E1300DB9A0F /* Accelerun.entitlements */,
 				1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */,
 				1CA97DDD1EFD315900572B42 /* Superpowered */,
 				1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */,
@@ -145,13 +144,12 @@
 				1C9311A71F09799D00DB9A0F /* AboutVC.swift */,
 				1CA97DC51EFD312C00572B42 /* SongTableVC.swift */,
 				A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */,
-				A25244CF229DD7080023C5AB /* SystemDataUsage.swift */,
+				A202957222946127003D4FDA /* YTWebView.swift */,
 				1CA97DDE1EFD316100572B42 /* Model */,
 				1CA97DBC1EFD312C00572B42 /* Assets.xcassets */,
 				1CA97DC01EFD312C00572B42 /* Info.plist */,
 				1CA97DC21EFD312C00572B42 /* MyParticle.sks */,
 				1CD81EC41EEAED04006098D1 /* Products */,
-				A202957222946127003D4FDA /* YTWebView.swift */,
 			);
 			name = Accelerun;
 			path = XCSync;
@@ -261,9 +259,9 @@
 				1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */,
 				A20BA06E22933E1800351138 /* SuperpoweredIOSAudioIO.mm in Sources */,
 				1C9311A81F09799D00DB9A0F /* AboutVC.swift in Sources */,
-				A25244D0229DD7080023C5AB /* SystemDataUsage.swift in Sources */,
+				A232EC82232EDAF400C583C7 /* Song.swift in Sources */,
 				A202957322946127003D4FDA /* YTWebView.swift in Sources */,
-				1CA97DD81EFD312C00572B42 /* Song.swift in Sources */,
+				1CA97DD81EFD312C00572B42 /* SongApple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

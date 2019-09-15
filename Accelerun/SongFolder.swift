@@ -8,8 +8,8 @@
 
 import CoreData
 
-class SongFolder: SongItem {
-    @NSManaged var items: Set<SongItem>
+class SongFolder: Song {
+    @NSManaged var items: Set<Song>
     
     var itemsSet: NSMutableOrderedSet {
         return mutableOrderedSetValue(forKey: "items")
@@ -25,7 +25,7 @@ class SongFolder: SongItem {
         super.init(entity: entity, insertInto: context)
     }
     
-    func at(index: Int) -> SongItem? {
+    func at(index: Int) -> Song? {
         if index >= 0 && index < items.count {
             return songs[index]
         }
@@ -33,10 +33,10 @@ class SongFolder: SongItem {
     }
     
     // Note: inefficient with large playlists
-    private var songs: [SongItem] {
+    private var songs: [Song] {
         return Array(items)
     }
-    func songAt(index: Int) -> SongItem? {
+    func songAt(index: Int) -> Song? {
         return songs[index]
     }
     
@@ -58,25 +58,5 @@ class SongFolder: SongItem {
             AppDelegate.saveContext()
         }
         return theFolder!
-    }
-}
-
-class SongItem: NSManagedObject {
-    @NSManaged var title: String
-    @NSManaged var folders: NSSet
-    
-    var foldersSet: NSMutableSet {
-        return mutableSetValue(forKey: "folders")
-    }
-    
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
-    }
-    
-    func delete() {
-        do {
-            AppDelegate.moc.delete(self)
-            try AppDelegate.moc.save()
-        } catch _ {}
     }
 }

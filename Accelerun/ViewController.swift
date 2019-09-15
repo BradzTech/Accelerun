@@ -35,7 +35,7 @@ class ViewController: UIViewController {
             } else if tr < 0.8 {
                 tr *= 2
             }
-            _trueRatio = newValue
+            _trueRatio = tr
         }
     }
     
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         } set {
             _playing = newValue
             if _playing {
-                if let _ = cSong as? Song {
+                if let _ = cSong as? SongApple {
                     musicPlayer.resume()
                 } else {
                     musicPlayer.pause()
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
                 }
                 playPauseBtn.setImage(UIImage(named: "btnPause"), for: .normal)
             } else {
-                if let _ = cSong as? Song {
+                if let _ = cSong as? SongApple {
                     musicPlayer.pause()
                 } else {
                     webView.pause()
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         }
     }
     
-    var cSong: SongItem? {
+    var cSong: Song? {
         if let folder = cFolder {
             return folder.at(index: cIndex)
         }
@@ -91,9 +91,10 @@ class ViewController: UIViewController {
         
         DispatchQueue.global(qos: .default).async {
             while true {
-                if let _ = self.cSong as? Song {
+                if let _ = self.cSong as? SongApple {
                     let msToNextBeat = self.musicPlayer.getMsToNextBeat()
                     if (msToNextBeat > 0) {
+                        // TODO: Fix incorrect beats, both YouTube and local
                         let sleepTime = msToNextBeat * 1000 / Double(self.trueRatio) - 5000
                         if sleepTime > 0 {
                             usleep(useconds_t(sleepTime))
@@ -142,9 +143,9 @@ class ViewController: UIViewController {
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget(self, action:#selector(remotePlay(_:)))
         commandCenter.previousTrackCommand.isEnabled = true
-        commandCenter.previousTrackCommand.addTarget(self, action:#selector(btnPrev(_:)))
+        commandCenter.previousTrackCommand.addTarget(self, action:#selector(remotePrev(_:)))
         commandCenter.nextTrackCommand.isEnabled = true
-        commandCenter.nextTrackCommand.addTarget(self, action:#selector(btnNext(_:)))
+        commandCenter.nextTrackCommand.addTarget(self, action:#selector(remoteNext(_:)))
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget(self, action:#selector(changePlaybackPosition(_:)))
         let ytUrl = Bundle.main.url(forResource: "yt", withExtension: "html")!
@@ -156,67 +157,13 @@ class ViewController: UIViewController {
         // TODO: Fix spin lock at eof of YouTube
     }
     
-    var initLoad = true
     override func viewDidAppear(_ animated: Bool) {
-        if initLoad {
-            initLoad = false
+        if cFolder == nil {
             btnMusic(true)
         }
     }
     
-    func play(folder: SongFolder, index: Int) {
-        playing = false
-        cFolder = folder
-        cIndex = index
-        if let cSong = cSong as? Song {
-            webView.isHidden = true
-            cSong.playIn(advPlayer: musicPlayer)
-        } else if let cSong = cSong as? SongYoutube {
-            webView.isHidden = false
-            cSong.playIn(webView: webView)
-        }
-        playing = true
-        
-        let lastTempo = UserDefaults.standard.integer(forKey: "lastTempo")
-        if lastTempo == 0 {
-            remotePause()
-            tutView.isHidden = false
-            tutViewBack.isHidden = false
-        } else {
-            targetTempo = Float(lastTempo)
-            upTempo()
-        }
-    }
-    
-    private var startData: UInt64 = 0
-    public func upTempo() {
-        scene.setEffectColor(tempo: targetTempo)
-        lblTempo.text = "\(Int(targetTempo))"
-        if let song = cSong as? SongYoutube {
-            trueRatio = targetTempo / song.bpm
-            lblSong.text = song.title
-            webView.evaluateJavaScript("setPlaybackRate(\(trueRatio));", completionHandler: nil)
-        } else if let song = cSong as? Song {
-            trueRatio = targetTempo / song.bpm
-            lblSong.text = song.title
-            musicPlayer.setRatio(trueRatio)
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                MPMediaItemPropertyTitle: song.title,
-                MPMediaItemPropertyPlaybackDuration: Double(song.seconds / musicPlayer.getCurrentFactor()),
-                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
-                MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
-            ]
-        }
-        if targetTempo != 0 {
-            UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
-        }
-        
-        let wifiComplete = SystemDataUsage.wifiCompelete
-        if startData == 0 {
-            startData = wifiComplete
-        }
-        print("\(Double(wifiComplete - startData) / 1024 / 1024) MB")
-    }
+    // IBActions
     
     private var processNextUp = true
     @IBAction func tempoUp(_ sender: Any) {
@@ -274,49 +221,128 @@ class ViewController: UIViewController {
         }
     }
     
-    func flashDot() {
-        scene.flashFoot()
+    @IBAction func btnPrev(_ sender: Any? = nil) {
+        _ = remotePrev()
     }
     
-    @IBAction func btnPrev(_ sender: Any? = nil) {
+    @IBAction func btnNext(_ sender: Any? = nil) {
+        _ = remoteNext()
+    }
+    
+    @IBAction func btnPlayPause(_ sender: Any) {
+        if cFolder == nil {
+            btnMusic(true)
+            return
+        }
+        playing = !playing
+        upTempo()
+    }
+    
+    @IBAction func btnMusic(_ sender: Any) {
+        performSegue(withIdentifier: "toNav", sender: nil)
+    }
+    
+    // Remote control delegate methods
+    
+    @objc func remotePrev(_ sender: Any? = nil) -> MPRemoteCommandHandlerStatus {
         if let folder = cFolder {
             cIndex -= 1
             if cIndex < 0 {
                 cIndex += folder.numSongs()
             }
             play(folder: folder, index: cIndex)
+            return MPRemoteCommandHandlerStatus.success
         }
+        return MPRemoteCommandHandlerStatus.noActionableNowPlayingItem
     }
     
-    @IBAction func btnNext(_ sender: Any? = nil) {
+    @objc func remoteNext(_ sender: Any? = nil) -> MPRemoteCommandHandlerStatus {
         if let folder = cFolder {
             cIndex = (cIndex + 1) % folder.numSongs()
             play(folder: folder, index: cIndex)
+            return MPRemoteCommandHandlerStatus.success
+        }
+        return MPRemoteCommandHandlerStatus.noActionableNowPlayingItem
+    }
+    
+    @objc func remotePlay(_ sender: Any? = nil) -> MPRemoteCommandHandlerStatus {
+        playing = true
+        upTempo()
+        return MPRemoteCommandHandlerStatus.success
+    }
+    
+    @objc func remotePause(_ sender: Any? = nil) -> MPRemoteCommandHandlerStatus {
+        playing = false
+        upTempo()
+        return MPRemoteCommandHandlerStatus.success
+    }
+    
+    @objc func changePlaybackPosition(_ event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
+        musicPlayer.setPosition(event.positionTime * Double(musicPlayer.getCurrentFactor()))
+        MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = event.positionTime
+        return MPRemoteCommandHandlerStatus.success
+    }
+    
+    // Methods
+    
+    func play(folder: SongFolder, index: Int) {
+        playing = false
+        cFolder = folder
+        cIndex = index
+        if cSong == nil || !cSong!.CanPlay {
+            btnNext()
+            return
+        }
+        if let cSong = cSong as? SongApple {
+            webView.pause()
+            if !webView.isHidden {
+                musicPlayer = AdvPlayer()
+            }
+            webView.isHidden = true
+            cSong.playIn(advPlayer: musicPlayer)
+        } else if let cSong = cSong as? SongYoutube {
+            webView.isHidden = false
+            cSong.playIn(webView: webView)
+        }
+        playing = true
+        
+        let lastTempo = UserDefaults.standard.integer(forKey: "lastTempo")
+        if lastTempo == 0 {
+            _ = remotePause()
+            tutView.isHidden = false
+            tutViewBack.isHidden = false
+        } else {
+            targetTempo = Float(lastTempo)
+            upTempo()
         }
     }
     
-    @objc func remotePlay(_ sender: Any? = nil) {
-        playing = true
-        upTempo()
+    private var startData: UInt64 = 0
+    public func upTempo() {
+        scene.setEffectColor(tempo: targetTempo)
+        lblTempo.text = "\(Int(targetTempo))"
+        if let song = cSong as? SongYoutube {
+            trueRatio = targetTempo / song.bpm
+            lblSong.text = song.title
+            webView.evaluateJavaScript("setPlaybackRate(\(trueRatio));", completionHandler: nil)
+        } else if let song = cSong as? SongApple {
+            trueRatio = targetTempo / song.bpm
+            lblSong.text = song.title
+            musicPlayer.setRatio(trueRatio)
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                MPMediaItemPropertyTitle: song.title,
+                MPMediaItemPropertyPlaybackDuration: Double(song.seconds / musicPlayer.getCurrentFactor()),
+                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
+                MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
+            ]
+        }
+        if targetTempo != 0 {
+            UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
+        }
     }
     
-    @objc func remotePause(_ sender: Any? = nil) {
-        playing = false
-        upTempo()
-    }
-    
-    @IBAction func btnPlayPause(_ sender: Any) {
-        playing = !playing
-        upTempo()
-    }
-    
-    @objc func changePlaybackPosition(_ event: MPChangePlaybackPositionCommandEvent) {
-        musicPlayer.setPosition(event.positionTime * Double(musicPlayer.getCurrentFactor()));
-        MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = event.positionTime
-    }
-    
-    @IBAction func btnMusic(_ sender: Any) {
-        performSegue(withIdentifier: "toNav", sender: nil)
+    func flashDot() {
+        scene.flashFoot()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -331,7 +357,8 @@ class ViewController: UIViewController {
         }
     }
     
-    // Begin Pedometer
+    // Pedometer
+    
     private var pedometer: CMPedometer!
     private var _stepCadence: Float = 0.0
     private var _stepActive = true
@@ -381,7 +408,7 @@ class ViewController: UIViewController {
         }
         tutView.isHidden = true
         tutViewBack.isHidden = true
-        remotePlay()
+        _ = remotePlay()
     }
 }
 

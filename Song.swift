@@ -1,71 +1,34 @@
 //
-//  RunSong.swift
+//  Song.swift
 //  Accelerun
 //
-//  Created by Bradley Klemick on 6/10/17.
-//  Copyright © 2017 BradzTech. All rights reserved.
+//  Created by Bradley Klemick on 9/15/19.
+//  Copyright © 2019 BradzTech. All rights reserved.
 //
 
 import CoreData
-import MediaPlayer
 
-class Song: SongItem {
-    @NSManaged var url: String
-    @NSManaged var bpm: Float
-    @NSManaged var beatStartMs: Float
-    @NSManaged var peakDb: Float
-    @NSManaged var seconds: Float
+class Song: NSManagedObject {
+    @NSManaged var title: String
+    @NSManaged var folders: NSSet
     
-    var Url: URL {
-        return URL(string: url)!
+    var foldersSet: NSMutableSet {
+        return mutableSetValue(forKey: "folders")
     }
     
-    init(assetUrl: URL, title: String, seconds: Float) {
-        super.init(entity: NSEntityDescription.entity(forEntityName: "Song", in: AppDelegate.moc)!, insertInto: AppDelegate.moc)
-        url = assetUrl.absoluteString
-        self.title = title
-        self.seconds = seconds
+    var CanPlay: Bool {
+        return false
     }
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
     }
     
-    func calcSpecs() {
-        let analyzer = BPMDetector()
-        analyzer.calc(Url)
-        bpm = analyzer.getBpm()
-        beatStartMs = analyzer.getBeatStartMs()
-        peakDb = analyzer.getPeakDb()
-        if bpm == 0 {
-            print("Error on song \(title)!")
-        }
-    }
-    
-    func playIn(advPlayer: AdvPlayer) {
-        if bpm == 0 {
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.calcSpecs()
-                DispatchQueue.main.async {
-                    self.finishPlay(advPlayer: advPlayer)
-                }
-            }
-        } else {
-            finishPlay(advPlayer: advPlayer)
-        }
-    }
-    
-    private func finishPlay(advPlayer: AdvPlayer) {
-        advPlayer.play(Url)
-        advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
-        advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!
-    }
-    
-    public func doesExist() -> Bool {
-        if let _ = try? AVAudioPlayer(contentsOf: Url) {
-            return true
-        }
-        return false
+    func delete() {
+        do {
+            AppDelegate.moc.delete(self)
+            try AppDelegate.moc.save()
+        } catch _ {}
     }
 }
 
@@ -74,7 +37,7 @@ class BackgroundAnalyzer {
     
     static func rescan(ytCallback: (() -> Void)? = nil) {
         let ytFetch = NSFetchRequest<SongYoutube>(entityName: "SongYoutube")
-        ytFetch.predicate = NSPredicate(format: "seconds == 0")
+        ytFetch.predicate = NSPredicate(format: "seconds < 0")
         if let yts = try? AppDelegate.moc.fetch(ytFetch) {
             if yts.count > 0 {
                 var requestArr = [String]()
@@ -90,11 +53,11 @@ class BackgroundAnalyzer {
                             if let jsonRoot = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]] {
                                 for i in 0..<jsonRoot.count {
                                     let jsonItem = jsonRoot[i]
-                                    if let seconds = jsonItem["seconds"] as? Double,
-                                        let bpm = jsonItem["bpm"] as? Double {
+                                    if let seconds = jsonItem["seconds"] as? NSNumber,
+                                        let bpm = jsonItem["bpm"] as? NSNumber {
                                         let yt = yts[i]
-                                        yt.seconds = Float(seconds)
-                                        yt.bpm = Float(bpm)
+                                        yt.seconds = seconds.floatValue
+                                        yt.bpm = bpm.floatValue
                                         var bfFloats = [Float]()
                                         if let beatFingerprint = jsonItem["beatFingerprint"] as? [Double] {
                                             for bf in beatFingerprint {
@@ -116,7 +79,7 @@ class BackgroundAnalyzer {
         if !active {
             active = true
             
-            let songFetch = NSFetchRequest<Song>(entityName: "Song")
+            let songFetch = NSFetchRequest<SongApple>(entityName: "SongApple")
             songFetch.predicate = NSPredicate(format: "bpm == 0")
             do {
                 let songs = try AppDelegate.moc.fetch(songFetch)
