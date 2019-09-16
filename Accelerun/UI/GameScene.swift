@@ -20,6 +20,7 @@ class GameScene: SKScene {
     private var feedbackGenerator: UIImpactFeedbackGenerator?
     private var inittedFeedback: Bool = false
     
+    // Initialize this SpriteKit Scene
     override func didMove(to view: SKView) {
         for i in 0..<2 {
             let foot = SKSpriteNode(imageNamed: "rightFoot")
@@ -41,7 +42,8 @@ class GameScene: SKScene {
         }
     }
     
-    // Run on background thread
+    // Flash a foot, including all effects (particles, haptics, etc.)
+    // Invoked from a background thread
     func flashFoot() {
         DispatchQueue.main.async {
             if self.emitterStrength != 0 {
@@ -71,6 +73,7 @@ class GameScene: SKScene {
         }
     }
     
+    // Set the color of both the feet and the emitters based on tempo
     func setEffectColor(tempo: Float) {
         if tempo >= 105 && tempo <= 210 {
             var hue: CGFloat = (CGFloat(tempo) - 100) / 105 / 2.7
@@ -82,6 +85,7 @@ class GameScene: SKScene {
         }
     }
     
+    // Set the strength of the particle emitters
     func setEmitterStrength(_ strength: Int) {
         emitterStrength = strength
     }

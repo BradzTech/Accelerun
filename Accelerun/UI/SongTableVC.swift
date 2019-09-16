@@ -11,9 +11,15 @@ import CoreData
 import MediaPlayer
 
 class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
-    var songItems = [Song]()
-    var folder: SongFolder?
+    
+    // Private attributes
+    
+    private var songItems = [Song]()
+    public var folder: SongFolder?
     private var toolGroups = [[UIBarButtonItem]]()
+    
+    // Computed attributes
+    
     private var playlistLengthStr: String {
         var numSongs = 0
         var totalSeconds: Float = 0.0
@@ -40,6 +46,8 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             self.setToolbarItems(toolGroups[editing ? 1 : 0], animated: true)
         }
     }
+    
+    // UITableViewController delegate methods
     
     override func viewDidLoad() {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -80,17 +88,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
             }
         }
         upSelected()
-    }
-    
-    private func upSelected() {
-        if let beforeRow = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: beforeRow, animated: true)
-        }
-        for i in 0..<songItems.count {
-            if songItems[i] == ViewController.inst?.cSong {
-                tableView.selectRow(at: IndexPath(row: i, section: 0), animated: true, scrollPosition: .middle)
-            }
-        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -168,31 +165,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         }
     }
     
-    private func alertAnalysis() {
-        let alert = UIAlertController(title: "Song Analysis in Progress", message: "Please try again in several seconds.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    private func alertNotExist(index: Int) {
-        let alert = UIAlertController(title: "Could not find file!", message: "Sorry about that. Please re-add it from your library.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-        remove(index: index)
-    }
-    
-    private func alertTooLong(index: Int) {
-        let alert = UIAlertController(title: "Song Too Long", message: "Sorry, this song is either too long, or no beat was detected. Please use a shorter song with a constant rhythm.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-        remove(index: index)
-    }
-    
-    private func playIndex(_ indexPath: IndexPath) {
-        ViewController.inst.play(folder: folder!, index: indexPath.row)
-        goToNowPlaying()
-    }
-    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if indexPath.section == 0 {
             let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: {(rowAction, indexPath) in
@@ -210,7 +182,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section == 0
     }
-    
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         var needsExchange = true
@@ -242,6 +213,44 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         } else {
             return 260
         }
+    }
+    
+    // Private methods
+    
+    private func upSelected() {
+        if let beforeRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: beforeRow, animated: true)
+        }
+        for i in 0..<songItems.count {
+            if songItems[i] == ViewController.inst?.cSong {
+                tableView.selectRow(at: IndexPath(row: i, section: 0), animated: true, scrollPosition: .middle)
+            }
+        }
+    }
+    
+    private func alertAnalysis() {
+        let alert = UIAlertController(title: "Song Analysis in Progress", message: "Please try again in several seconds.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func alertNotExist(index: Int) {
+        let alert = UIAlertController(title: "Could not find file!", message: "Sorry about that. Please re-add it from your library.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        remove(index: index)
+    }
+    
+    private func alertTooLong(index: Int) {
+        let alert = UIAlertController(title: "Song Too Long", message: "Sorry, this song is either too long, or no beat was detected. Please use a shorter song with a constant rhythm.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        remove(index: index)
+    }
+    
+    private func playIndex(_ indexPath: IndexPath) {
+        ViewController.inst.play(folder: folder!, index: indexPath.row)
+        goToNowPlaying()
     }
     
     @IBAction func editBtn(_ sender: Any? = nil) {
@@ -282,30 +291,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         navigationController!.pushViewController(songTableVC, animated: animated)
     }
     
-    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
-        mediaPicker.dismiss(animated: true, completion: nil)
-    }
-    
-    /**
-     * Get cached song if it exists, otherwise create one. Then add it to the current folder.
-     */
-    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        mediaPicker.dismiss(animated: true, completion: nil)
-        // Sleep a bit so we don't get a table out of view hierarchy warning
-        DispatchQueue.global(qos: .userInitiated).async(execute: {
-            usleep(100000)
-            DispatchQueue.main.async {
-                // Add each item to playlist, both database-side and visually
-                for mediaItem in mediaItemCollection.items {
-                    let song = SongApple.getOrCreateFor(mediaItem: mediaItem)
-                    song.foldersSet.add(self.folder!)
-                    self.add(songItem: song)
-                }
-                BackgroundAnalyzer.rescan()
-            }
-        })
-    }
-    
     public func add(songItem: Song) {
         songItems.append(songItem)
         AppDelegate.saveContext()
@@ -341,5 +326,31 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+    }
+    
+    // MediaPicker delegate methods
+    
+    func mediaPickerDidCancel(_ mediaPicker: MPMediaPickerController) {
+        mediaPicker.dismiss(animated: true, completion: nil)
+    }
+    
+    /**
+     * Get cached song if it exists, otherwise create one. Then add it to the current folder.
+     */
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        mediaPicker.dismiss(animated: true, completion: nil)
+        // Sleep a bit so we don't get a table out of view hierarchy warning
+        DispatchQueue.global(qos: .userInitiated).async(execute: {
+            usleep(100000)
+            DispatchQueue.main.async {
+                // Add each item to playlist, both database-side and visually
+                for mediaItem in mediaItemCollection.items {
+                    let song = SongApple.getOrCreateFor(mediaItem: mediaItem)
+                    song.foldersSet.add(self.folder!)
+                    self.add(songItem: song)
+                }
+                BackgroundAnalyzer.rescan()
+            }
+        })
     }
 }

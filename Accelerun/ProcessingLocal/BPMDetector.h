@@ -3,7 +3,7 @@
 //  BPMDetect
 //
 //  Created by Yuki Konda on 1/29/16.
-//  Copyright © 2016 Yuki Konda. All rights reserved.
+//  Modified by Bradley Klemick.
 //
 
 #import <Foundation/Foundation.h>

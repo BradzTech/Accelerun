@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Initialize API Keys
-        if let path = Bundle.main.path(forResource: "keys", ofType: "plist") {
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path)
             if let superpoweredKey = keys?["Superpowered"] as? String {
                 BPMDetector().initSuperpowered(superpoweredKey)
