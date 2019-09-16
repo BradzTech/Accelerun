@@ -7,68 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C4F41FC1EFD3424006E117E /* Accelerun.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */; };
-		1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */; };
-		1CA97DD01EFD312C00572B42 /* AdvPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */; };
-		1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */; };
-		1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA97DBC1EFD312C00572B42 /* Assets.xcassets */; };
-		1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */; };
-		1CA97DD41EFD312C00572B42 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DBF1EFD312C00572B42 /* GameScene.swift */; };
-		1CA97DD81EFD312C00572B42 /* SongApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC31EFD312C00572B42 /* SongApple.swift */; };
-		1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC41EFD312C00572B42 /* SongFolder.swift */; };
-		1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DC51EFD312C00572B42 /* SongTableVC.swift */; };
-		1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA97DCD1EFD312C00572B42 /* ViewController.swift */; };
 		A2029571229442F0003D4FDA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2029570229442F0003D4FDA /* WebKit.framework */; };
-		A202957322946127003D4FDA /* YTWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A202957222946127003D4FDA /* YTWebView.swift */; };
-		A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */; };
-		A232EC85232F16B200C583C7 /* yt.html in Resources */ = {isa = PBXBuildFile; fileRef = A232EC83232F16B200C583C7 /* yt.html */; };
-		A232EC86232F16B200C583C7 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232EC84232F16B200C583C7 /* AboutVC.swift */; };
-		A232ECA0232F364600C583C7 /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A232EC9F232F364600C583C7 /* keys.plist */; };
-		A232ECAB232F383000C583C7 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A232ECA4232F383000C583C7 /* SuperpoweredIOSAudioIO.mm */; };
-		A232ECAC232F383000C583C7 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A232ECA6232F383000C583C7 /* libSuperpoweredAudioIOS.a */; };
-		A232ECAE232F384100C583C7 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232ECAD232F384000C583C7 /* Song.swift */; };
-		A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A232ECAF232F398900C583C7 /* MyParticle.sks */; };
-		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
-		A29A3EE12294819600E34BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A29A3EE02294819600E34BFE /* Main.storyboard */; };
+		A24BD9FF232FDC470080BBA9 /* Processing in Resources */ = {isa = PBXBuildFile; fileRef = A24BD9FA232FDC470080BBA9 /* Processing */; };
+		A24BDA00232FDC470080BBA9 /* UI in Resources */ = {isa = PBXBuildFile; fileRef = A24BD9FB232FDC470080BBA9 /* UI */; };
+		A24BDA01232FDC470080BBA9 /* Model in Resources */ = {isa = PBXBuildFile; fileRef = A24BD9FC232FDC470080BBA9 /* Model */; };
+		A24BDA02232FDC470080BBA9 /* Superpowered in Resources */ = {isa = PBXBuildFile; fileRef = A24BD9FD232FDC470080BBA9 /* Superpowered */; };
+		A24BDA03232FDC470080BBA9 /* Supporting Files in Resources */ = {isa = PBXBuildFile; fileRef = A24BD9FE232FDC470080BBA9 /* Supporting Files */; };
+		A24BDA05232FDC640080BBA9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A24BDA04232FDC640080BBA9 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1C4F41FB1EFD3424006E117E /* Accelerun.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Accelerun.xcdatamodel; sourceTree = "<group>"; };
-		1C8AB7BB1EFFDF8500E61FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Accelerun/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1CA97DB91EFD312C00572B42 /* AdvPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdvPlayer.h; path = Accelerun/AdvPlayer.h; sourceTree = SOURCE_ROOT; };
-		1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AdvPlayer.mm; path = Accelerun/AdvPlayer.mm; sourceTree = SOURCE_ROOT; };
-		1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Accelerun/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DBC1EFD312C00572B42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Accelerun/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-		1CA97DBD1EFD312C00572B42 /* BPMDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BPMDetector.h; path = Accelerun/BPMDetector.h; sourceTree = SOURCE_ROOT; };
-		1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BPMDetector.mm; path = Accelerun/BPMDetector.mm; sourceTree = SOURCE_ROOT; };
-		1CA97DBF1EFD312C00572B42 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = Accelerun/GameScene.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DC01EFD312C00572B42 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Accelerun/Info.plist; sourceTree = SOURCE_ROOT; };
-		1CA97DC31EFD312C00572B42 /* SongApple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongApple.swift; path = Accelerun/SongApple.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DC41EFD312C00572B42 /* SongFolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongFolder.swift; path = Accelerun/SongFolder.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DC51EFD312C00572B42 /* SongTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SongTableVC.swift; path = Accelerun/SongTableVC.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DCD1EFD312C00572B42 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Accelerun/ViewController.swift; sourceTree = SOURCE_ROOT; };
-		1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Accelerun-Bridging-Header.h"; path = "Accelerun/Accelerun-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		1CD81EC31EEAED04006098D1 /* Accelerun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Accelerun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CD81EC31EEAED04006098D1 /* Accelerun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Accelerun.app; path = "/Users/brad/Developer/iOS/Accelerun/Accelerun/build/Debug-iphoneos/Accelerun.app"; sourceTree = "<absolute>"; };
 		A2029570229442F0003D4FDA /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		A202957222946127003D4FDA /* YTWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YTWebView.swift; path = Accelerun/YTWebView.swift; sourceTree = SOURCE_ROOT; };
-		A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = YoutubeSelectVC.swift; path = Accelerun/YoutubeSelectVC.swift; sourceTree = SOURCE_ROOT; };
-		A232EC83232F16B200C583C7 /* yt.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = yt.html; path = Accelerun/yt.html; sourceTree = SOURCE_ROOT; };
-		A232EC84232F16B200C583C7 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutVC.swift; path = Accelerun/AboutVC.swift; sourceTree = SOURCE_ROOT; };
-		A232EC9F232F364600C583C7 /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = keys.plist; path = Accelerun/keys.plist; sourceTree = SOURCE_ROOT; };
-		A232ECA1232F383000C583C7 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAnalyzer.h; path = Accelerun/Superpowered/SuperpoweredAnalyzer.h; sourceTree = SOURCE_ROOT; };
-		A232ECA2232F383000C583C7 /* Superpowered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Superpowered.h; path = Accelerun/Superpowered/Superpowered.h; sourceTree = SOURCE_ROOT; };
-		A232ECA3232F383000C583C7 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredIOSAudioIO.h; path = Accelerun/Superpowered/SuperpoweredIOSAudioIO.h; sourceTree = SOURCE_ROOT; };
-		A232ECA4232F383000C583C7 /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SuperpoweredIOSAudioIO.mm; path = Accelerun/Superpowered/SuperpoweredIOSAudioIO.mm; sourceTree = SOURCE_ROOT; };
-		A232ECA5232F383000C583C7 /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredDecoder.h; path = Accelerun/Superpowered/SuperpoweredDecoder.h; sourceTree = SOURCE_ROOT; };
-		A232ECA6232F383000C583C7 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = Accelerun/Superpowered/libSuperpoweredAudioIOS.a; sourceTree = SOURCE_ROOT; };
-		A232ECA7232F383000C583C7 /* SuperpoweredHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredHTTP.h; path = Accelerun/Superpowered/SuperpoweredHTTP.h; sourceTree = SOURCE_ROOT; };
-		A232ECA8232F383000C583C7 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAdvancedAudioPlayer.h; path = Accelerun/Superpowered/SuperpoweredAdvancedAudioPlayer.h; sourceTree = SOURCE_ROOT; };
-		A232ECA9232F383000C583C7 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAudioBuffers.h; path = Accelerun/Superpowered/SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
-		A232ECAA232F383000C583C7 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredSimple.h; path = Accelerun/Superpowered/SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
-		A232ECAD232F384000C583C7 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Accelerun/Song.swift; sourceTree = SOURCE_ROOT; };
-		A232ECAF232F398900C583C7 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = Accelerun/MyParticle.sks; sourceTree = SOURCE_ROOT; };
-		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
-		A29A3EE02294819600E34BFE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Accelerun/Main.storyboard; sourceTree = "<group>"; };
+		A24BD9FA232FDC470080BBA9 /* Processing */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Processing; path = Accelerun/Processing; sourceTree = "<group>"; };
+		A24BD9FB232FDC470080BBA9 /* UI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = UI; path = Accelerun/UI; sourceTree = "<group>"; };
+		A24BD9FC232FDC470080BBA9 /* Model */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Model; path = Accelerun/Model; sourceTree = "<group>"; };
+		A24BD9FD232FDC470080BBA9 /* Superpowered */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Superpowered; path = Accelerun/Superpowered; sourceTree = "<group>"; };
+		A24BD9FE232FDC470080BBA9 /* Supporting Files */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Supporting Files"; path = "Accelerun/Supporting Files"; sourceTree = "<group>"; };
+		A24BDA04232FDC640080BBA9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,87 +33,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2029571229442F0003D4FDA /* WebKit.framework in Frameworks */,
-				A232ECAC232F383000C583C7 /* libSuperpoweredAudioIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1CA97DDD1EFD315900572B42 /* Superpowered */ = {
-			isa = PBXGroup;
-			children = (
-				A232ECA6232F383000C583C7 /* libSuperpoweredAudioIOS.a */,
-				A232ECA2232F383000C583C7 /* Superpowered.h */,
-				A232ECA8232F383000C583C7 /* SuperpoweredAdvancedAudioPlayer.h */,
-				A232ECA1232F383000C583C7 /* SuperpoweredAnalyzer.h */,
-				A232ECA9232F383000C583C7 /* SuperpoweredAudioBuffers.h */,
-				A232ECA5232F383000C583C7 /* SuperpoweredDecoder.h */,
-				A232ECA7232F383000C583C7 /* SuperpoweredHTTP.h */,
-				A232ECA3232F383000C583C7 /* SuperpoweredIOSAudioIO.h */,
-				A232ECA4232F383000C583C7 /* SuperpoweredIOSAudioIO.mm */,
-				A232ECAA232F383000C583C7 /* SuperpoweredSimple.h */,
-				1CA97DB91EFD312C00572B42 /* AdvPlayer.h */,
-				1CA97DBA1EFD312C00572B42 /* AdvPlayer.mm */,
-				1CA97DBD1EFD312C00572B42 /* BPMDetector.h */,
-				1CA97DBE1EFD312C00572B42 /* BPMDetector.mm */,
-			);
-			name = Superpowered;
-			sourceTree = "<group>";
-		};
-		1CA97DDE1EFD316100572B42 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A232ECAD232F384000C583C7 /* Song.swift */,
-				1CA97DC31EFD312C00572B42 /* SongApple.swift */,
-				A26E21D422938C9900B4BE28 /* SongYoutube.swift */,
-				1CA97DC41EFD312C00572B42 /* SongFolder.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		1CD81EBA1EEAED04006098D1 = {
 			isa = PBXGroup;
 			children = (
-				1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */,
-				A29A3EE02294819600E34BFE /* Main.storyboard */,
-				1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */,
-				1CD81EC51EEAED04006098D1 /* Accelerun */,
+				A24BDA04232FDC640080BBA9 /* README.md */,
+				A24BD9FC232FDC470080BBA9 /* Model */,
+				A24BD9FA232FDC470080BBA9 /* Processing */,
+				A24BD9FD232FDC470080BBA9 /* Superpowered */,
+				A24BD9FE232FDC470080BBA9 /* Supporting Files */,
+				A24BD9FB232FDC470080BBA9 /* UI */,
 				A202956F229442F0003D4FDA /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		1CD81EC41EEAED04006098D1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1CD81EC31EEAED04006098D1 /* Accelerun.app */,
-			);
-			name = Products;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		1CD81EC51EEAED04006098D1 /* Accelerun */ = {
-			isa = PBXGroup;
-			children = (
-				A232EC9E232F361000C583C7 /* Supporting Files */,
-				1CA97DCE1EFD312C00572B42 /* Accelerun-Bridging-Header.h */,
-				1CA97DDD1EFD315900572B42 /* Superpowered */,
-				1CA97DBB1EFD312C00572B42 /* AppDelegate.swift */,
-				1CA97DCD1EFD312C00572B42 /* ViewController.swift */,
-				1CA97DBF1EFD312C00572B42 /* GameScene.swift */,
-				1CA97DC51EFD312C00572B42 /* SongTableVC.swift */,
-				A207E4AB22934E1500AF9567 /* YoutubeSelectVC.swift */,
-				A202957222946127003D4FDA /* YTWebView.swift */,
-				A232EC84232F16B200C583C7 /* AboutVC.swift */,
-				A232EC83232F16B200C583C7 /* yt.html */,
-				A232ECAF232F398900C583C7 /* MyParticle.sks */,
-				1CA97DDE1EFD316100572B42 /* Model */,
-				1CA97DBC1EFD312C00572B42 /* Assets.xcassets */,
-				1CA97DC01EFD312C00572B42 /* Info.plist */,
-				1CD81EC41EEAED04006098D1 /* Products */,
-			);
-			name = Accelerun;
-			path = XCSync;
 			sourceTree = "<group>";
 		};
 		A202956F229442F0003D4FDA /* Frameworks */ = {
@@ -166,14 +58,6 @@
 				A2029570229442F0003D4FDA /* WebKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A232EC9E232F361000C583C7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				A232EC9F232F364600C583C7 /* keys.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,7 +115,7 @@
 				Base,
 			);
 			mainGroup = 1CD81EBA1EEAED04006098D1;
-			productRefGroup = 1CD81EC41EEAED04006098D1 /* Products */;
+			productRefGroup = 1CD81EBA1EEAED04006098D1;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -245,12 +129,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */,
-				A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */,
-				A232EC85232F16B200C583C7 /* yt.html in Resources */,
-				A232ECA0232F364600C583C7 /* keys.plist in Resources */,
-				1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */,
-				A29A3EE12294819600E34BFE /* Main.storyboard in Resources */,
+				A24BDA05232FDC640080BBA9 /* README.md in Resources */,
+				A24BDA01232FDC470080BBA9 /* Model in Resources */,
+				A24BDA02232FDC470080BBA9 /* Superpowered in Resources */,
+				A24BDA00232FDC470080BBA9 /* UI in Resources */,
+				A24BDA03232FDC470080BBA9 /* Supporting Files in Resources */,
+				A24BD9FF232FDC470080BBA9 /* Processing in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,36 +145,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA97DD41EFD312C00572B42 /* GameScene.swift in Sources */,
-				1CA97DD01EFD312C00572B42 /* AdvPlayer.mm in Sources */,
-				1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */,
-				1CA97DDA1EFD312C00572B42 /* SongTableVC.swift in Sources */,
-				1CA97DDC1EFD312C00572B42 /* ViewController.swift in Sources */,
-				A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */,
-				1C4F41FC1EFD3424006E117E /* Accelerun.xcdatamodeld in Sources */,
-				A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */,
-				1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */,
-				A232ECAE232F384100C583C7 /* Song.swift in Sources */,
-				1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */,
-				A232ECAB232F383000C583C7 /* SuperpoweredIOSAudioIO.mm in Sources */,
-				A232EC86232F16B200C583C7 /* AboutVC.swift in Sources */,
-				A202957322946127003D4FDA /* YTWebView.swift in Sources */,
-				1CA97DD81EFD312C00572B42 /* SongApple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		1C8AB7BA1EFFDF8500E61FFC /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1C8AB7BB1EFFDF8500E61FFC /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1CD81ED61EEAED04006098D1 /* Debug */ = {
@@ -483,20 +341,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		1C4F41FA1EFD3424006E117E /* Accelerun.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1C4F41FB1EFD3424006E117E /* Accelerun.xcdatamodel */,
-			);
-			currentVersion = 1C4F41FB1EFD3424006E117E /* Accelerun.xcdatamodel */;
-			name = Accelerun.xcdatamodeld;
-			path = Accelerun/Accelerun.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 1CD81EBB1EEAED04006098D1 /* Project object */;
 }
