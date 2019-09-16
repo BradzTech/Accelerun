@@ -17,14 +17,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var wasPlaying = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Initialize Superpowered Audio
+        // Initialize API Keys
         if let path = Bundle.main.path(forResource: "keys", ofType: "plist") {
             let keys = NSDictionary(contentsOfFile: path)
             if let superpoweredKey = keys?["Superpowered"] as? String {
                 BPMDetector().initSuperpowered(superpoweredKey)
             }
+            if let youtubeKey = keys?["YouTube"] as? String {
+                AppDelegate._youtubeKey = youtubeKey
+            }
         }
         return true
+    }
+    
+    private static var _youtubeKey: String?
+    public static var youtubeKey: String {
+        return _youtubeKey!
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

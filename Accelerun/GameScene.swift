@@ -73,7 +73,11 @@ class GameScene: SKScene {
     
     func setEffectColor(tempo: Float) {
         if tempo >= 105 && tempo <= 210 {
-            effectColor = UIColor(hue: (1 - ((CGFloat(tempo) - 105) / 105)) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+            var hue: CGFloat = (CGFloat(tempo) - 100) / 105 / 2.7
+            if tempo > 155 {
+                hue += (CGFloat(tempo) - 155) / 450
+            }
+            effectColor = UIColor(hue: hue, saturation: 0.9, brightness: 1.0, alpha: 1.0)
             animTime = 60 / Double(tempo)
         }
     }

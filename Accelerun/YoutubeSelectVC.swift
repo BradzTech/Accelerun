@@ -73,8 +73,8 @@ class YoutubeSelectVC: UITableViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let query = textField.text!.addingPercentEncoding(withAllowedCharacters: CharacterSet())!
-        var req = URLRequest(url: URL(string: "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBoHK3SebwUpQYezmM_zvy0w3mKAUG-69o&part=snippet&type=video&q=" + query)!)
+        let query = textField.text!.addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics)!
+        var req = URLRequest(url: URL(string: "https://www.googleapis.com/youtube/v3/search?key=" + AppDelegate.youtubeKey + "&part=snippet&type=video&q=" + query)!)
         req.addValue(Bundle.main.bundleIdentifier!.trimmingCharacters(in: .whitespacesAndNewlines), forHTTPHeaderField: "X-Ios-Bundle-Identifier")
         URLSession.shared.dataTask(with: req, completionHandler: {(data, response, error) in
             var success = false
