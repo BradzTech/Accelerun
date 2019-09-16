@@ -5,6 +5,7 @@
 @interface BPMDetector : NSObject
 
 - (void)calc:(NSURL *)fileURL;
+- (void)initSuperpowered:(const char *)apiKey;
 - (float)getBpm;
 - (float)getBeatStartMs;
 - (float)getPeakDb;

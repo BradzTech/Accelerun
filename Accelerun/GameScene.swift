@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import CoreHaptics
 
 class GameScene: SKScene {
     private var lastFlash = 0
@@ -15,6 +16,9 @@ class GameScene: SKScene {
     private var effectColor = UIColor.yellow
     private var emitterStrength: Int = 100
     private var footScale: CGFloat = 0.88
+    private var animTime: Double = 0.5
+    private var feedbackGenerator: UIImpactFeedbackGenerator?
+    private var inittedFeedback: Bool = false
     
     override func didMove(to view: SKView) {
         for i in 0..<2 {
@@ -45,17 +49,24 @@ class GameScene: SKScene {
                 self.emitters[self.lastFlash].numParticlesToEmit = self.emitterStrength
                 self.emitters[self.lastFlash].resetSimulation()
             }
-        }
-        //usleep(10000)
-        DispatchQueue.main.async {
+            if #available(iOS 13.0, *) {
+                if (!self.inittedFeedback) {
+                    self.inittedFeedback = true
+                    self.feedbackGenerator = UIImpactFeedbackGenerator()
+                    self.feedbackGenerator?.prepare()
+                }
+                if self.animTime > 0.36 || self.lastFlash == 0 {
+                    self.feedbackGenerator?.impactOccurred(intensity: CGFloat(0.32))
+                }
+            }
             let lf = self.lastFlash
             let foot = self.feet[lf]
-            let scaleFactor: CGFloat = 0.85
+            let scaleFactor: CGFloat = 5 / 6
             let footScale = self.footScale * (lf == 1 ? 1 : -1)
             foot.run(SKAction.colorize(with: self.effectColor, colorBlendFactor: 1.0, duration: 0.0))
             foot.run(SKAction.scaleX(to: footScale / scaleFactor, y: self.footScale / scaleFactor, duration: 0.0))
             foot.run(SKAction.colorize(with: UIColor.black, colorBlendFactor: 1.0, duration: 0.5))
-            foot.run(SKAction.scaleX(to: footScale, y: self.footScale, duration: 0.3))
+            foot.run(SKAction.scaleX(to: footScale, y: self.footScale, duration: self.animTime))
             self.lastFlash = (self.lastFlash + 1) % 2
         }
     }
@@ -63,6 +74,7 @@ class GameScene: SKScene {
     func setEffectColor(tempo: Float) {
         if tempo >= 105 && tempo <= 210 {
             effectColor = UIColor(hue: (1 - ((CGFloat(tempo) - 105) / 105)) / 3, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+            animTime = 60 / Double(tempo)
         }
     }
     

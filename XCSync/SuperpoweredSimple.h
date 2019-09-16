@@ -57,7 +57,7 @@ void SuperpoweredChangeVolumeAdd(float *input, float *output, float volumeStart,
 
 /**
  @fn SuperpoweredPeak(float *input, unsigned int numberOfValues);
- @return Returns with the peak value.
+ @return Returns the peak value.
 
  @param input An array of floating point values.
  @param numberOfValues The number of values to process. (2 * numberOfSamples for stereo input) Must be a multiply of 8.
@@ -215,10 +215,21 @@ void SuperpoweredInterleaveAndGetPeaks(float *left, float *right, float *output,
  @param input Interleaved input.
  @param left Output for left channel.
  @param right Output for right channel.
-
  @param numberOfSamples The number of samples to process.
  */
 void SuperpoweredDeInterleave(float *input, float *left, float *right, unsigned int numberOfSamples);
+
+/**
+ @fn SuperpoweredDeInterleaveMultiply(float *input, float *left, float *right, unsigned int numberOfSamples, float multiplier);
+ @brief Deinterleaves an interleaved input and multiplies the output.
+ 
+ @param input Interleaved input.
+ @param left Output for left channel.
+ @param right Output for right channel.
+ @param numberOfSamples The number of samples to process.
+ @param multiplier Multiply each output sample with this value.
+ */
+void SuperpoweredDeInterleaveMultiply(float *input, float *left, float *right, unsigned int numberOfSamples, float multiplier);
 
 /**
  @fn SuperpoweredDeInterleaveAdd(float *input, float *left, float *right, unsigned int numberOfSamples);
@@ -227,10 +238,21 @@ void SuperpoweredDeInterleave(float *input, float *left, float *right, unsigned 
  @param input Interleaved input.
  @param left Output for left channel.
  @param right Output for right channel.
-
  @param numberOfSamples The number of samples to process.
  */
 void SuperpoweredDeInterleaveAdd(float *input, float *left, float *right, unsigned int numberOfSamples);
+
+/**
+ @fn SuperpoweredDeInterleaveMultiplyAdd(float *input, float *left, float *right, unsigned int numberOfSamples, float multiplier);
+ @brief Deinterleaves an interleaved input, multiplies the results and adds them to the output channels.
+ 
+ @param input Interleaved input.
+ @param left Output for left channel.
+ @param right Output for right channel.
+ @param numberOfSamples The number of samples to process.
+ @param multiplier Multiply each output sample with this value.
+ */
+void SuperpoweredDeInterleaveMultiplyAdd(float *input, float *left, float *right, unsigned int numberOfSamples, float multiplier);
 
 /**
  @fn SuperpoweredHasNonFinite(float *buffer, unsigned int numberOfValues);
@@ -349,11 +371,43 @@ void SuperpoweredAdd2(float *inputA, float *inputB, float *output, unsigned int 
 void SuperpoweredAdd4(float *inputA, float *inputB, float *inputC, float *inputD, float *output, unsigned int numberOfValues);
 
 /**
- @fn SuperpoweredVersion()
- @return Returns with the current version of the Superpowered SDK.
+ @fn SuperpoweredStereoToMidSide(float *input, float *output, unsigned int numberOfFrames)
+ @brief Converts a stereo signal to mid-side.
  
- The returned value is 3 unsigned chars: major,minor,revision Example: 1,0,0 means 1.0.0
+ @param input Input buffer.
+ @param output Output buffer. Can be equal to input (in-place processing).
+ @param numberOfFrames The number of frames to process.
  */
-const unsigned char *SuperpoweredVersion();
+void SuperpoweredStereoToMidSide(float *input, float *output, unsigned int numberOfFrames);
+
+/**
+ @fn SuperpoweredMidSideToStereo(float *input, float *output, unsigned int numberOfFrames)
+ @brief Converts a mid-side signal to stereo.
+ 
+ @param input Input buffer.
+ @param output Output buffer. Can be equal to input (in-place processing).
+ @param numberOfFrames The number of frames to process.
+ */
+void SuperpoweredMidSideToStereo(float *input, float *output, unsigned int numberOfFrames);
+
+/**
+ @fn SuperpoweredDotProduct(float *input0, float *input1, unsigned int numValues)
+ @brief Calculates the dot product of two vectors.
+ 
+ @param input0 First input vector.
+ @param input1 Second input vector.
+ @param numValues Number of value pairs to process.
+ @return The dot product.
+ */
+float SuperpoweredDotProduct(float *input0, float *input1, unsigned int numValues);
+
+/**
+ @fn SuperpoweredVersion()
+ @return Returns the current version of the Superpowered SDK.
+ 
+ The returned value is: major version * 10000 + minor version * 100 + revision
+ Example: 10402 means 1.4.2
+ */
+unsigned int SuperpoweredVersion();
 
 #endif

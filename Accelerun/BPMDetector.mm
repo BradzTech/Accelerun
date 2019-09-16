@@ -11,11 +11,17 @@
 #include "SuperpoweredSimple.h"
 #include "SuperpoweredAudioBuffers.h"
 #include "SuperpoweredAnalyzer.h"
+#include "Superpowered.h"
 
 @implementation BPMDetector {
     float detectedBpm;
     float beatStartMs;
     float peakDb;
+}
+
+- (void)initSuperpowered:(const char *)apiKey
+{
+    SuperpoweredInitialize(apiKey, true, true, true, true, true, false, false);
 }
 
 - (void)calc:(NSURL *)fileURL
@@ -34,7 +40,7 @@
 
 -(SuperpoweredDecoder *)getSongDecoderForFileURL:(NSURL *)fileURL {
     SuperpoweredDecoder *decoder = new SuperpoweredDecoder();
-    const char *openError = decoder->open([[fileURL absoluteString] UTF8String]);
+    const char *openError = decoder->open([[fileURL absoluteString] UTF8String], false, 0, 0);
     if (openError) {
         NSLog(@"%s", openError);
         delete decoder;

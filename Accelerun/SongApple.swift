@@ -16,18 +16,18 @@ class SongApple: Song {
     @NSManaged var peakDb: Float
     @NSManaged var seconds: Float
     
-    private var url: URL?
+    private var _url: URL?
     
-    public var Url: URL? {
-        if url == nil {
+    public var url: URL? {
+        if _url == nil {
             let pred = MPMediaPropertyPredicate(value: persistentId, forProperty: MPMediaItemPropertyPersistentID)
             let query = MPMediaQuery(filterPredicates: [pred])
             if let items = query.items,
                 let first = items.first {
-                    url = first.assetURL
+                _url = first.assetURL
             }
         }
-        return url
+        return _url
     }
     
     override var CanPlay: Bool {
@@ -68,11 +68,13 @@ class SongApple: Song {
     }
     
     public func calcSpecs() {
-        let analyzer = BPMDetector()
-        analyzer.calc(Url)
-        bpm = analyzer.getBpm()
-        beatStartMs = analyzer.getBeatStartMs()
-        peakDb = analyzer.getPeakDb()
+        if let url = url {
+            let analyzer = BPMDetector()
+            analyzer.calc(url)
+            bpm = analyzer.getBpm()
+            beatStartMs = analyzer.getBeatStartMs()
+            peakDb = analyzer.getPeakDb()
+        }
         if bpm == 0 {
             print("Error on song \(title)!")
         }
@@ -92,12 +94,14 @@ class SongApple: Song {
     }
     
     private func finishPlay(advPlayer: AdvPlayer) {
-        advPlayer.play(Url)
-        advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
-        advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!
+        if let url = url {
+            advPlayer.play(url)
+            advPlayer.setOrigBpm(bpm, beatStartMs: beatStartMs)
+            advPlayer.setVolume(powf(2, peakDb / -3)) // Normalization!
+        }
     }
     
     public func doesExist() -> Bool {
-        return Url != nil
+        return url != nil
     }
 }

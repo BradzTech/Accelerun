@@ -17,7 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var wasPlaying = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Initialize Superpowered Audio
+        if let path = Bundle.main.path(forResource: "keys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path)
+            if let superpoweredKey = keys?["Superpowered"] as? String {
+                BPMDetector().initSuperpowered(superpoweredKey)
+            }
+        }
         return true
     }
 

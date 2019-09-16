@@ -294,13 +294,15 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         // Sleep a bit so we don't get a table out of view hierarchy warning
         DispatchQueue.global(qos: .userInitiated).async(execute: {
             usleep(100000)
-            // Add each item to playlist, both database-side and visually
-            for mediaItem in mediaItemCollection.items {
-                let song = SongApple.getOrCreateFor(mediaItem: mediaItem)
-                song.foldersSet.add(self.folder!)
-                self.add(songItem: song)
+            DispatchQueue.main.async {
+                // Add each item to playlist, both database-side and visually
+                for mediaItem in mediaItemCollection.items {
+                    let song = SongApple.getOrCreateFor(mediaItem: mediaItem)
+                    song.foldersSet.add(self.folder!)
+                    self.add(songItem: song)
+                }
+                BackgroundAnalyzer.rescan()
             }
-            BackgroundAnalyzer.rescan()
         })
     }
     

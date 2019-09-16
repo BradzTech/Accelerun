@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     private var musicPlayer: AdvPlayer!
     var targetTempo: Float = 0.0
     private var _trueRatio: Float = 1.0
+    private var _tFactor: Float = 1.0
     var cFolder: SongFolder?
     var cIndex: Int = 0
     private var _playing = false
@@ -29,13 +30,14 @@ class ViewController: UIViewController {
         get {
             return _trueRatio
         } set {
-            var tr = newValue
-            if tr > 1.6 {
-                tr /= 2
-            } else if tr < 0.8 {
-                tr *= 2
+            var tFactor: Float = 1.0
+            if newValue > 1.6 {
+                tFactor /= 2
+            } else if newValue < 0.8 {
+                tFactor *= 2
             }
-            _trueRatio = tr
+            _tFactor = tFactor
+            _trueRatio = newValue * tFactor
         }
     }
     
@@ -91,15 +93,11 @@ class ViewController: UIViewController {
         
         DispatchQueue.global(qos: .default).async {
             while true {
+                var sleepTime: Double = 0
                 if let _ = self.cSong as? SongApple {
                     let msToNextBeat = self.musicPlayer.getMsToNextBeat()
                     if (msToNextBeat > 0) {
-                        // TODO: Fix incorrect beats, both YouTube and local
-                        let sleepTime = msToNextBeat * 1000 / Double(self.trueRatio) - 5000
-                        if sleepTime > 0 {
-                            usleep(useconds_t(sleepTime))
-                        }
-                        self.flashDot()
+                        sleepTime = (msToNextBeat - 10)
                     }
                 } else if let song = self.cSong as? SongYoutube {
                     if self.playing {
@@ -110,18 +108,21 @@ class ViewController: UIViewController {
                             i += 1
                         }
                         if i < len {
-                            let sleepTime = UInt32((song.beatFingerprint[i] - cur) / self.trueRatio * 1000000)
-                            if sleepTime > 0 && sleepTime < 3000000 {
-                                usleep(sleepTime)
-                                self.flashDot()
-                                usleep(40000)
-                            }
+                            sleepTime = Double((song.beatFingerprint[i] - cur) / self.trueRatio * 1000) + 60
                         } else {
                             DispatchQueue.main.async {
                                 self.btnNext()
                             }
                         }
                     }
+                }
+                // If we are halved song speed, also half the step speed by adding a beat
+                if self._tFactor > 1 {
+                    sleepTime += 60000 / Double(self.targetTempo)
+                }
+                if sleepTime > 0 && sleepTime < 2000 {
+                    usleep(useconds_t(sleepTime * 1000))
+                    self.flashDot()
                 }
                 usleep(40000)
             }
@@ -153,8 +154,6 @@ class ViewController: UIViewController {
         webView.loadHTMLString(ytHtml, baseURL: URL(string: "https://bradztech.com/"))
         //webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
         webView.navigationDelegate = self
-        
-        // TODO: Fix spin lock at eof of YouTube
     }
     
     override func viewDidAppear(_ animated: Bool) {
