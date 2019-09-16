@@ -27,6 +27,7 @@
 		A232ECAB232F383000C583C7 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A232ECA4232F383000C583C7 /* SuperpoweredIOSAudioIO.mm */; };
 		A232ECAC232F383000C583C7 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A232ECA6232F383000C583C7 /* libSuperpoweredAudioIOS.a */; };
 		A232ECAE232F384100C583C7 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232ECAD232F384000C583C7 /* Song.swift */; };
+		A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A232ECAF232F398900C583C7 /* MyParticle.sks */; };
 		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
 		A29A3EE12294819600E34BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A29A3EE02294819600E34BFE /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		A232ECA9232F383000C583C7 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredAudioBuffers.h; path = Accelerun/Superpowered/SuperpoweredAudioBuffers.h; sourceTree = SOURCE_ROOT; };
 		A232ECAA232F383000C583C7 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredSimple.h; path = Accelerun/Superpowered/SuperpoweredSimple.h; sourceTree = SOURCE_ROOT; };
 		A232ECAD232F384000C583C7 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Accelerun/Song.swift; sourceTree = SOURCE_ROOT; };
+		A232ECAF232F398900C583C7 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = Accelerun/MyParticle.sks; sourceTree = SOURCE_ROOT; };
 		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
 		A29A3EE02294819600E34BFE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Accelerun/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,6 +150,7 @@
 				A202957222946127003D4FDA /* YTWebView.swift */,
 				A232EC84232F16B200C583C7 /* AboutVC.swift */,
 				A232EC83232F16B200C583C7 /* yt.html */,
+				A232ECAF232F398900C583C7 /* MyParticle.sks */,
 				1CA97DDE1EFD316100572B42 /* Model */,
 				1CA97DBC1EFD312C00572B42 /* Assets.xcassets */,
 				1CA97DC01EFD312C00572B42 /* Info.plist */,
@@ -243,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */,
+				A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */,
 				A232EC85232F16B200C583C7 /* yt.html in Resources */,
 				A232ECA0232F364600C583C7 /* keys.plist in Resources */,
 				1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */,
