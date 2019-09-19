@@ -18,7 +18,6 @@ class GameScene: SKScene {
     private var footScale: CGFloat = 0.88
     private var animTime: Double = 0.5
     private var feedbackGenerator: UIImpactFeedbackGenerator?
-    private var inittedFeedback: Bool = false
     
     // Initialize this SpriteKit Scene
     override func didMove(to view: SKView) {
@@ -40,27 +39,32 @@ class GameScene: SKScene {
             addChild(emitter)
             emitters.append(emitter)
         }
+        
+        // Initialize the haptics if OS supports
+        if #available(iOS 13.0, *) {
+            GameHaptics.inst = GameHaptics()
+        }
     }
     
     // Flash a foot, including all effects (particles, haptics, etc.)
     // Invoked from a background thread
     func flashFoot() {
         DispatchQueue.main.async {
+            // Fire particle emitter behind foot
             if self.emitterStrength != 0 {
                 self.emitters[self.lastFlash].particleColor = self.effectColor
                 self.emitters[self.lastFlash].numParticlesToEmit = self.emitterStrength
                 self.emitters[self.lastFlash].resetSimulation()
             }
+            
+            // Fire haptic if available
             if #available(iOS 13.0, *) {
-                if (!self.inittedFeedback) {
-                    self.inittedFeedback = true
-                    self.feedbackGenerator = UIImpactFeedbackGenerator()
-                    self.feedbackGenerator?.prepare()
-                }
-                if self.animTime > 0.36 || self.lastFlash == 0 {
-                    self.feedbackGenerator?.impactOccurred(intensity: CGFloat(0.32))
+                if let haptics = GameHaptics.inst {
+                    haptics.tap()
                 }
             }
+            
+            // Flash foot
             let lf = self.lastFlash
             let foot = self.feet[lf]
             let scaleFactor: CGFloat = 5 / 6
@@ -88,5 +92,33 @@ class GameScene: SKScene {
     // Set the strength of the particle emitters
     func setEmitterStrength(_ strength: Int) {
         emitterStrength = strength
+    }
+
+    // Code for haptics, encapsulated to be skipped if OS doesn't support
+    @available(iOS 13.0, *)
+    private class GameHaptics {
+        public static var inst: GameHaptics!
+        private var engine: CHHapticEngine
+        private var player: CHHapticPatternPlayer
+        
+        init?() {
+            let tapEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [CHHapticEventParameter(parameterID: CHHapticEvent.ParameterID.hapticSharpness, value: 0.3), CHHapticEventParameter(parameterID: CHHapticEvent.ParameterID.hapticIntensity, value: 0.5)], relativeTime: 0.001)
+            do {
+                let hapticPattern = try CHHapticPattern(events: [tapEvent], parameters: [])
+                engine = try CHHapticEngine()
+                player = try engine.makePlayer(with: hapticPattern)
+            } catch {
+                return nil
+            }
+        }
+        
+        public func tap() {
+            try? engine.start()
+            try? player.start(atTime: 0)
+        }
+        
+        public func stopEngine() {
+            engine.stop(completionHandler: nil)
+        }
     }
 }
