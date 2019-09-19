@@ -7,6 +7,7 @@
 //
 
 #import "AdvPlayer.h"
+#include "Superpowered.h"
 #include "SuperpoweredSimple.h"
 #include "SuperpoweredAdvancedAudioPlayer.h"
 #include "SuperpoweredIOSAudioIO.h"
@@ -18,7 +19,7 @@
 #import "Accelerun-Swift.h"
 
 @implementation AdvPlayer {
-    SuperpoweredAdvancedAudioPlayer *player;
+    Superpowered::AdvancedAudioPlayer *player;
     SuperpoweredIOSAudioIO *output;
     float *stereoBuffer;
     float volume;
@@ -30,38 +31,28 @@ static bool audioProcessing(void *clientData, float **inputBuffers, unsigned int
     __unsafe_unretained AdvPlayer *self = (__bridge AdvPlayer *)clientData;
     if (samplerate != self->lastSamplerate) {
         self->lastSamplerate = samplerate;
-        self->player->setSamplerate(samplerate);
+        self->player->outputSamplerate = samplerate;
     };
     //uint64_t startTime = mach_absolute_time();
     if (self->volume == 0.0f)
         self->volume = 1.0f;
-    bool silence = !self->player->process(self->stereoBuffer, false, numberOfSamples, self->volume, 0.0f, -1.0);
+    bool silence = !self->player->processStereo(self->stereoBuffer, false, numberOfSamples, self->volume);
     
     //self->playing = self->player->playing;
-    if (!silence) SuperpoweredDeInterleave(self->stereoBuffer, inputBuffers[0], inputBuffers[1], numberOfSamples); // The stereoBuffer is ready now, let's put the finished audio into the requested buffers.
+    if (!silence) Superpowered::DeInterleave(self->stereoBuffer, inputBuffers[0], inputBuffers[1], numberOfSamples); // The stereoBuffer is ready now, let's put the finished audio into the requested buffers.
     return !silence;
-}
-
-void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent event, void *value) {
-    switch (event) {
-        case SuperpoweredAdvancedAudioPlayerEvent_EOF:
-            [VCBridge eof];
-            break;
-        default:
-            break;
-    }
 }
 
 - (void)play:(NSURL *)fileURL
 {
     if (posix_memalign((void **)&stereoBuffer, 16, 4096 + 128) != 0) abort();
     if (!player) {
-        player = new SuperpoweredAdvancedAudioPlayer(NULL, playerEventCallback, 44100, 0);
+        player = new Superpowered::AdvancedAudioPlayer(44100, 0);
         player->fixDoubleOrHalfBPM = true;
     }
     player->open([[fileURL absoluteString] UTF8String]);
-    player->setTempo(1.0f, true);
-    player->play(false);
+    player->playbackRate = 1.0f;
+    player->play();
     
     if (!output) {
         output = [[SuperpoweredIOSAudioIO alloc] initWithDelegate:(id<SuperpoweredIOSAudioIODelegate>)self preferredBufferSize:12 preferredSamplerate:44100 audioSessionCategory:AVAudioSessionCategoryPlayback channels:2 audioProcessingCallback:audioProcessing clientdata:(__bridge void *)self];
@@ -71,7 +62,7 @@ void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent 
 
 - (void)resume {
     if (player) {
-        player->play(false);
+        player->play();
     }
 }
 
@@ -89,14 +80,14 @@ void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent 
 - (void)setRatio:(float)ratio
 {
     if (player && origBPM > 1 && ratio > 0) {
-        player->setBpm(origBPM * ratio);
-        player->setTempo(ratio, true);
+        player->originalBPM = origBPM;
+        player->playbackRate = ratio;
     }
 }
 
 - (float)getCurrentFactor {
     if (player) {
-        return player->tempo;
+        return player->playbackRate;
     } else {
         return 1.0f;
     }
@@ -104,7 +95,7 @@ void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent 
 
 - (float)getPosition {
     if (player) {
-        return (float)(player->positionMs / 1000);
+        return (float)(player->getPositionMs() / 1000);
     } else {
         return 0.0f;
     }
@@ -126,16 +117,16 @@ void playerEventCallback(void *clientData, SuperpoweredAdvancedAudioPlayerEvent 
 {
     origBPM = newBpm;
     if (player) {
-        player->setBpm(newBpm);
-        player->setFirstBeatMs(newBeatStartMs);
+        player->originalBPM = newBpm;
+        player->firstBeatMs = newBeatStartMs;
     }
 }
 
 - (double)getMsToNextBeat
 {
-    if (player && player->playing) {
+    if (player && player->isPlaying()) {
         //return player->msElapsedSinceLastBeat;
-        return (player->closestBeatMs(player->positionMs, NULL) - player->positionMs) / player->tempo;
+        return (player->closestBeatMs(player->getPositionMs(), NULL) - player->getPositionMs()) / player->playbackRate;
     } else {
         return -1;
     }

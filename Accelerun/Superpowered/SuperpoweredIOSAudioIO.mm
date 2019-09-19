@@ -115,7 +115,8 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
 #if (USES_AUDIO_INPUT == 1)
         if ((recordOnly || [category isEqualToString:AVAudioSessionCategoryPlayAndRecord]) && [[AVAudioSession sharedInstance] respondsToSelector:@selector(recordPermission)] && [[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)] && ([[AVAudioSession sharedInstance] recordPermission] != AVAudioSessionRecordPermissionGranted)) {
             [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-                if (granted) [self onMediaServerReset:nil]; else [self->delegate recordPermissionRefused];
+                if (granted) [self onMediaServerReset:nil];
+                else if ([(NSObject *)self->delegate respondsToSelector:@selector(recordPermissionRefused)]) [self->delegate recordPermissionRefused];
             }];
         };
 #endif
@@ -185,7 +186,7 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
     if (audioUnitRunning || !started) return;
     if (![NSThread isMainThread]) [self performSelectorOnMainThread:@selector(endInterruption) withObject:nil waitUntilDone:NO];
     else {
-        [delegate interruptionEnded];
+        if ([(NSObject *)delegate respondsToSelector:@selector(interruptionEnded)]) [delegate interruptionEnded];
         [[AVAudioSession sharedInstance] setActive:NO error:nil];
         [self resetAudio];
         [self start];
@@ -197,7 +198,7 @@ static audioDeviceType NSStringToAudioDeviceType(NSString *str) {
 }
 
 - (void)startDelegateInterruption {
-    [delegate interruptionStarted];
+    if ([(NSObject *)delegate respondsToSelector:@selector(interruptionStarted)]) [delegate interruptionStarted];
 }
 
 - (void)onAudioSessionInterrupted:(NSNotification *)notification {
@@ -517,8 +518,8 @@ static OSStatus coreAudioProcessingCallback(void *inRefCon, AudioUnitRenderActio
     outputChannelMap.deviceChannels[0] = outputChannelMap.deviceChannels[1] = -1;
     for (int n = 0; n < 8; n++) outputChannelMap.HDMIChannels[n] = -1;
     for (int n = 0; n < 32; n++) outputChannelMap.USBChannels[n] = inputChannelMap.USBChannels[n] = - 1;
-
-    [delegate mapChannels:&outputChannelMap inputMap:&inputChannelMap externalAudioDeviceName:externalAudioDeviceName outputsAndInputs:audioSystemInfo];
+    
+    if ([(NSObject *)self->delegate respondsToSelector:@selector(mapChannels:inputMap:externalAudioDeviceName:outputsAndInputs:)]) [delegate mapChannels:&outputChannelMap inputMap:&inputChannelMap externalAudioDeviceName:externalAudioDeviceName outputsAndInputs:audioSystemInfo];
     if (!audioUnit || !iOS6 || (numChannels <= 2)) return;
 
     SInt32 outputmap[32], inputmap[32];
@@ -560,7 +561,8 @@ static OSStatus coreAudioProcessingCallback(void *inRefCon, AudioUnitRenderActio
         if ([[AVAudioSession sharedInstance] recordPermission] == AVAudioSessionRecordPermissionGranted) [self onMediaServerReset:nil];
         else {
             [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-                if (granted) [self onMediaServerReset:nil]; else [self->delegate recordPermissionRefused];
+                if (granted) [self onMediaServerReset:nil];
+                else if ([(NSObject *)self->delegate respondsToSelector:@selector(recordPermissionRefused)]) [self->delegate recordPermissionRefused];
             }];
         };
     } else [self onMediaServerReset:nil];

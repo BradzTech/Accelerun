@@ -25,11 +25,12 @@
 		A232EC86232F16B200C583C7 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232EC84232F16B200C583C7 /* AboutVC.swift */; };
 		A232ECAE232F384100C583C7 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232ECAD232F384000C583C7 /* Song.swift */; };
 		A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A232ECAF232F398900C583C7 /* MyParticle.sks */; };
-		A23F64C72330059800658FCD /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A23F64BD2330059800658FCD /* libSuperpoweredAudioIOS.a */; };
-		A23F64C82330059800658FCD /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A23F64C12330059800658FCD /* SuperpoweredIOSAudioIO.mm */; };
-		A23F64CD2330072700658FCD /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A23F64CC2330072700658FCD /* Keys.plist */; };
 		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
 		A29A3EE12294819600E34BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A29A3EE02294819600E34BFE /* Main.storyboard */; };
+		A29FCD852332EB630031DDA1 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29FCD802332EB630031DDA1 /* libSuperpoweredAudioIOS.a */; };
+		A29FCD8A2332EBA20031DDA1 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = A29FCD892332EBA20031DDA1 /* SuperpoweredIOSAudioIO.mm */; };
+		A29FCD8C2332ECE40031DDA1 /* Superpowered.h in Sources */ = {isa = PBXBuildFile; fileRef = A29FCD8B2332EBE10031DDA1 /* Superpowered.h */; };
+		A29FCD8F233323610031DDA1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A29FCD8E233323610031DDA1 /* Keys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,20 +57,20 @@
 		A232EC84232F16B200C583C7 /* AboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutVC.swift; path = Accelerun/UI/AboutVC.swift; sourceTree = SOURCE_ROOT; };
 		A232ECAD232F384000C583C7 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Accelerun/Model/Song.swift; sourceTree = SOURCE_ROOT; };
 		A232ECAF232F398900C583C7 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = Accelerun/Resources/MyParticle.sks; sourceTree = SOURCE_ROOT; };
-		A23F64BD2330059800658FCD /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
-		A23F64BE2330059800658FCD /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredIOSAudioIO.h; sourceTree = "<group>"; };
-		A23F64BF2330059800658FCD /* SuperpoweredHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredHTTP.h; sourceTree = "<group>"; };
-		A23F64C02330059800658FCD /* Superpowered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Superpowered.h; sourceTree = "<group>"; };
-		A23F64C12330059800658FCD /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SuperpoweredIOSAudioIO.mm; sourceTree = "<group>"; };
-		A23F64C22330059800658FCD /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = "<group>"; };
-		A23F64C32330059800658FCD /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAnalyzer.h; sourceTree = "<group>"; };
-		A23F64C42330059800658FCD /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredDecoder.h; sourceTree = "<group>"; };
-		A23F64C52330059800658FCD /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAdvancedAudioPlayer.h; sourceTree = "<group>"; };
-		A23F64C62330059800658FCD /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = "<group>"; };
-		A23F64CC2330072700658FCD /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		A23F64CE2330073100658FCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/Model/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
 		A29A3EE02294819600E34BFE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Accelerun/Main.storyboard; sourceTree = "<group>"; };
+		A29FCD7E2332EB620031DDA1 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAnalyzer.h; sourceTree = "<group>"; };
+		A29FCD7F2332EB630031DDA1 /* SuperpoweredAudioBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAudioBuffers.h; sourceTree = "<group>"; };
+		A29FCD802332EB630031DDA1 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
+		A29FCD812332EB630031DDA1 /* SuperpoweredHTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredHTTP.h; sourceTree = "<group>"; };
+		A29FCD822332EB630031DDA1 /* SuperpoweredDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredDecoder.h; sourceTree = "<group>"; };
+		A29FCD832332EB630031DDA1 /* SuperpoweredAdvancedAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAdvancedAudioPlayer.h; sourceTree = "<group>"; };
+		A29FCD882332EBA20031DDA1 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SuperpoweredIOSAudioIO.h; path = "../../../../../../Downloads/SuperpoweredSDK 2/Superpowered/OpenSource/SuperpoweredIOSAudioIO.h"; sourceTree = "<group>"; };
+		A29FCD892332EBA20031DDA1 /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = SuperpoweredIOSAudioIO.mm; path = "../../../../../../Downloads/SuperpoweredSDK 2/Superpowered/OpenSource/SuperpoweredIOSAudioIO.mm"; sourceTree = "<group>"; };
+		A29FCD8B2332EBE10031DDA1 /* Superpowered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Superpowered.h; sourceTree = "<group>"; };
+		A29FCD8D2332F0C00031DDA1 /* SuperpoweredSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredSimple.h; sourceTree = "<group>"; };
+		A29FCD8E233323610031DDA1 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2029571229442F0003D4FDA /* WebKit.framework in Frameworks */,
-				A23F64C72330059800658FCD /* libSuperpoweredAudioIOS.a in Frameworks */,
+				A29FCD852332EB630031DDA1 /* libSuperpoweredAudioIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,16 +158,16 @@
 		A23F64AF2330053300658FCD /* Superpowered */ = {
 			isa = PBXGroup;
 			children = (
-				A23F64BD2330059800658FCD /* libSuperpoweredAudioIOS.a */,
-				A23F64C02330059800658FCD /* Superpowered.h */,
-				A23F64C52330059800658FCD /* SuperpoweredAdvancedAudioPlayer.h */,
-				A23F64C32330059800658FCD /* SuperpoweredAnalyzer.h */,
-				A23F64C62330059800658FCD /* SuperpoweredAudioBuffers.h */,
-				A23F64C42330059800658FCD /* SuperpoweredDecoder.h */,
-				A23F64BF2330059800658FCD /* SuperpoweredHTTP.h */,
-				A23F64BE2330059800658FCD /* SuperpoweredIOSAudioIO.h */,
-				A23F64C12330059800658FCD /* SuperpoweredIOSAudioIO.mm */,
-				A23F64C22330059800658FCD /* SuperpoweredSimple.h */,
+				A29FCD802332EB630031DDA1 /* libSuperpoweredAudioIOS.a */,
+				A29FCD8B2332EBE10031DDA1 /* Superpowered.h */,
+				A29FCD832332EB630031DDA1 /* SuperpoweredAdvancedAudioPlayer.h */,
+				A29FCD7E2332EB620031DDA1 /* SuperpoweredAnalyzer.h */,
+				A29FCD7F2332EB630031DDA1 /* SuperpoweredAudioBuffers.h */,
+				A29FCD822332EB630031DDA1 /* SuperpoweredDecoder.h */,
+				A29FCD812332EB630031DDA1 /* SuperpoweredHTTP.h */,
+				A29FCD882332EBA20031DDA1 /* SuperpoweredIOSAudioIO.h */,
+				A29FCD892332EBA20031DDA1 /* SuperpoweredIOSAudioIO.mm */,
+				A29FCD8D2332F0C00031DDA1 /* SuperpoweredSimple.h */,
 			);
 			path = Superpowered;
 			sourceTree = "<group>";
@@ -186,9 +187,9 @@
 		A23F64C92330060300658FCD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A23F64CC2330072700658FCD /* Keys.plist */,
 				A232EC83232F16B200C583C7 /* yt.html */,
 				A232ECAF232F398900C583C7 /* MyParticle.sks */,
+				A29FCD8E233323610031DDA1 /* Keys.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -262,7 +263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A23F64CD2330072700658FCD /* Keys.plist in Resources */,
+				A29FCD8F233323610031DDA1 /* Keys.plist in Resources */,
 				1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */,
 				A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */,
 				A232EC85232F16B200C583C7 /* yt.html in Resources */,
@@ -278,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29FCD8C2332ECE40031DDA1 /* Superpowered.h in Sources */,
 				1CA97DD41EFD312C00572B42 /* GameScene.swift in Sources */,
 				1CA97DD01EFD312C00572B42 /* AdvPlayer.mm in Sources */,
 				1CA97DD31EFD312C00572B42 /* BPMDetector.mm in Sources */,
@@ -288,7 +290,7 @@
 				A207E4AC22934E1500AF9567 /* YoutubeSelectVC.swift in Sources */,
 				1CA97DD91EFD312C00572B42 /* SongFolder.swift in Sources */,
 				A232ECAE232F384100C583C7 /* Song.swift in Sources */,
-				A23F64C82330059800658FCD /* SuperpoweredIOSAudioIO.mm in Sources */,
+				A29FCD8A2332EBA20031DDA1 /* SuperpoweredIOSAudioIO.mm in Sources */,
 				1CA97DD11EFD312C00572B42 /* AppDelegate.swift in Sources */,
 				A232EC86232F16B200C583C7 /* AboutVC.swift in Sources */,
 				A202957322946127003D4FDA /* YTWebView.swift in Sources */,
