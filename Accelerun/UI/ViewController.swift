@@ -91,43 +91,6 @@ class ViewController: UIViewController {
         startPedometer()
         webView.scrollView.contentInset = UIEdgeInsets.zero
         
-        DispatchQueue.global(qos: .default).async {
-            while true {
-                var sleepTime: Double = 0
-                if let _ = self.cSong as? SongApple {
-                    let msToNextBeat = self.musicPlayer.getMsToNextBeat()
-                    if (msToNextBeat > 0) {
-                        sleepTime = (msToNextBeat - 10)
-                    }
-                } else if let song = self.cSong as? SongYoutube {
-                    if self.playing {
-                        let cur = Float(self.webView.getCurrentTime())
-                        var i = 0
-                        let len = song.beatFingerprint.count
-                        while i < len && song.beatFingerprint[i] < cur {
-                            i += 1
-                        }
-                        if i < len {
-                            sleepTime = Double((song.beatFingerprint[i] - cur) / self.trueRatio * 1000) + 60
-                        } else {
-                            DispatchQueue.main.async {
-                                self.btnNext()
-                            }
-                        }
-                    }
-                }
-                // If we are halved song speed, also half the step speed by adding a beat
-                if self._tFactor > 1 {
-                    sleepTime += 60000 / Double(self.targetTempo)
-                }
-                if sleepTime > 0 && sleepTime < 2000 {
-                    usleep(useconds_t(sleepTime * 1000))
-                    self.flashDot()
-                }
-                usleep(40000)
-            }
-        }
-        
         if let skView = circleView as? SKView {
             scene = GameScene()
             scene.scaleMode = .aspectFill
@@ -154,6 +117,50 @@ class ViewController: UIViewController {
         webView.loadHTMLString(ytHtml, baseURL: URL(string: "https://bradztech.com/"))
         //webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
         webView.navigationDelegate = self
+        
+        DispatchQueue.global(qos: .default).async {
+            while true {
+                var sleepTime: Double = 0
+                if let _ = self.cSong as? SongApple {
+                    let msToNextBeat = self.musicPlayer.getMsToNextBeat()
+                    if msToNextBeat > 0 {
+                        sleepTime = (msToNextBeat - 10)
+                    }
+                } else if let song = self.cSong as? SongYoutube {
+                    if self.playing {
+                        let cur = Float(self.webView.getCurrentTime())
+                        var i = 0
+                        let len = song.beatFingerprint.count
+                        while i < len && song.beatFingerprint[i] < cur {
+                            i += 1
+                        }
+                        if i < len {
+                            sleepTime = Double((song.beatFingerprint[i] - cur) / self.trueRatio * 1000) + 60
+                        } else {
+                            DispatchQueue.main.async {
+                                self.btnNext()
+                            }
+                        }
+                    }
+                }
+                // If we are doubled song speed, also half the step speed by adding a beat
+                let beatTime = 60000 / Double(self.targetTempo)
+                if self._tFactor > 1 {
+                    sleepTime += beatTime
+                }
+                // Wait and then make the beat animation
+                if sleepTime > 0 && sleepTime < 2500 {
+                    usleep(useconds_t(sleepTime * 1000))
+                    self.flashDot()
+                }
+                // If we are halved song speed, do two steps
+                if self._tFactor < 1 {
+                    usleep(useconds_t((beatTime - 20) * 1000))
+                    self.flashDot()
+                }
+                usleep(33333)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
