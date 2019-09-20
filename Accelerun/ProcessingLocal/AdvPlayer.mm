@@ -136,4 +136,9 @@ static bool audioProcessing(void *clientData, float **inputBuffers, unsigned int
     player->onMediaserverInterrupt();
 }
 
+- (bool)isEOF
+{
+    return player->eofRecently();
+}
+
 @end

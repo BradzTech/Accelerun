@@ -21,4 +21,5 @@
 - (double)getMsToNextBeat;
 - (void)resume;
 - (void)pause;
+- (bool)isEOF;
 @end

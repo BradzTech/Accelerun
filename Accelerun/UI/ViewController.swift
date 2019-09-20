@@ -126,6 +126,9 @@ class ViewController: UIViewController {
                     if msToNextBeat > 0 {
                         sleepTime = (msToNextBeat - 10)
                     }
+                    if self.musicPlayer.isEOF() {
+                        self.eof()
+                    }
                 } else if let song = self.cSong as? SongYoutube {
                     if self.playing {
                         let cur = Float(self.webView.getCurrentTime())
@@ -137,15 +140,13 @@ class ViewController: UIViewController {
                         if i < len {
                             sleepTime = Double((song.beatFingerprint[i] - cur) / self.trueRatio * 1000) + 60
                         } else {
-                            DispatchQueue.main.async {
-                                self.btnNext()
-                            }
+                            self.eof()
                         }
                     }
                 }
                 // If we are doubled song speed, also half the step speed by adding a beat
                 let beatTime = 60000 / Double(self.targetTempo)
-                if self._tFactor > 1 {
+                if self._tFactor > 1 && sleepTime > 0 {
                     sleepTime += beatTime
                 }
                 // Wait and then make the beat animation
@@ -356,10 +357,8 @@ class ViewController: UIViewController {
     }
     
     @objc func eof() {
-        DispatchQueue.global(qos: .default).async {
-            DispatchQueue.main.async {
-                self.btnNext()
-            }
+        DispatchQueue.main.async {
+            self.btnNext()
         }
     }
     
@@ -431,11 +430,5 @@ extension ViewController: WKNavigationDelegate {
         } else {
             decisionHandler(.allow)
         }
-    }
-}
-
-@objc class VCBridge: NSObject {
-    @objc public static func eof() {
-        ViewController.inst.eof()
     }
 }
