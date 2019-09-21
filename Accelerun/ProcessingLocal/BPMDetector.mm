@@ -14,6 +14,7 @@
 #include "SuperpoweredSimple.h"
 
 @implementation BPMDetector {
+    float durationSeconds;
     float detectedBpm;
     float beatStartMs;
     float peakDb;
@@ -66,7 +67,8 @@
  */
 -(void)processSongForDecoder:(Superpowered::Decoder *)decoder {
     // Create the analyzer.
-    Superpowered::Analyzer *analyzer = new Superpowered::Analyzer(decoder->getSamplerate(), decoder->getDurationSeconds());
+    durationSeconds = decoder->getDurationSeconds();
+    Superpowered::Analyzer *analyzer = new Superpowered::Analyzer(decoder->getSamplerate(), durationSeconds);
 
     // Create a buffer for the 16-bit integer audio output of the decoder.
     short int *intBuffer = (short int *)malloc(decoder->getFramesPerChunk() * 2 * sizeof(short int) + 16384);
@@ -97,6 +99,11 @@
     delete analyzer;
     free(intBuffer);
     free(floatBuffer);
+}
+
+- (float)getDurationSeconds
+{
+    return durationSeconds;
 }
 
 - (float)getBpm

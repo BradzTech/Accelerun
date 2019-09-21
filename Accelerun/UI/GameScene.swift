@@ -102,7 +102,7 @@ class GameScene: SKScene {
         private var player: CHHapticPatternPlayer
         
         init?() {
-            let tapEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [CHHapticEventParameter(parameterID: CHHapticEvent.ParameterID.hapticSharpness, value: 0.3), CHHapticEventParameter(parameterID: CHHapticEvent.ParameterID.hapticIntensity, value: 0.45)], relativeTime: 0.001)
+            let tapEvent = CHHapticEvent(eventType: .hapticTransient, parameters: [CHHapticEventParameter(parameterID: CHHapticEvent.ParameterID.hapticSharpness, value: 0.32), CHHapticEventParameter(parameterID: CHHapticEvent.ParameterID.hapticIntensity, value: 0.42)], relativeTime: 0.001)
             do {
                 let hapticPattern = try CHHapticPattern(events: [tapEvent], parameters: [])
                 engine = try CHHapticEngine()

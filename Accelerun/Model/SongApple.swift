@@ -52,6 +52,7 @@ class SongApple: Song {
             if let artist = mediaItem.artist {
                 songTitle += " | " + artist
             }
+            
             return SongApple(persistentId: persistentId, title: songTitle, seconds: Float(mediaItem.playbackDuration))
         }
     }
@@ -71,6 +72,7 @@ class SongApple: Song {
         if let url = url {
             let analyzer = BPMDetector()
             analyzer.calc(url)
+            seconds = analyzer.getDurationSeconds()
             bpm = analyzer.getBpm()
             beatStartMs = analyzer.getBeatStartMs()
             peakDb = analyzer.getPeakDb()

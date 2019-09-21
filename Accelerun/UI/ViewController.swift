@@ -285,8 +285,16 @@ class ViewController: UIViewController {
     }
     
     @objc func changePlaybackPosition(_ event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
+        playing = false
         musicPlayer.setPosition(event.positionTime * Double(musicPlayer.getCurrentFactor()))
-        MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = event.positionTime
+        // Wait a moment to ensure the new position is properly shown
+        DispatchQueue.global(qos: .userInitiated).async {
+            usleep(20000)
+            DispatchQueue.main.async {
+                self.playing = true
+                self.upNowPlayingInfo()
+            }
+        }
         return MPRemoteCommandHandlerStatus.success
     }
     
@@ -336,15 +344,22 @@ class ViewController: UIViewController {
             trueRatio = targetTempo / song.bpm
             lblSong.text = song.title
             musicPlayer.setRatio(trueRatio)
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                MPMediaItemPropertyTitle: song.title,
-                MPMediaItemPropertyPlaybackDuration: Double(song.seconds / musicPlayer.getCurrentFactor()),
-                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(floatLiteral: playing ? 1.0: 0.0),
-                MPNowPlayingInfoPropertyElapsedPlaybackTime: musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
-            ]
+            upNowPlayingInfo()
         }
         if targetTempo != 0 {
             UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
+        }
+    }
+    
+    private func upNowPlayingInfo() {
+        if let song = cSong as? SongApple {
+            let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+            var npi = nowPlayingInfoCenter.nowPlayingInfo ?? [String: Any]()
+            npi[MPMediaItemPropertyTitle] = song.title
+            npi[MPMediaItemPropertyPlaybackDuration] = Double(song.seconds / musicPlayer.getCurrentFactor())
+            npi[MPNowPlayingInfoPropertyElapsedPlaybackTime] = musicPlayer.getPosition() / musicPlayer.getCurrentFactor()
+            npi[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(floatLiteral: playing ? 1.0: 0.0)
+            nowPlayingInfoCenter.nowPlayingInfo = npi
         }
     }
     

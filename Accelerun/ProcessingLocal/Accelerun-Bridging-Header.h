@@ -6,6 +6,7 @@
 
 - (void)calc:(NSURL *)fileURL;
 - (void)initSuperpowered:(const char *)apiKey;
+- (float)getDurationSeconds;
 - (float)getBpm;
 - (float)getBeatStartMs;
 - (float)getPeakDb;

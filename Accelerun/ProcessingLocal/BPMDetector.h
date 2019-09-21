@@ -10,6 +10,7 @@
 
 @interface BPMDetector : NSObject
 - (void)calc:(NSURL *)fileURL;
+- (float)getDurationSeconds;
 - (float)getBpm;
 - (float)getBeatStartMs;
 - (float)getPeakDb;
