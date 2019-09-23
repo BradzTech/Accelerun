@@ -319,12 +319,6 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         songItems.remove(at: index)
         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .top)
         tableView.reloadSections(IndexSet(integer: 1), with: .fade)
-        if let VC = ViewController.inst {
-            if VC.cFolder == folder && VC.cIndex == index {
-                ViewController.inst?.btnNext()
-                ViewController.inst?.btnPrev()
-            }
-        }
     }
     
     @objc func goToNowPlaying(_ sender: Any? = nil) {
