@@ -8,13 +8,18 @@
 
 import UIKit
 import CoreData
+import MediaPlayer
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-    
     private var wasPlaying = false
+    private static var _appIsOpen = true
+    
+    public var window: UIWindow?
+    public static var appIsOpen: Bool {
+        return _appIsOpen
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Initialize API Keys
@@ -48,7 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ViewController.inst.playing = false
                 wasPlaying = true
             }
+        } else {
+            // If first song is paused, then second app is closed, remove now playing
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
         }
+        AppDelegate._appIsOpen = false
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -61,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wasPlaying = false
             ViewController.inst.playing = true
         }
+        AppDelegate._appIsOpen = true
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -119,8 +129,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
-    
-
 }
 
+public enum DefaultsKey: String {
+    case lastTempo = "lastTempo"
+    case ytDisclaimer = "ytDisclaimer"
+}

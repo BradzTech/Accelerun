@@ -113,8 +113,11 @@ class GameScene: SKScene {
         }
         
         public func tap() {
-            try? engine.start()
-            try? player.start(atTime: 0)
+            // Try to make a haptic tap, if the app is foreground
+            if AppDelegate.appIsOpen {
+                try? engine.start()
+                try? player.start(atTime: 0)
+            }
         }
         
         public func stopEngine() {

@@ -112,11 +112,26 @@ class ViewController: UIViewController {
         commandCenter.nextTrackCommand.addTarget(self, action:#selector(remoteNext(_:)))
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget(self, action:#selector(changePlaybackPosition(_:)))
-        let ytUrl = Bundle.main.url(forResource: "yt", withExtension: "html")!
-        let ytHtml = try! String(contentsOf: ytUrl, encoding: .utf8)
-        webView.loadHTMLString(ytHtml, baseURL: URL(string: "https://bradztech.com/"))
-        //webView.load(URLRequest(url: URL(string: "https://bradztech.com/c/ios/accelerun/yt.html")!))
+        
+        // Per license terms, display Superpowered Audio logo
+        let spLogo = Bundle.main.url(forResource: "superpoweredLogo", withExtension: "svg")!
+        webView.loadFileURL(spLogo, allowingReadAccessTo: spLogo)
         webView.navigationDelegate = self
+        
+        // After showing the logo, loading YouTube page and open music selection
+        DispatchQueue.global(qos: .default).async {
+            usleep(2300000)
+            DispatchQueue.main.async {
+                self.btnMusic(true)
+                let ytUrl = Bundle.main.url(forResource: "yt", withExtension: "html")!
+                let ytHtml = try! String(contentsOf: ytUrl, encoding: .utf8)
+                self.webView.loadHTMLString(ytHtml, baseURL: URL(string: "https://bradztech.com/"))
+            }
+            sleep(1)
+            DispatchQueue.main.async {
+                self.webView.isHidden = true
+            }
+        }
         
         DispatchQueue.global(qos: .default).async {
             while true {
@@ -161,12 +176,6 @@ class ViewController: UIViewController {
                 }
                 usleep(33333)
             }
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if cFolder == nil {
-            btnMusic(true)
         }
     }
     
@@ -321,7 +330,7 @@ class ViewController: UIViewController {
         }
         playing = true
         
-        let lastTempo = UserDefaults.standard.integer(forKey: "lastTempo")
+        let lastTempo = UserDefaults.standard.integer(forKey: DefaultsKey.lastTempo.rawValue)
         if lastTempo == 0 {
             _ = remotePause()
             tutView.isHidden = false
@@ -347,7 +356,7 @@ class ViewController: UIViewController {
             upNowPlayingInfo()
         }
         if targetTempo != 0 {
-            UserDefaults.standard.set(Int(floor(targetTempo)), forKey: "lastTempo")
+            UserDefaults.standard.set(Int(floor(targetTempo)), forKey: DefaultsKey.lastTempo.rawValue)
         }
     }
     

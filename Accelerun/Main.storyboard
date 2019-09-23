@@ -165,7 +165,7 @@ Tempo</string>
                                     <constraint firstAttribute="width" constant="240" id="Swv-ip-LTI"/>
                                 </constraints>
                             </view>
-                            <wkWebView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eo8-f2-ggp" customClass="YTWebView" customModule="Accelerun" customModuleProvider="target">
+                            <wkWebView userInteractionEnabled="NO" contentMode="scaleToFill" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eo8-f2-ggp" customClass="YTWebView" customModule="Accelerun" customModuleProvider="target">
                                 <rect key="frame" x="20" y="383.66666666666669" width="335" height="188.33333333333331"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -273,28 +273,27 @@ Tempo</string>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="appDesc" rowHeight="260" id="XtV-bb-pXx">
-                                <rect key="frame" x="0.0" y="136" width="375" height="260"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="appDesc" rowHeight="200" id="XtV-bb-pXx">
+                                <rect key="frame" x="0.0" y="136" width="375" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XtV-bb-pXx" id="mMW-xa-r8L">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="07X-x1-kFO">
-                                            <rect key="frame" x="24" y="11" width="327" height="200"/>
+                                            <rect key="frame" x="24" y="11" width="327" height="150"/>
                                             <color key="backgroundColor" red="0.0" green="1" blue="0.036020399305555451" alpha="0.0" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="200" id="Vzq-Ca-3Ze"/>
+                                                <constraint firstAttribute="height" constant="150" id="Vzq-Ca-3Ze"/>
                                             </constraints>
-                                            <string key="text">Please use the controls on this page to create a custom running playlist, then add some music from Music library or YouTube*. Tap a song in a playlist to start Accelerunning!
-
-*Music added from YouTube requires a data connection and leaving the app open.</string>
+                                            <string key="text">Please use the controls on this page to create a custom running playlist, then add some music from Music library or YouTube. Tap a song in a playlist to start Accelerunning!</string>
                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                             <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5uX-Ec-5UC">
-                                            <rect key="frame" x="130.66666666666666" y="211" width="114" height="30"/>
+                                            <rect key="frame" x="129" y="161" width="117" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <state key="normal" title="About Accelerun"/>
                                             <connections>
                                                 <segue destination="OQK-6S-SBH" kind="show" id="LKh-sV-fGY"/>
@@ -312,7 +311,7 @@ Tempo</string>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.036020399305555451" alpha="0.0" colorSpace="calibratedRGB"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="playlistTotal" textLabel="vvF-8Q-1KL" style="IBUITableViewCellStyleDefault" id="snF-iD-sNL">
-                                <rect key="frame" x="0.0" y="396" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="336" width="375" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="snF-iD-sNL" id="25g-08-XYL">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>

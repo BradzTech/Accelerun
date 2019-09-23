@@ -107,10 +107,13 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "songCell")!
-                let bgView = UIView()
-                bgView.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
-                cell.selectedBackgroundView = bgView
                 cell.textLabel?.text = songItems[indexPath.row].title
+                let selView = UIView()
+                selView.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+                cell.selectedBackgroundView = selView
+                let bgView = UIView()
+                bgView.backgroundColor = UIColor(red: 0.8, green: 0.2, blue: 0.4, alpha: songItem is SongYoutube ? 0.4 : 0)
+                cell.backgroundView = bgView
                 return cell
             }
         } else {
@@ -211,7 +214,7 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
         if indexPath.section == 0 || folder != SongFolder.rootFolder {
             return 54
         } else {
-            return 260
+            return 200
         }
     }
     
@@ -280,9 +283,17 @@ class SongTableVC: UITableViewController, MPMediaPickerControllerDelegate {
     }
     
     @objc func addYoutube(_ sender: Any) {
-        let youtubeVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YoutubeSelectVC") as! YoutubeSelectVC
-        youtubeVC.pvc = self
-        navigationController!.pushViewController(youtubeVC, animated: true)
+        let onAccept = {
+            let youtubeVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YoutubeSelectVC") as! YoutubeSelectVC
+            youtubeVC.pvc = self
+            self.navigationController!.pushViewController(youtubeVC, animated: true)
+        }
+        // If disclaimer is accepted, go right away, else show disclaimer
+        if UserDefaults.standard.bool(forKey: DefaultsKey.ytDisclaimer.rawValue) {
+            onAccept()
+        } else {
+            AboutVC.ytDisclaimer(vc: self, onAccept: onAccept)
+        }
     }
     
     private func open(folder: SongFolder, animated: Bool) {

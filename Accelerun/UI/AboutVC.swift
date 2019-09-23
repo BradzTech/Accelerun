@@ -10,7 +10,7 @@ import UIKit
 
 class AboutVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -23,6 +23,8 @@ class AboutVC: UITableViewController {
             cell.textLabel!.text = "Icons provided by icons8.com"
         case 3:
             cell.textLabel!.text = "Powered by Superpowered Audio"
+        case 4:
+            cell.textLabel!.text = "YouTube Support Information"
         default:
             cell.textLabel!.text = "Created by BradzTech"
         }
@@ -33,18 +35,27 @@ class AboutVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 1:
-            UIApplication.shared.open(URL(string: "https://bradztech.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://bradztech.com/")!, options: [:], completionHandler: nil)
         case 2:
-            UIApplication.shared.open(URL(string: "https://icons8.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://icons8.com/")!, options: [:], completionHandler: nil)
         case 3:
-            UIApplication.shared.open(URL(string: "https://superpowered.com/")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+            UIApplication.shared.open(URL(string: "https://superpowered.com/")!, options: [:], completionHandler: nil)
+        case 4:
+            AboutVC.ytDisclaimer(vc: self)
         default:
             break
         }
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+    
+    public static func ytDisclaimer(vc: UIViewController, onAccept: (() -> ())? = nil) {
+        let alert = UIAlertController(title: "YouTube Disclaimer", message: "Please note videos added from YouTube cannot be downloaded ahead of time, so they will require keeping the app open and an active data connection (roughly 4 MB/minute). Furthermore, added songs will be annoymously sent to a remote server for beat analysis.\n\nIf the above is not okay, you can still use Accelerun with only music on your iPhone.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "I understand", style: .default, handler: {(alert: UIAlertAction) in
+            UserDefaults.standard.set(true, forKey: DefaultsKey.ytDisclaimer.rawValue)
+            onAccept?()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(alert: UIAlertAction) in
+            UserDefaults.standard.set(false, forKey: DefaultsKey.ytDisclaimer.rawValue)
+        }))
+        vc.present(alert, animated: true, completion: nil)
+    }
 }

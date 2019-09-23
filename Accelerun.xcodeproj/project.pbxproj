@@ -25,6 +25,7 @@
 		A232EC86232F16B200C583C7 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232EC84232F16B200C583C7 /* AboutVC.swift */; };
 		A232ECAE232F384100C583C7 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = A232ECAD232F384000C583C7 /* Song.swift */; };
 		A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A232ECAF232F398900C583C7 /* MyParticle.sks */; };
+		A2400EB623386019001A0410 /* superpoweredLogo.svg in Resources */ = {isa = PBXBuildFile; fileRef = A2400EB523386019001A0410 /* superpoweredLogo.svg */; };
 		A26E21D522938C9900B4BE28 /* SongYoutube.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26E21D422938C9900B4BE28 /* SongYoutube.swift */; };
 		A29A3EE12294819600E34BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A29A3EE02294819600E34BFE /* Main.storyboard */; };
 		A29FCD852332EB630031DDA1 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A29FCD802332EB630031DDA1 /* libSuperpoweredAudioIOS.a */; };
@@ -58,6 +59,7 @@
 		A232ECAD232F384000C583C7 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Song.swift; path = Accelerun/Model/Song.swift; sourceTree = SOURCE_ROOT; };
 		A232ECAF232F398900C583C7 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyParticle.sks; path = Accelerun/Resources/MyParticle.sks; sourceTree = SOURCE_ROOT; };
 		A23F64CE2330073100658FCD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A2400EB523386019001A0410 /* superpoweredLogo.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = superpoweredLogo.svg; sourceTree = "<group>"; };
 		A26E21D422938C9900B4BE28 /* SongYoutube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SongYoutube.swift; path = Accelerun/Model/SongYoutube.swift; sourceTree = SOURCE_ROOT; };
 		A29A3EE02294819600E34BFE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Accelerun/Main.storyboard; sourceTree = "<group>"; };
 		A29FCD7E2332EB620031DDA1 /* SuperpoweredAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperpoweredAnalyzer.h; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		A23F64C92330060300658FCD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A2400EB523386019001A0410 /* superpoweredLogo.svg */,
 				A232EC83232F16B200C583C7 /* yt.html */,
 				A232ECAF232F398900C583C7 /* MyParticle.sks */,
 				A29FCD8E233323610031DDA1 /* Keys.plist */,
@@ -267,6 +270,7 @@
 				1C8AB7BE1EFFDF8500E61FFC /* LaunchScreen.storyboard in Resources */,
 				A232ECB0232F398900C583C7 /* MyParticle.sks in Resources */,
 				A232EC85232F16B200C583C7 /* yt.html in Resources */,
+				A2400EB623386019001A0410 /* superpoweredLogo.svg in Resources */,
 				1CA97DD21EFD312C00572B42 /* Assets.xcassets in Resources */,
 				A29A3EE12294819600E34BFE /* Main.storyboard in Resources */,
 			);
